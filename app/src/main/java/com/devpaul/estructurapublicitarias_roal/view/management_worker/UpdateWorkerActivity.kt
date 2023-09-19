@@ -21,7 +21,6 @@ import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityUpdateWorkerBinding
-import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.textfield.TextInputEditText
@@ -36,8 +35,7 @@ import java.io.IOException
 
 class UpdateWorkerActivity : BaseActivity() {
 
-    var workersProvider = WorkersProvider()
-    private var progressDialog: Dialog? = null
+    private var workersProvider = WorkersProvider()
     lateinit var binding: ActivityUpdateWorkerBinding
     private var imageFile: File? = null
 
