@@ -177,7 +177,6 @@ class UpdateWorkerActivity : BaseActivity() {
                             })
                         }
                     } else {
-                        val pref = SharedPref(applicationContext)
                         val workerUser = WorkersResponse(
                             dni = dni,
                             name = name,

@@ -15,7 +15,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWit
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.ManagementWorkerActivity
 import com.devpaul.estructurapublicitarias_roal.view.validationepp.ValidationEPPActivity
 
-class OptionsAdapter(val context: Activity, private val categories: List<Options>) :
+class OptionsAdapter(val context: Activity, private val categories: List<Any>) :
     RecyclerView.Adapter<OptionsAdapter.OptionsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OptionsViewHolder {
@@ -29,16 +29,18 @@ class OptionsAdapter(val context: Activity, private val categories: List<Options
 
     override fun onBindViewHolder(holder: OptionsViewHolder, position: Int) {
 
-        val options = categories[position] // CADA UNA DE LAS CATEGORIAS
+        val category = categories[position] // CADA UNA DE LAS CATEGORIAS
 
-        holder.textViewCategory.text = options.name
-        Glide.with(context)
-            .load(options.image)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .skipMemoryCache(true)
-            .into(holder.imageViewCategory);
+        if (category is Options) {
+            holder.textViewCategory.text = category.name
+            Glide.with(context)
+                .load(category.image)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(holder.imageViewCategory);
 
-        holder.itemView.setOnClickListener { goToProducts(options) }
+            holder.itemView.setOnClickListener { goToProducts(category) }
+        }
     }
 
     private fun goToProducts(options: Options) {

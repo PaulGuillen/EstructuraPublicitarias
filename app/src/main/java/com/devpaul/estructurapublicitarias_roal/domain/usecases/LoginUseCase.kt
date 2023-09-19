@@ -77,7 +77,7 @@ class LoginUseCase(
 
     private fun saveForgotPassword(principalUser: PrincipalUser) {
         if (principalUser.code == 200) {
-            prefs.saveJsonObject("saveForgotPassword", principalUser)
+            prefs.saveJsonObject("SaveForgotPassword", principalUser)
         }
     }
 

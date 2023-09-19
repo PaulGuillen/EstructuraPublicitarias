@@ -48,7 +48,7 @@ class WorkerUseCase(
 
     private fun saveDataWorker(worker: Worker) {
         if (!worker.dni.isNullOrEmpty()) {
-            prefs.saveWorker("Worker", worker)
+            prefs.saveJsonObject("Worker", worker)
         }
     }
 

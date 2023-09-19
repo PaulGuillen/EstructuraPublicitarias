@@ -7,9 +7,6 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityPerfilBinding
-import com.devpaul.estructurapublicitarias_roal.domain.utils.INACTIVE
-import com.devpaul.estructurapublicitarias_roal.domain.utils.NAME
-import com.devpaul.estructurapublicitarias_roal.domain.utils.SaveUserInSession
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
 import com.devpaul.estructurapublicitarias_roal.view.LoginActivity
@@ -47,6 +44,11 @@ class PerfilActivity : BaseActivity() {
         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(i)
         this.getSharedPreferences("Worker", 0).edit().clear().apply()
+        clearPreferenceSaveUser()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         clearPreferenceSaveUser()
     }
 

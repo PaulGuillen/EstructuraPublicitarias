@@ -10,6 +10,7 @@ import com.devpaul.estructurapublicitarias_roal.databinding.ActivityHomeBinding
 import com.devpaul.estructurapublicitarias_roal.domain.adapter.OptionsAdapter
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.WorkerUseCase
+import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialog
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
@@ -65,6 +66,17 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun getCategories() {
+        val prefs = SharedPref(applicationContext)
+        val optionsCategory = prefs.getJsonListOptions("OptionsCategory")
+        if (!optionsCategory.isNullOrEmpty()) {
+            displayCategories(optionsCategory)
+        } else {
+            callServiceGetCategories()
+        }
+    }
+
+    private fun callServiceGetCategories() {
+        val prefs = SharedPref(applicationContext)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val workersRepository = WorkersRepository()
@@ -73,28 +85,36 @@ class HomeActivity : BaseActivity() {
                 withContext(Dispatchers.Main) {
                     when (serviceWorker) {
                         is CustomResult.OnSuccess -> {
-                            binding.shimmerFrameLayout.visibility = View.GONE
-                            binding.recyclerviewOptions.visibility = View.VISIBLE
-                            val optionsCategory = serviceWorker.data
-                            adapter = OptionsAdapter(this@HomeActivity, optionsCategory)
-                            binding.recyclerviewOptions.adapter = adapter
+                            val optionsCategories = serviceWorker.data
+                            prefs.saveJsonListOptions("OptionsCategory", optionsCategories)
+                            displayCategories(optionsCategories)
                         }
 
                         is CustomResult.OnError -> {
-                            binding.shimmerFrameLayout.visibility = View.GONE
-                            binding.recyclerviewOptions.visibility = View.VISIBLE
-                            val codeState = SingletonError.code
-                            val title = SingletonError.title
-                            val subTitle = SingletonError.subTitle
-                            showCustomDialog(this@HomeActivity, title, subTitle, codeState, "Aceptar", onClickListener = {})
+                            handleServiceError()
                         }
                     }
                 }
-
             } catch (e: Exception) {
                 Timber.d("Response $e")
             }
         }
+    }
+
+    private fun displayCategories(categories: List<Any>) {
+        binding.shimmerFrameLayout.visibility = View.GONE
+        binding.recyclerviewOptions.visibility = View.VISIBLE
+        adapter = OptionsAdapter(this@HomeActivity, categories)
+        binding.recyclerviewOptions.adapter = adapter
+    }
+
+    private fun handleServiceError() {
+        binding.shimmerFrameLayout.visibility = View.GONE
+        binding.recyclerviewOptions.visibility = View.VISIBLE
+        val codeState = SingletonError.code
+        val title = SingletonError.title
+        val subTitle = SingletonError.subTitle
+        showCustomDialog(this@HomeActivity, title, subTitle, codeState, "Aceptar", onClickListener = {})
     }
 
     override fun onResume() {
