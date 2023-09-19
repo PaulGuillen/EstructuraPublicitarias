@@ -3,16 +3,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/constraint"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".view.WelcomeActivity">
+
+    <ImageView
+        android:id="@+id/image_principal"
+        android:layout_width="320dp"
+        android:layout_height="350dp"
+
+        android:background="@drawable/welcome_person"
+        android:contentDescription="@string/todo"
+        app:layout_constraintBottom_toTopOf="@+id/btnIngresar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_Top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/bienvenido_a"
+        android:textAlignment="center"
+        android:textAppearance="@style/titulosGeneral"
+        app:layout_constraintEnd_toEndOf="@+id/image_principal"
+        app:layout_constraintStart_toStartOf="@+id/image_principal"
+        app:layout_constraintTop_toBottomOf="@+id/image_principal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_marginTop="10dp"
+        android:text="@string/ingresa_al_app_de_gestion_de_trabajadores"
+        android:textAlignment="center"
+        android:textAppearance="@style/subtitulosGeneral"
+        app:layout_constraintEnd_toEndOf="@+id/text_Top"
+        app:layout_constraintStart_toStartOf="@+id/text_Top"
+        app:layout_constraintTop_toBottomOf="@+id/text_Top" />
+
+    <Button
+        android:id="@+id/btnIngresar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/ingresar"
+        android:textAllCaps="false"
+        android:textAppearance="@style/botonesGeneral"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/viewTopA"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#66000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/viewLeftA"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#66000000" />
+
+            <LinearLayout
+                android:id="@+id/customCheckboxA"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/checkBoxLabelA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A"
+                    android:textSize="18sp"
+                    tools:ignore="RtlSymmetry" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/viewRightA"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="-2dp"
+                android:background="#66000000" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/viewBottomA"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#66000000" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/viewTopB"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#66000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/viewLeftB"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#66000000" />
+
+            <LinearLayout
+                android:id="@+id/customCheckboxB"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/checkBoxLabelB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="B"
+                    android:textSize="18sp"
+                    tools:ignore="RtlSymmetry" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/viewRightB"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="-2dp"
+                android:background="#66000000" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/viewBottomB"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#66000000" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/viewTopAB"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#66000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/viewLeftAB"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#66000000" />
+
+            <LinearLayout
+                android:id="@+id/customCheckboxAB"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/checkBoxLabelTI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="AB"
+                    android:textSize="18sp"
+                    tools:ignore="RtlSymmetry" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/viewRightAB"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="-2dp"
+                android:background="#66000000" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/viewBottomAB"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#66000000" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/viewTopSI"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#66000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/viewLeftO"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#66000000" />
+
+            <LinearLayout
+                android:id="@+id/customCheckboxO"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/checkBoxLabelO"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="O"
+                    android:textSize="18sp"
+                    tools:ignore="RtlSymmetry" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/viewRightO"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="-2dp"
+                android:background="#66000000" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/viewBottomO"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#66000000" />
+
+    </LinearLayout>
+
+</LinearLayout>

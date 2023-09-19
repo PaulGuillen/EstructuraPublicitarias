@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/bg_round"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="30dp"
+    android:paddingTop="40dp"
+    android:paddingRight="30dp"
+    android:paddingBottom="40dp">
+
+    <TextView
+        android:id="@+id/titleService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20sp"
+        tools:text="Validacion Exitosa" />
+
+    <ImageView
+        android:id="@+id/imageError"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/data_not_found"
+        android:contentDescription="@string/todo" />
+
+    <TextView
+        android:id="@+id/textMessageError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:hint="@string/text_message_from_be"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnAccept"
+        style="@style/BasicMaterialButton"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/text_aceptar" />
+
+</LinearLayout>

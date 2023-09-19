@@ -6,6 +6,7 @@ plugins {
 android {
     namespace = "com.devpaul.estructurapublicitarias_roal"
     compileSdk = 33
+    flavorDimensions("environment")
 
     defaultConfig {
         applicationId = "com.devpaul.estructurapublicitarias_roal"
@@ -13,7 +14,6 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -23,6 +23,26 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    productFlavors {
+        create("prod") {
+            dimension = "environment"
+            applicationId = "com.devpaul.estructurapublicitarias_roal.prod"
+            buildConfigField("String", "BASE_URL", "\"https://nbyz455qc9.execute-api.us-east-1.amazonaws.com/prod/\"")
+        }
+
+        create("cert") {
+            dimension = "environment"
+            applicationId = "com.devpaul.estructurapublicitarias_roal.cert"
+            buildConfigField("String", "BASE_URL", "\"https://nbyz455qc9.execute-api.us-east-1.amazonaws.com/cert/\"")
+        }
+    }
+
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
