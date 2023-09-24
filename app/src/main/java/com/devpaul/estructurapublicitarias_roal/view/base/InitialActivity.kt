@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.devpaul.estructurapublicitarias_roal.R
+import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
 import com.devpaul.estructurapublicitarias_roal.domain.utils.TIME_OUT_DEFAULT
 import com.devpaul.estructurapublicitarias_roal.domain.utils.TimberFactory
 import timber.log.Timber
@@ -54,7 +55,8 @@ abstract class InitialActivity : AppCompatActivity() {
 
             val customLogoutButton = customLogoutView.findViewById<Button>(R.id.dialogButton)
             customLogoutButton.setOnClickListener {
-                isDialogShown = true // Marcar el diálogo como mostrado
+                isDialogShown = true
+                clearPreferences()
                 finish()
             }
         }
@@ -87,6 +89,11 @@ abstract class InitialActivity : AppCompatActivity() {
         super.onResume()
         onScreen = true
         showCustomLogoutView()
+    }
+
+    private fun clearPreferences() {
+        val prefs = SharedPref(this)
+        prefs.clearPreferences()
     }
 
 }

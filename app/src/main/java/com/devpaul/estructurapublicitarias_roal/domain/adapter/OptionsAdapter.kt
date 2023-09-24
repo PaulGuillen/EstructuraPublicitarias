@@ -11,11 +11,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.data.models.Options
+import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.ManagementWorkerActivity
 import com.devpaul.estructurapublicitarias_roal.view.validationepp.ValidationEPPActivity
 
-class OptionsAdapter(val context: Activity, private val categories: List<Any>) :
+class OptionsAdapter(val context: Activity, private val categories: List<Options>) :
     RecyclerView.Adapter<OptionsAdapter.OptionsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OptionsViewHolder {
@@ -31,17 +32,18 @@ class OptionsAdapter(val context: Activity, private val categories: List<Any>) :
 
         val category = categories[position] // CADA UNA DE LAS CATEGORIAS
 
-        if (category is Options) {
-            holder.textViewCategory.text = category.name
-            Glide.with(context)
-                .load(category.image)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .into(holder.imageViewCategory);
+        holder.textViewCategory.text = category.name
 
-            holder.itemView.setOnClickListener { goToProducts(category) }
-        }
+        Glide.with(context)
+            .load(category.image)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .into(holder.imageViewCategory)
+
+        holder.itemView.setOnClickListener { goToProducts(category) }
+
     }
+
 
     private fun goToProducts(options: Options) {
 

@@ -47,11 +47,6 @@ class PerfilActivity : BaseActivity() {
         clearPreferenceSaveUser()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        clearPreferenceSaveUser()
-    }
-
     private fun clearPreferenceSaveUser() {
         val prefs = SharedPref(this)
         prefs.saveData(SaveUserInSession, INACTIVE)

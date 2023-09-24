@@ -1,7 +1,6 @@
 package com.devpaul.estructurapublicitarias_roal.view.management_worker
 
 import android.app.Activity
-import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64

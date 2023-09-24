@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
+import com.devpaul.estructurapublicitarias_roal.data.models.Options
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityHomeBinding
 import com.devpaul.estructurapublicitarias_roal.domain.adapter.OptionsAdapter
@@ -101,7 +102,7 @@ class HomeActivity : BaseActivity() {
         }
     }
 
-    private fun displayCategories(categories: List<Any>) {
+    private fun displayCategories(categories: List<Options>) {
         binding.shimmerFrameLayout.visibility = View.GONE
         binding.recyclerviewOptions.visibility = View.VISIBLE
         adapter = OptionsAdapter(this@HomeActivity, categories)
