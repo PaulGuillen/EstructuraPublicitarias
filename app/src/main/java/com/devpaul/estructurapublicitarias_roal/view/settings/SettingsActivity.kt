@@ -8,7 +8,9 @@ import android.os.Bundle
 import com.devpaul.estructurapublicitarias_roal.BuildConfig
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivitySettingsBinding
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
+import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 
 @SuppressLint("SourceLockedOrientationActivity")
@@ -21,9 +23,7 @@ class SettingsActivity : BaseActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        toolbarStyle(this@SettingsActivity, binding.include.toolbar, "Ajustes")
-        setSupportActionBar(binding.include.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbarStyle(this@SettingsActivity, binding.include.toolbar, "Ajustes", true, HomeActivity::class.java)
         actionsInView()
     }
 
@@ -57,5 +57,10 @@ class SettingsActivity : BaseActivity() {
         val versionName = BuildConfig.VERSION_NAME
         val textFullVersion = getString(R.string.app_versi_n) + "\r" + versionName
         binding.version.text = textFullVersion
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startNewActivityWithBackAnimation(this@SettingsActivity, HomeActivity::class.java)
     }
 }

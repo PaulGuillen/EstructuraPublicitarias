@@ -28,6 +28,8 @@ import com.devpaul.estructurapublicitarias_roal.databinding.ActivityCreateWorker
 import com.devpaul.estructurapublicitarias_roal.domain.utils.deleteCache
 import com.devpaul.estructurapublicitarias_roal.domain.utils.isValidPhoneNumber
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showErrorAlert
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
+import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -59,11 +61,13 @@ class CreateWorkerActivity : BaseActivity() {
         binding = ActivityCreateWorkerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.include.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.black))
-        binding.include.toolbar.setTitleTextAppearance(this, R.style.titulosNavbar)
-        binding.include.toolbar.title = "Registro de trabajador"
-        setSupportActionBar(binding.include.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbarStyle(
+            this@CreateWorkerActivity,
+            binding.include.toolbar,
+            "Registro de trabajador",
+            true,
+            ManagementWorkerActivity::class.java
+        )
 
         binding.btnRegistrarTrabajador.setOnClickListener { creatingWorkers() }
         binding.imageViewUser.setOnClickListener { selectImage() }
@@ -500,6 +504,11 @@ class CreateWorkerActivity : BaseActivity() {
             error.printStackTrace()
             "Ha ocurrido un error"
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startNewActivityWithBackAnimation(this@CreateWorkerActivity, ManagementWorkerActivity::class.java)
     }
 
 }

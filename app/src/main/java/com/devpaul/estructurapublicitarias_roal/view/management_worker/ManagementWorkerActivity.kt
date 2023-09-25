@@ -23,8 +23,11 @@ import com.devpaul.estructurapublicitarias_roal.databinding.ActivityManagementWo
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.WorkerUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
+import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +48,13 @@ class ManagementWorkerActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityManagementWorkerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        toolbarStyle(this@ManagementWorkerActivity, binding.include.toolbar, "Mantenimiento de Trabajadores")
+        toolbarStyle(
+            this@ManagementWorkerActivity,
+            binding.include.toolbar,
+            "Mantenimiento de Trabajadores",
+            true,
+            HomeActivity::class.java
+        )
         binding.fabWorkerCreate.setOnClickListener { goToWorkerCreate() }
         binding.cardViewWorker.btnDeleteWorker.setOnClickListener { deleteWorker() }
         binding.cardViewWorker.btnUpdateWorker.setOnClickListener { goToUpdateWorkers() }
@@ -197,8 +206,7 @@ class ManagementWorkerActivity : BaseActivity() {
     }
 
     private fun goToWorkerCreate() {
-        val i = Intent(this, CreateWorkerActivity::class.java)
-        startActivity(i)
+        startNewActivityWithAnimation(this@ManagementWorkerActivity, CreateWorkerActivity::class.java)
     }
 
     private fun goToUpdateWorkers() {
@@ -219,4 +227,8 @@ class ManagementWorkerActivity : BaseActivity() {
         `in`.hideSoftInputFromWindow(binding.searchBox.windowToken, 0)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startNewActivityWithBackAnimation(this@ManagementWorkerActivity, HomeActivity::class.java)
+    }
 }

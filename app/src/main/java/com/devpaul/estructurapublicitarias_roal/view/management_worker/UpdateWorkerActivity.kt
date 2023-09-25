@@ -20,6 +20,7 @@ import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityUpdateWorkerBinding
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.textfield.TextInputEditText
@@ -43,9 +44,7 @@ class UpdateWorkerActivity : BaseActivity() {
         binding = ActivityUpdateWorkerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        toolbarStyle(this@UpdateWorkerActivity, binding.include.toolbar, "Actualización de datos")
-        setSupportActionBar(binding.include.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbarStyle(this@UpdateWorkerActivity, binding.include.toolbar, "Actualización de datos",true,ManagementWorkerActivity::class.java)
         gettingDataPerUser()
         binding.imageViewUser.setOnClickListener { selectImage() }
         binding.btnActualizarData.setOnClickListener {
@@ -297,5 +296,9 @@ class UpdateWorkerActivity : BaseActivity() {
             error.printStackTrace()
             "Ha ocurrido un error"
         }
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startNewActivityWithBackAnimation(this@UpdateWorkerActivity, ManagementWorkerActivity::class.java)
     }
 }

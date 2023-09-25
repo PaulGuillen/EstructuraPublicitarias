@@ -19,24 +19,25 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.devpaul.estructurapublicitarias_roal.R
 import java.io.File
 
-
-fun toolbarStyle(context: Context, toolbar: Toolbar, title: String, activeToolbar: Boolean? = null) {
-    configureToolbar(context as AppCompatActivity, toolbar, title, activeToolbar)
+fun toolbarStyle(context: Context, toolbar: Toolbar, title: String, activeToolbar: Boolean? = null, targetActivity: Class<*>? = null) {
+    targetActivity?.let { configureToolbar(context as AppCompatActivity, toolbar, title, activeToolbar, it) }
     toolbar.setTitleTextColor(ContextCompat.getColor(context, R.color.white))
     toolbar.setTitleTextAppearance(context, R.style.titulosNavbar)
 }
 
-fun configureToolbar(activity: AppCompatActivity, toolbar: Toolbar, title: String, activeToolbar: Boolean?) {
+fun configureToolbar(activity: AppCompatActivity, toolbar: Toolbar, title: String, activeToolbar: Boolean?, targetActivity: Class<*>) {
     activity.setSupportActionBar(toolbar)
     val actionBar = activity.supportActionBar
-    if (activeToolbar == false){
+    actionBar?.title = title
+    if (activeToolbar == false) {
         actionBar?.setDisplayHomeAsUpEnabled(false)
-    }else{
-        actionBar?.title = title
+    } else {
         actionBar?.setDisplayHomeAsUpEnabled(true)
         actionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
+        toolbar.setNavigationOnClickListener {
+            startNewActivityWithBackAnimation(activity, targetActivity)
+        }
     }
-
 }
 
 fun deleteCache(context: Context) {
@@ -133,24 +134,19 @@ fun showCustomDialog(
     dialog.show()
 }
 
-fun startNewActivityWithAnimation(context: Context, targetActivity: Class<*>, extras: Bundle? = null) {
+fun startNewActivityWithAnimation(context: Context, targetActivity: Class<*>, extras: Bundle? = null, clearTask: Boolean = false) {
     val intent = Intent(context, targetActivity)
     extras?.let {
         intent.putExtras(it)
     }
     val options = ActivityOptionsCompat.makeCustomAnimation(context, R.transition.slide_in, R.transition.slide_out)
+
+    if (clearTask) {
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+    }
     context.startActivity(intent, options.toBundle())
 }
 
-fun startNewActivityWithAnimationAndClearTask(context: Context, targetActivity: Class<*>, extras: Bundle? = null) {
-    val intent = Intent(context, targetActivity)
-    extras?.let {
-        intent.putExtras(it)
-    }
-    val options = ActivityOptionsCompat.makeCustomAnimation(context, R.transition.slide_in, R.transition.slide_out)
-    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-    context.startActivity(intent, options.toBundle())
-}
 
 fun startNewActivityWithBackAnimation(context: Context, targetActivity: Class<*>) {
     val intent = Intent(context, targetActivity)

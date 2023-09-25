@@ -13,7 +13,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 import com.devpaul.estructurapublicitarias_roal.domain.utils.isEmailValid
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialog
-import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimationAndClearTask
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -108,10 +108,10 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun goToHomeDashboard() {
-        startNewActivityWithAnimationAndClearTask(this@LoginActivity, HomeActivity::class.java)
+        startNewActivityWithAnimation(this@LoginActivity, HomeActivity::class.java,null,true)
     }
 
     private fun gotToForgotPasswordView() {
-        startNewActivityWithAnimationAndClearTask(this@LoginActivity, ForgotPasswordActivity::class.java)
+        startNewActivityWithAnimation(this@LoginActivity, ForgotPasswordActivity::class.java,null,true)
     }
 }

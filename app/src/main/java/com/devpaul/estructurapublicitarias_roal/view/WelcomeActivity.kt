@@ -8,7 +8,7 @@ import com.devpaul.estructurapublicitarias_roal.databinding.ActivityMainBinding
 import com.devpaul.estructurapublicitarias_roal.domain.utils.ACTIVE
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SaveUserInSession
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
-import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimationAndClearTask
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 
 class WelcomeActivity : BaseActivity() {
@@ -21,7 +21,7 @@ class WelcomeActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.btnIngresar.setOnClickListener {
-            startNewActivityWithAnimationAndClearTask(this@WelcomeActivity, LoginActivity::class.java)
+            startNewActivityWithAnimation(this@WelcomeActivity, LoginActivity::class.java, null, true)
         }
         validateUserInSession()
     }
@@ -35,7 +35,7 @@ class WelcomeActivity : BaseActivity() {
             binding.btnIngresar.isClickable = false
             Handler(Looper.getMainLooper()).postDelayed({
                 hideLoading()
-                startNewActivityWithAnimationAndClearTask(this@WelcomeActivity, HomeActivity::class.java)
+                startNewActivityWithAnimation(this@WelcomeActivity, HomeActivity::class.java, null, true)
             }, 5000)
         }
     }

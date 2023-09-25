@@ -9,7 +9,7 @@ import com.devpaul.estructurapublicitarias_roal.data.repository.LoginRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityForgotPasswordBinding
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialog
-import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimationAndClearTask
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import kotlinx.coroutines.CoroutineScope
@@ -87,7 +87,7 @@ class ForgotPasswordActivity : BaseActivity() {
         val extras = Bundle()
         val email = binding.textEmail.text.toString()
         extras.putString("email", email)
-        startNewActivityWithAnimationAndClearTask(this@ForgotPasswordActivity, CodeVerificationActivity::class.java, extras)
+        startNewActivityWithAnimation(this@ForgotPasswordActivity, CodeVerificationActivity::class.java, extras)
     }
 
     private fun backView() {

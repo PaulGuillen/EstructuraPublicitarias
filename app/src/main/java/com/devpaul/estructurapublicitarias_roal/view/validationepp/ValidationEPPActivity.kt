@@ -15,8 +15,10 @@ import com.devpaul.estructurapublicitarias_roal.data.models.response.ErrorModel
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
 import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityValidationEppactivityBinding
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
+import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.gson.Gson
@@ -43,11 +45,7 @@ class ValidationEPPActivity : BaseActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = ActivityValidationEppactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        toolbarStyle(this@ValidationEPPActivity,binding.include.toolbar, "Validación EPP")
-        setSupportActionBar(binding.include.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        toolbarStyle(this@ValidationEPPActivity, binding.include.toolbar, "Validación EPP", true, HomeActivity::class.java)
         binding.imagePhoto.setOnClickListener { selectImage() }
     }
 
@@ -61,25 +59,26 @@ class ValidationEPPActivity : BaseActivity() {
                     )
                     workersProvider.validationEPP(user)?.enqueue(object : Callback<ResponseHttp> {
                         override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
-                            if (response.isSuccessful){
+                            if (response.isSuccessful) {
                                 hideLoading()
-                                if (response.code() == 200){
+                                if (response.code() == 200) {
                                     Timber.d("ResponseValidation $response")
                                 }
-                            }else{
+                            } else {
                                 hideLoading()
                                 val errorBody = response.errorBody()?.string()
                                 val statusResponse = Gson().fromJson(errorBody, ErrorModel::class.java)
 
-                                if (statusResponse.code == 400){
+                                if (statusResponse.code == 400) {
 
                                     statusResponse.requiredEquipment?.let { requiredEquipment ->
-                                        Toast.makeText(this@ValidationEPPActivity,"Necesario : $requiredEquipment",Toast.LENGTH_LONG).show()
+                                        Toast.makeText(this@ValidationEPPActivity, "Necesario : $requiredEquipment", Toast.LENGTH_LONG)
+                                            .show()
                                     }
 
                                     Timber.d("ResponseValidation error $statusResponse")
 
-                                }else{
+                                } else {
                                     Timber.d("ResponseValidation error $statusResponse")
                                 }
                             }
@@ -99,10 +98,10 @@ class ValidationEPPActivity : BaseActivity() {
             dataResult(result)
         }
 
-    private fun dataResult(result : ActivityResult){
+    private fun dataResult(result: ActivityResult) {
         val resultCode = result.resultCode
         val data = result.data
-        when(resultCode) {
+        when (resultCode) {
             Activity.RESULT_OK -> {
                 val fileUri = data?.data
                 imageFile = fileUri?.path?.let { File(it) }
@@ -110,10 +109,12 @@ class ValidationEPPActivity : BaseActivity() {
                 showLoading()
                 sendImageToBE()
             }
+
             ImagePicker.RESULT_ERROR -> {
                 hideLoading()
                 /**Causistica a contemplar**/
             }
+
             else -> {
                 /**Si se cierra la vista*/
             }
@@ -136,5 +137,10 @@ class ValidationEPPActivity : BaseActivity() {
             error.printStackTrace() // This exception always occurs
             "Ha ocurrido un error"
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startNewActivityWithBackAnimation(this@ValidationEPPActivity,HomeActivity::class.java)
     }
 }

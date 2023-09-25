@@ -12,7 +12,7 @@ import com.devpaul.estructurapublicitarias_roal.data.repository.LoginRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityCodeVerificationBinding
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialog
-import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimationAndClearTask
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import kotlinx.coroutines.CoroutineScope
@@ -180,11 +180,16 @@ class CodeVerificationActivity : BaseActivity() {
         val extras = Bundle()
         val email = intent.getStringExtra("email")
         extras.putString("email", email)
-        startNewActivityWithAnimationAndClearTask(this@CodeVerificationActivity , NewPasswordActivity::class.java, extras)
+        startNewActivityWithAnimation(this@CodeVerificationActivity, NewPasswordActivity::class.java, extras, true)
     }
 
     private fun backView() {
         countDownTimer?.cancel()
         startNewActivityWithBackAnimation(this@CodeVerificationActivity, ForgotPasswordActivity::class.java)
+    }
+
+    override fun onBackPressed() {
+        onBackPressedDispatcher.onBackPressed()
+        backView()
     }
 }

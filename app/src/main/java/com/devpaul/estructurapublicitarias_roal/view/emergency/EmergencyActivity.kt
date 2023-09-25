@@ -29,6 +29,8 @@ import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityEmergencyBinding
 import com.devpaul.estructurapublicitarias_roal.domain.utils.deleteCache
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
+import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.google.zxing.integration.android.IntentIntegrator
 import java.io.File
@@ -47,10 +49,7 @@ class EmergencyActivity : BaseActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = ActivityEmergencyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, "Emergencia")
-        setSupportActionBar(binding.include.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, "Busquedad por DNI", true, HomeActivity::class.java)
         binding.btnSearchByDNI.setOnClickListener { searchingByDNI() }
         binding.btnSearchByPhoto.setOnClickListener { searchingByPhoto() }
         binding.btnSearchByQR.setOnClickListener { searchingByQR() }
@@ -108,7 +107,6 @@ class EmergencyActivity : BaseActivity() {
     }
 
     private fun searchingByDNI() {
-        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, "Busquedad por DNI")
         binding.searchBox.visibility = View.VISIBLE
         binding.linearLayoutNoDataFound.visibility = View.GONE
         binding.imagePhoto.visibility = View.GONE
@@ -117,7 +115,7 @@ class EmergencyActivity : BaseActivity() {
     }
 
     private fun searchingByPhoto() {
-        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, "Busquedad por FOTO")
+        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, "Busquedad por FOTO", true, HomeActivity::class.java)
         binding.searchBox.visibility = View.GONE
         binding.imagePhoto.visibility = View.VISIBLE
         binding.linearLayoutNoDataFound.visibility = View.GONE
@@ -126,7 +124,7 @@ class EmergencyActivity : BaseActivity() {
     }
 
     private fun searchingByQR() {
-        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, "Busquedad por QR")
+        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, "Busquedad por QR", true, HomeActivity::class.java)
         binding.searchBox.visibility = View.GONE
         binding.imagePhoto.visibility = View.GONE
         binding.linearLayoutNoDataFound.visibility = View.GONE
@@ -303,6 +301,11 @@ class EmergencyActivity : BaseActivity() {
             error.printStackTrace() // This exception always occurs
             "Ha ocurrido un error"
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startNewActivityWithBackAnimation(this@EmergencyActivity, HomeActivity::class.java)
     }
 
 }

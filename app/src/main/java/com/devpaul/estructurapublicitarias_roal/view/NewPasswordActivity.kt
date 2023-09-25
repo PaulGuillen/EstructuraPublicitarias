@@ -9,7 +9,7 @@ import com.devpaul.estructurapublicitarias_roal.data.repository.LoginRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityNewPasswordBinding
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialog
-import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimationAndClearTask
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import kotlinx.coroutines.CoroutineScope
@@ -94,7 +94,7 @@ class NewPasswordActivity : BaseActivity() {
     }
 
     private fun goToHomeDashboard() {
-        startNewActivityWithAnimationAndClearTask(this@NewPasswordActivity, LoginActivity::class.java)
+        startNewActivityWithAnimation(this@NewPasswordActivity, LoginActivity::class.java, null, true)
     }
 
     private fun backView() {
