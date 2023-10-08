@@ -35,32 +35,31 @@ abstract class InitialActivity : AppCompatActivity() {
         try {
             handler = Handler(Looper.getMainLooper())
             runnable = Runnable {
-                run {
-                    if (!isFinishing) {
-                        scan = false
-                        showCustomLogoutView()
-                    }
+                if (!isFinishing) {
+                    scan = false
+                    showCustomLogoutView()
                 }
             }
         } catch (ex: Exception) {
-            Timber.e(ex, "Something happen when trying to show `EndSession` dialog")
+            Timber.e(ex, "Something happened when trying to show `EndSession` dialog")
         }
     }
 
     private fun showCustomLogoutView() {
-        if (!isDialogShown && !scan && onScreen) {
+        if (!scan && onScreen && !isDialogShown) {
+            isDialogShown = true
             val customLogoutView = layoutInflater.inflate(R.layout.dialog_end_session, null)
             val rootView = findViewById<ViewGroup>(android.R.id.content)
             rootView.addView(customLogoutView)
 
             val customLogoutButton = customLogoutView.findViewById<Button>(R.id.dialogButton)
             customLogoutButton.setOnClickListener {
-                isDialogShown = true
                 clearPreferences()
                 finish()
             }
         }
     }
+
 
     override fun onUserInteraction() {
         super.onUserInteraction()
@@ -84,12 +83,14 @@ abstract class InitialActivity : AppCompatActivity() {
         isDialogShown = false
     }
 
-
     override fun onResume() {
         super.onResume()
         onScreen = true
-        showCustomLogoutView()
+        if (!isDialogShown) {
+            showCustomLogoutView()
+        }
     }
+
 
     private fun clearPreferences() {
         val prefs = SharedPref(this)
