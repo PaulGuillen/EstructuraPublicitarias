@@ -56,7 +56,7 @@ class LoginActivity : BaseActivity() {
                         hideLoading()
                         when (requestLoginService) {
                             is CustomResult.OnSuccess -> {
-                                val datas = requestLoginService.data
+                                val data = requestLoginService.data
                                 validateUserInSession()
                                 goToHomeDashboard()
                             }

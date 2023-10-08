@@ -4,8 +4,10 @@
 /.idea/caches
 .idea/sonarlint/issuestore
 .idea/sonarlint/securityhotspotstore
-.idea
 .idea/deploymentTargetDropDown.xml
+.idea/sonarlint/issuestore/index.pb
+.idea/sonarlint/securityhotspotstore/index.pb
+.idea
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
