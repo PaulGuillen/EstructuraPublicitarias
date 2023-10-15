@@ -31,7 +31,4 @@ class WorkersProvider {
         return workersRoutes?.consultByPhoto(workerUser)
     }
 
-    fun validationEPP(workerUser : WorkersResponse): Call<ResponseHttp>? {
-        return workersRoutes?.validationEPP(workerUser)
-    }
 }

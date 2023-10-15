@@ -1,7 +1,9 @@
 package com.devpaul.estructurapublicitarias_roal.data.routes
 
+import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidationEPPRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.response.OptionsResponse
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
+import com.devpaul.estructurapublicitarias_roal.data.models.response.ValidationEPPResponse
 import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -32,13 +34,13 @@ interface ApiConfig {
         @Path("dni") dni: String
     ): Call<ResponseHttp>
 
-    @POST("get_data_from_photo")
+    @POST("getDataFromPhoto")
     fun consultByPhoto(
         @Body workerUser: WorkersResponse
     ): Call<WorkersResponse>
 
-    @POST("validate_epp")
+    @POST("validateEPP")
     fun validationEPP(
-        @Body workerUser: WorkersResponse
-    ): Call<ResponseHttp>
+        @Body validationRequest: ValidationEPPRequest
+    ): Call<ValidationEPPResponse>
 }

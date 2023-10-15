@@ -19,8 +19,7 @@ abstract class InitialActivity : AppCompatActivity() {
     private var timeOutApp = TIME_OUT_DEFAULT
     private var scan = true
     private var onScreen = true
-    private var isDialogShown = false
-
+    private var isShowDialog = false
     private val logoutRunnable = Runnable {
         showCustomLogoutView()
     }
@@ -28,6 +27,7 @@ abstract class InitialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initTimer()
+        startHandler()
         TimberFactory.setupOnDebug()
     }
 
@@ -46,8 +46,8 @@ abstract class InitialActivity : AppCompatActivity() {
     }
 
     private fun showCustomLogoutView() {
-        if (!scan && onScreen && !isDialogShown) {
-            isDialogShown = true
+        if (!scan && onScreen) {
+            isShowDialog = true
             val customLogoutView = layoutInflater.inflate(R.layout.dialog_end_session, null)
             val rootView = findViewById<ViewGroup>(android.R.id.content)
             rootView.addView(customLogoutView)
@@ -79,14 +79,14 @@ abstract class InitialActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+        isShowDialog = false
         onScreen = false
-        isDialogShown = false
     }
 
     override fun onResume() {
         super.onResume()
         onScreen = true
-        if (!isDialogShown) {
+        if (!scan && !isShowDialog){
             showCustomLogoutView()
         }
     }

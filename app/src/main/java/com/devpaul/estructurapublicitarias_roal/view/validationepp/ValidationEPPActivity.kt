@@ -2,32 +2,31 @@ package com.devpaul.estructurapublicitarias_roal.view.validationepp
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Dialog
 import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
-import android.widget.Toast
+import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
-import com.devpaul.estructurapublicitarias_roal.data.models.response.ErrorModel
-import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
-import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
+import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidationEPPRequest
+import com.devpaul.estructurapublicitarias_roal.data.repository.ValidationEPPRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityValidationEppactivityBinding
+import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
+import com.devpaul.estructurapublicitarias_roal.domain.usecases.ValidationEPPUseCase
+import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
+import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialog
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
-import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -36,10 +35,7 @@ import java.io.IOException
 class ValidationEPPActivity : BaseActivity() {
 
     lateinit var binding: ActivityValidationEppactivityBinding
-    private var progressDialog: Dialog? = null
-    var imageFile: File? = null
-    var workersProvider = WorkersProvider()
-
+    private var imageFile: File? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -50,47 +46,63 @@ class ValidationEPPActivity : BaseActivity() {
     }
 
     private fun sendImageToBE() {
+        showLoading()
         CoroutineScope(Dispatchers.Default).launch {
-            startImageForResult.let {
-                imageFile?.let {
-                    val imageInBase64 = getBase64ForUriAndPossiblyCrash(it.toUri())
-                    val user = WorkersResponse(
-                        photo = imageInBase64
-                    )
-                    workersProvider.validationEPP(user)?.enqueue(object : Callback<ResponseHttp> {
-                        override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
-                            if (response.isSuccessful) {
-                                hideLoading()
-                                if (response.code() == 200) {
-                                    Timber.d("ResponseValidation $response")
+            try {
+                startImageForResult.let {
+                    imageFile?.let {
+                        val imageInBase64 = getBase64ForUriAndPossiblyCrash(it.toUri())
+                        val validateEPP = ValidationEPPRequest().apply {
+                            photo = imageInBase64
+                        }
+
+                        val validateEPPRepository = ValidationEPPRepository()
+                        val validateUseCase = ValidationEPPUseCase(this@ValidationEPPActivity, validateEPPRepository)
+                        val requestValidateEPPService = validateUseCase.validateEPP(validateEPP)
+
+                        withContext(Dispatchers.Main) {
+
+                            hideLoading()
+                            hideViewItems()
+
+                            when (requestValidateEPPService) {
+                                is CustomResult.OnSuccess -> {
+                                    val data = requestValidateEPPService.data
                                 }
-                            } else {
-                                hideLoading()
-                                val errorBody = response.errorBody()?.string()
-                                val statusResponse = Gson().fromJson(errorBody, ErrorModel::class.java)
 
-                                if (statusResponse.code == 400) {
+                                is CustomResult.OnError -> {
 
-                                    statusResponse.requiredEquipment?.let { requiredEquipment ->
-                                        Toast.makeText(this@ValidationEPPActivity, "Necesario : $requiredEquipment", Toast.LENGTH_LONG)
-                                            .show()
+                                    val codeState = SingletonError.code
+                                    val titleState = SingletonError.title
+                                    val subTitleState = if (SingletonError.subTitle.isNullOrEmpty()) {
+                                        "No data"
+                                    } else {
+                                        SingletonError.subTitle
                                     }
 
-                                    Timber.d("ResponseValidation error $statusResponse")
-
-                                } else {
-                                    Timber.d("ResponseValidation error $statusResponse")
+                                    showCustomDialog(
+                                        this@ValidationEPPActivity,
+                                        titleState,
+                                        subTitleState,
+                                        codeState,
+                                        "Aceptar",
+                                        onClickListener = {})
                                 }
                             }
                         }
 
-                        override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
-                            hideLoading()
-                        }
-                    })
+                    }
                 }
+            } catch (e: Exception) {
+                Timber.d("Response $e")
             }
+
         }
+    }
+
+    private fun hideViewItems(){
+        binding.centeredImage.visibility = View.GONE
+        binding.subtitleImage.visibility = View.GONE
     }
 
     private val startImageForResult =
@@ -106,7 +118,6 @@ class ValidationEPPActivity : BaseActivity() {
                 val fileUri = data?.data
                 imageFile = fileUri?.path?.let { File(it) }
                 binding.imagePhoto.setImageURI(fileUri)
-                showLoading()
                 sendImageToBE()
             }
 
@@ -141,6 +152,6 @@ class ValidationEPPActivity : BaseActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        startNewActivityWithBackAnimation(this@ValidationEPPActivity,HomeActivity::class.java)
+        startNewActivityWithBackAnimation(this@ValidationEPPActivity, HomeActivity::class.java)
     }
 }

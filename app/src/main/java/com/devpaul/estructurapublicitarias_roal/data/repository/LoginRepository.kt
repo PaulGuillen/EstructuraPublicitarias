@@ -20,7 +20,6 @@ class LoginRepository : LoginRepositoryNetwork {
         val api = ApiRoutes()
         apiConfig = api.getMainUserRoutes()
     }
-
     override fun getMainUser(mainUser: MainUser): CustomResult<PrincipalUser> {
         val serviceTitle = "Error en el MS getMainUser"
         try {
@@ -68,6 +67,7 @@ class LoginRepository : LoginRepositoryNetwork {
             )
         }
     }
+
 
     override fun forgotPassword(mainUser: MainUser): CustomResult<PrincipalUser> {
         val serviceTitle = "Error en el MS recoveryPassword"
