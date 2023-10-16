@@ -1,7 +1,13 @@
 package com.devpaul.estructurapublicitarias_roal.data.models
 
-class ValidationEPP(
+data class ValidationEPP(
     var code: Int? = null,
     var message: String? = null,
-    var requiredEquipment: String? = null,
+    var area: String? = null,
+    var requiredEquipment: List<EquipmentItem>? = null
+)
+
+data class EquipmentItem(
+    var key: String? = null,
+    var value: Boolean? = null
 )

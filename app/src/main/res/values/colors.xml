@@ -17,7 +17,7 @@
     <color name="gray_light">#F5F5F5</color>
     <item name="indigo" type="color">#303F9F</item>
     <item name="red" type="color">#D4034A</item>
-    <item name="red_light" type="color">#ec446c </item>
+    <item name="red_light" type="color">#ec446c</item>
     <color name="unchecked_color">#FF0000</color>
 
     <color name="colorGrey">#dddddd</color>
@@ -29,6 +29,10 @@
     <color name="viewfinder_laser">#ff7FFF00</color>
     <color name="viewfinder_mask">#607CFC00</color>
     <color name="possible_result_points">#c07FFF00</color>
+    <color name="green_checked">#A8DF8E</color>
 
     <color name="transparent">#00000000</color>
+    <color name="principal_yellow">#fbd760</color>
+
+
 </resources>

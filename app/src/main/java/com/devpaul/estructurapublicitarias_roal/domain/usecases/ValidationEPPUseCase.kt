@@ -20,12 +20,14 @@ class ValidationEPPUseCase(
                 saveValidateEPP(validateEPP.data)
             }
 
-            else -> {
+            is CustomResult.OnError -> {
                 saveValidateEPP(ValidationEPP())
             }
+
         }
         return validateEPP
     }
+
     private fun saveValidateEPP(validateEPP: ValidationEPP) {
         if (validateEPP.code == 200) {
             prefs.saveJsonObject("ValidateEPP", validateEPP)

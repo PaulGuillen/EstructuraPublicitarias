@@ -10,11 +10,14 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.devpaul.estructurapublicitarias_roal.R
 import java.io.File
@@ -147,10 +150,16 @@ fun startNewActivityWithAnimation(context: Context, targetActivity: Class<*>, ex
     context.startActivity(intent, options.toBundle())
 }
 
-
 fun startNewActivityWithBackAnimation(context: Context, targetActivity: Class<*>) {
     val intent = Intent(context, targetActivity)
     val options = ActivityOptionsCompat.makeCustomAnimation(context, R.transition.slide_out_reverse, R.transition.slide_in_reverse)
     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
     context.startActivity(intent, options.toBundle())
+}
+
+fun setSVGColorFromResource(imageButton: ImageButton, colorResource: Int) {
+    val color = ContextCompat.getColor(imageButton.context, colorResource)
+    val drawable = imageButton.drawable
+    DrawableCompat.setTint(drawable, color)
+    imageButton.setImageDrawable(drawable)
 }

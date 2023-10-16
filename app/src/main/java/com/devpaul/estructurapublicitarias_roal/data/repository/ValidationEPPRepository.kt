@@ -10,8 +10,9 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.HttpError
 import com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository.ValidationEPPRepositoryNetwork
 import com.devpaul.estructurapublicitarias_roal.domain.mappers.ValidationEPPMapper
+import com.google.gson.Gson
 
-class ValidationEPPRepository : ValidationEPPRepositoryNetwork{
+class ValidationEPPRepository : ValidationEPPRepositoryNetwork {
 
     private var apiConfig: ApiConfig? = null
     private var messageTimeOut = "Time Out"
@@ -23,15 +24,15 @@ class ValidationEPPRepository : ValidationEPPRepositoryNetwork{
 
     override fun validateImageEPP(validationEPP: ValidationEPPRequest): CustomResult<ValidationEPP> {
 
-        val serviceTitle = "Error en el MS validateImageEPP"
+        val serviceTitle = "Error en el MS validate EPP"
 
         try {
+
             val callApi = apiConfig?.validationEPP(validationEPP)?.execute()
+            val response: ValidationEPPResponse? = callApi?.body()
 
             return when (callApi?.isSuccessful) {
                 true -> {
-                    val response: ValidationEPPResponse? = callApi.body()
-
                     if (response != null)
                         CustomResult.OnSuccess(ValidationEPPMapper().map(response))
                     else {
@@ -41,11 +42,15 @@ class ValidationEPPRepository : ValidationEPPRepositoryNetwork{
                 }
 
                 false -> {
+                    val errorBody = callApi.errorBody()?.string()
+                    val gson = Gson()
+                    val errorResponse = gson.fromJson(errorBody, ValidationEPPResponse::class.java)
+
                     CustomResult.OnError(
                         HttpError(
                             code = callApi.code(),
                             title = serviceTitle,
-                            subtitle = callApi.message()
+                            subtitle = errorResponse.message
                         )
                     )
                 }

@@ -3,19 +3,26 @@ package com.devpaul.estructurapublicitarias_roal.view.validationepp
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.ActivityInfo
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.net.toUri
+import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidationEPPRequest
 import com.devpaul.estructurapublicitarias_roal.data.repository.ValidationEPPRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityValidationEppactivityBinding
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.ValidationEPPUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
+import com.devpaul.estructurapublicitarias_roal.domain.utils.setSVGColorFromResource
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialog
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
@@ -26,7 +33,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -43,6 +49,11 @@ class ValidationEPPActivity : BaseActivity() {
         setContentView(binding.root)
         toolbarStyle(this@ValidationEPPActivity, binding.include.toolbar, "Validación EPP", true, HomeActivity::class.java)
         binding.imagePhoto.setOnClickListener { selectImage() }
+
+
+        setSVGColorFromResource(binding.safetyHelmet, R.color.red)
+        setSVGColorFromResource(binding.safetyBoots, R.color.green_checked)
+        setSVGColorFromResource(binding.safetyGloves, R.color.green_checked)
     }
 
     private fun sendImageToBE() {
@@ -63,11 +74,11 @@ class ValidationEPPActivity : BaseActivity() {
                         withContext(Dispatchers.Main) {
 
                             hideLoading()
-                            hideViewItems()
 
                             when (requestValidateEPPService) {
                                 is CustomResult.OnSuccess -> {
                                     val data = requestValidateEPPService.data
+
                                 }
 
                                 is CustomResult.OnError -> {
@@ -100,7 +111,7 @@ class ValidationEPPActivity : BaseActivity() {
         }
     }
 
-    private fun hideViewItems(){
+    private fun hideViewItems() {
         binding.centeredImage.visibility = View.GONE
         binding.subtitleImage.visibility = View.GONE
     }
@@ -116,8 +127,11 @@ class ValidationEPPActivity : BaseActivity() {
         when (resultCode) {
             Activity.RESULT_OK -> {
                 val fileUri = data?.data
-                imageFile = fileUri?.path?.let { File(it) }
+                imageFile = fileUri?.path?.let {
+                    File(it)
+                }
                 binding.imagePhoto.setImageURI(fileUri)
+                hideViewItems()
                 sendImageToBE()
             }
 

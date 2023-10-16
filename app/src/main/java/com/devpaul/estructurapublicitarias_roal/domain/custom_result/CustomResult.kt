@@ -36,16 +36,6 @@ open class CustomError(
         return subtitle ?: ""
     }
 }
-
-open class ErrorThrowable(
-    private val code: Int? = 0,
-    private val title: String? = null,
-    private val subtitle: String? = null,
-    override val cause: Throwable? = null
-) : Throwable(subtitle, cause) {
-    fun toError(): CustomError = CustomError(code, title, subtitle)
-}
-
 class HttpError(
     code: Int? = 0,
     title: String? = null,
