@@ -14,9 +14,11 @@ open class CustomError(
     val cause: Throwable? = null,
 ) {
     private val generalMessage = "En este momento el servicio no está disponible"
+
     init {
-        if (code == 400 ||code == 401 || code == 404 || code == 503 || code == 504
-            || code == 502 || code == 408) {
+        if (code == 400 || code == 401 || code == 404 || code == 503 || code == 504
+            || code == 502 || code == 408
+        ) {
             SingletonError.subTitle = subtitle?.let {
                 it.ifEmpty {
                     generalMessage
@@ -36,6 +38,7 @@ open class CustomError(
         return subtitle ?: ""
     }
 }
+
 class HttpError(
     code: Int? = 0,
     title: String? = null,

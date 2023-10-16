@@ -24,8 +24,8 @@ import timber.log.Timber
 class CodeVerificationActivity : BaseActivity() {
 
     lateinit var binding: ActivityCodeVerificationBinding
-    var countDownTimer: CountDownTimer? = null
-    var millisUntilFinished: Long? = null
+    private var countDownTimer: CountDownTimer? = null
+    private var millisUntilFinished: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

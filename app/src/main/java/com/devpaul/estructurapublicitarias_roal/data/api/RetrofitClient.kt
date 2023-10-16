@@ -2,6 +2,7 @@ package com.devpaul.estructurapublicitarias_roal.data.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 class RetrofitClient {
 
     fun getClient(url: String): Retrofit {

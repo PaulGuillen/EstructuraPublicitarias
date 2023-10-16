@@ -86,7 +86,7 @@ abstract class InitialActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         onScreen = true
-        if (!scan && !isShowDialog){
+        if (!scan && !isShowDialog) {
             showCustomLogoutView()
         }
     }
