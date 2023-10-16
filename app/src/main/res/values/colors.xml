@@ -19,6 +19,7 @@
     <item name="red" type="color">#D4034A</item>
     <item name="red_light" type="color">#ec446c</item>
     <color name="unchecked_color">#FF0000</color>
+    <color name="color_gray_items">#F4EEEE</color>
 
     <color name="colorGrey">#dddddd</color>
 

@@ -3,19 +3,15 @@ package com.devpaul.estructurapublicitarias_roal.view.validationepp
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.ActivityInfo
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.AppCompatImageButton
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.net.toUri
 import com.devpaul.estructurapublicitarias_roal.R
+import com.devpaul.estructurapublicitarias_roal.data.models.ValidationEPP
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidationEPPRequest
 import com.devpaul.estructurapublicitarias_roal.data.repository.ValidationEPPRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityValidationEppactivityBinding
@@ -50,16 +46,14 @@ class ValidationEPPActivity : BaseActivity() {
         toolbarStyle(this@ValidationEPPActivity, binding.include.toolbar, "Validación EPP", true, HomeActivity::class.java)
         binding.imagePhoto.setOnClickListener { selectImage() }
 
-
-        setSVGColorFromResource(binding.safetyHelmet, R.color.red)
-        setSVGColorFromResource(binding.safetyBoots, R.color.green_checked)
-        setSVGColorFromResource(binding.safetyGloves, R.color.green_checked)
     }
 
     private fun sendImageToBE() {
         showLoading()
+        setDefaultColorEquipment()
         CoroutineScope(Dispatchers.Default).launch {
             try {
+
                 startImageForResult.let {
                     imageFile?.let {
                         val imageInBase64 = getBase64ForUriAndPossiblyCrash(it.toUri())
@@ -74,15 +68,13 @@ class ValidationEPPActivity : BaseActivity() {
                         withContext(Dispatchers.Main) {
 
                             hideLoading()
-
                             when (requestValidateEPPService) {
                                 is CustomResult.OnSuccess -> {
                                     val data = requestValidateEPPService.data
-
+                                    validateEquipment(data)
                                 }
 
                                 is CustomResult.OnError -> {
-
                                     val codeState = SingletonError.code
                                     val titleState = SingletonError.title
                                     val subTitleState = if (SingletonError.subTitle.isNullOrEmpty()) {
@@ -109,6 +101,39 @@ class ValidationEPPActivity : BaseActivity() {
             }
 
         }
+    }
+
+    private fun validateEquipment(data: ValidationEPP?) {
+        val requiredEquipment = data?.requiredEquipment
+
+        val elementMap = mapOf(
+            "safety helmet" to binding.safetyHelmet,
+            "safety glasses" to binding.safetyGlasses,
+            "safety gloves" to binding.safetyGloves,
+            "safety boots" to binding.safetyBoots
+        )
+
+        requiredEquipment?.forEach { item ->
+            elementMap[item.key]?.let { imageButton ->
+                val colorResource = if (item.value == false) {
+                    R.color.red
+                } else {
+                    R.color.green_checked
+                }
+                setSVGColorFromResource(imageButton, colorResource)
+            }
+        }
+
+        val presentKeys = requiredEquipment?.map { it.key } ?: emptyList()
+
+        val missingKeys = elementMap.keys - presentKeys.toSet()
+
+        missingKeys.forEach { key ->
+            elementMap[key]?.let { imageButton ->
+                setSVGColorFromResource(imageButton, R.color.black)
+            }
+        }
+
     }
 
     private fun hideViewItems() {
@@ -167,5 +192,12 @@ class ValidationEPPActivity : BaseActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         startNewActivityWithBackAnimation(this@ValidationEPPActivity, HomeActivity::class.java)
+    }
+
+    private fun setDefaultColorEquipment() {
+        setSVGColorFromResource(binding.safetyHelmet, R.color.color_gray_items)
+        setSVGColorFromResource(binding.safetyGloves, R.color.color_gray_items)
+        setSVGColorFromResource(binding.safetyGlasses, R.color.color_gray_items)
+        setSVGColorFromResource(binding.safetyBoots, R.color.color_gray_items)
     }
 }

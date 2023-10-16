@@ -159,7 +159,11 @@ fun startNewActivityWithBackAnimation(context: Context, targetActivity: Class<*>
 
 fun setSVGColorFromResource(imageButton: ImageButton, colorResource: Int) {
     val color = ContextCompat.getColor(imageButton.context, colorResource)
-    val drawable = imageButton.drawable
-    DrawableCompat.setTint(drawable, color)
-    imageButton.setImageDrawable(drawable)
+    val originalDrawable = imageButton.drawable
+    val clonedDrawable = originalDrawable.constantState?.newDrawable()
+
+    if (clonedDrawable != null) {
+        DrawableCompat.setTint(clonedDrawable, color)
+        imageButton.setImageDrawable(clonedDrawable)
+    }
 }
