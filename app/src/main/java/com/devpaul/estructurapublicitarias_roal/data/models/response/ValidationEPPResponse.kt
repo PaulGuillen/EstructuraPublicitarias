@@ -12,13 +12,26 @@ data class ValidationEPPResponse(
     @SerializedName("area")
     val area: String? = null,
 
-    @SerializedName("requiredEquipment")
-    val requiredEquipment: List<EquipmentItem>? = null
+    @SerializedName("allEquipment")
+    val allEquipment: List<AllEquipment>? = null,
+
+    @SerializedName("wearingEquipment")
+    val wearingEquipment: List<EquipmentItem>? = null
+
 ) {
     override fun toString(): String {
-        return "ValidationEPPResponse(code=$code, message=$message, area=$area, requiredEquipment=$requiredEquipment)"
+        return "ValidationEPPResponse(code=$code, message=$message, area=$area, allEquipment=$allEquipment, wearingEquipment=$wearingEquipment)"
     }
+
 }
+
+data class AllEquipment(
+    @SerializedName("key")
+    val key: String? = null,
+
+    @SerializedName("value")
+    val value: String? = null
+)
 
 data class EquipmentItem(
     @SerializedName("key")

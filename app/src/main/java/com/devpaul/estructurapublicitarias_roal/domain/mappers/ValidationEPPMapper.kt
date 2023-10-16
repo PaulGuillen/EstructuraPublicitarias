@@ -1,5 +1,6 @@
 package com.devpaul.estructurapublicitarias_roal.domain.mappers
 
+import com.devpaul.estructurapublicitarias_roal.data.models.AllEquipment
 import com.devpaul.estructurapublicitarias_roal.data.models.EquipmentItem
 import com.devpaul.estructurapublicitarias_roal.data.models.ValidationEPP
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ValidationEPPResponse
@@ -12,7 +13,14 @@ class ValidationEPPMapper {
         validationEPP.message = validationEPPResponse.message
         validationEPP.area = validationEPPResponse.area
 
-        validationEPP.requiredEquipment = validationEPPResponse.requiredEquipment?.map { item ->
+        validationEPP.allEquipment = validationEPPResponse.allEquipment?.map { item ->
+            AllEquipment(
+                key = item.key,
+                value = item.value
+            )
+        }
+
+        validationEPP.wearingEquipment = validationEPPResponse.wearingEquipment?.map { item ->
             EquipmentItem(
                 key = item.key,
                 value = item.value

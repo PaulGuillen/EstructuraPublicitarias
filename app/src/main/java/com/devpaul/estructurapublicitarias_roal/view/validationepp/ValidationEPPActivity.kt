@@ -83,8 +83,7 @@ class ValidationEPPActivity : BaseActivity() {
                                         SingletonError.subTitle
                                     }
 
-                                    showCustomDialog(
-                                        this@ValidationEPPActivity,
+                                    showCustomDialog(this@ValidationEPPActivity,
                                         titleState,
                                         subTitleState,
                                         codeState,
@@ -104,16 +103,19 @@ class ValidationEPPActivity : BaseActivity() {
     }
 
     private fun validateEquipment(data: ValidationEPP?) {
-        val requiredEquipment = data?.requiredEquipment
+        val allEquipment = data?.allEquipment
+        val wearingEquipment = data?.wearingEquipment
+
+        val helmet = allEquipment?.find { it.key.contentEquals("firstEPP") }?.value
+        val gloves = allEquipment?.find { it.key.contentEquals("secondEPP") }?.value
+        val glasses = allEquipment?.find { it.key.contentEquals("thirdEPP") }?.value
+        val boots = allEquipment?.find { it.key.contentEquals("fourthEPP") }?.value
 
         val elementMap = mapOf(
-            "safety helmet" to binding.safetyHelmet,
-            "safety glasses" to binding.safetyGlasses,
-            "safety gloves" to binding.safetyGloves,
-            "safety boots" to binding.safetyBoots
+            helmet to binding.safetyHelmet, glasses to binding.safetyGlasses, gloves to binding.safetyGloves, boots to binding.safetyBoots
         )
 
-        requiredEquipment?.forEach { item ->
+        wearingEquipment?.forEach { item ->
             elementMap[item.key]?.let { imageButton ->
                 val colorResource = if (item.value == false) {
                     R.color.red
@@ -124,7 +126,7 @@ class ValidationEPPActivity : BaseActivity() {
             }
         }
 
-        val presentKeys = requiredEquipment?.map { it.key } ?: emptyList()
+        val presentKeys = wearingEquipment?.map { it.key } ?: emptyList()
 
         val missingKeys = elementMap.keys - presentKeys.toSet()
 
@@ -172,11 +174,7 @@ class ValidationEPPActivity : BaseActivity() {
     }
 
     private fun selectImage() {
-        ImagePicker.with(this)
-            .crop()
-            .compress(1024)
-            .maxResultSize(1080, 1080)
-            .createIntent { intent -> startImageForResult.launch(intent) }
+        ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080).createIntent { intent -> startImageForResult.launch(intent) }
     }
 
     private fun getBase64ForUriAndPossiblyCrash(uri: Uri): String {
