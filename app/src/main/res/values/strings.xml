@@ -140,7 +140,11 @@
     <string name="recordar_usuario">Recordar Usuario/Contraseña</string>
     <string name="full_name">%1$s %2$s</string>
 
-    <!--ITEM CARD VIEW VALIDATE EPP-->
+    <!--ACTIVITY VALIDATE EPP-->
     <string name="title_card_view">Equipo de protección personal</string>
+    <string name="text_inside_image">Seleccione una imagen</string>
+    <string name="text_legend_equipped">Equipado</string>
+    <string name="text_legend_not_equipped">No equipado</string>
+    <string name="text_legend_not_required">No requerido</string>
 
 </resources>

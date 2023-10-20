@@ -39,7 +39,7 @@ interface ApiConfig {
         @Body workerUser: WorkersResponse
     ): Call<WorkersResponse>
 
-    @POST("https://run.mocky.io/v3/14e20727-5c01-4ea6-b52b-a75174060fb1")
+    @POST("https://run.mocky.io/v3/b3454421-a4a4-48bc-b1fb-4e3fee2dadd4")
     fun validationEPP(
         @Body validationRequest: ValidationEPPRequest
     ): Call<ValidationEPPResponse>

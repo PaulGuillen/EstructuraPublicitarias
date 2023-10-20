@@ -103,12 +103,20 @@ class ValidationEPPActivity : BaseActivity() {
         val gloves = allEquipment?.find { it.key.contentEquals("secondEPP") }?.value
         val glasses = allEquipment?.find { it.key.contentEquals("thirdEPP") }?.value
         val boots = allEquipment?.find { it.key.contentEquals("fourthEPP") }?.value
+        val harness = allEquipment?.find { it.key.contentEquals("fifthEPP") }?.value
+        val headphones = allEquipment?.find { it.key.contentEquals("sixEPP") }?.value
+        val pants = allEquipment?.find { it.key.contentEquals("sevenEPP") }?.value
+        val vest = allEquipment?.find { it.key.contentEquals("eightEPP") }?.value
 
         val elementMap = mapOf(
             helmet to binding.includeCardViewValidateEPP.safetyHelmet,
             glasses to binding.includeCardViewValidateEPP.safetyGlasses,
             gloves to binding.includeCardViewValidateEPP.safetyGloves,
-            boots to binding.includeCardViewValidateEPP.safetyBoots
+            boots to binding.includeCardViewValidateEPP.safetyBoots,
+            harness to binding.includeCardViewValidateEPP.safetyHarness,
+            headphones to binding.includeCardViewValidateEPP.safetyHeadphones,
+            pants to binding.includeCardViewValidateEPP.safetyPants,
+            vest to binding.includeCardViewValidateEPP.safetyVest,
         )
 
         wearingEquipment?.forEach { item ->
@@ -193,4 +201,5 @@ class ValidationEPPActivity : BaseActivity() {
         setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyGlasses, R.color.color_gray_items)
         setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyBoots, R.color.color_gray_items)
     }
+
 }

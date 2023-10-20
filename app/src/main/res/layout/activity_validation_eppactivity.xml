@@ -77,13 +77,15 @@
                                         android:layout_width="240dp"
                                         android:layout_height="320dp"
                                         android:contentDescription="@string/todo"
-                                        android:scaleType="fitXY" />
+                                        android:scaleType="fitXY"
+                                        tools:ignore="TooDeepLayout" />
 
                                     <ImageView
                                         android:id="@+id/centeredImage"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
+                                        android:contentDescription="@string/todo"
                                         android:src="@drawable/baseline_image_search_24" />
 
                                     <TextView
@@ -93,7 +95,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:layout_marginTop="60dp"
-                                        android:text="Seleccione una imagen"
+                                        android:text="@string/text_inside_image"
                                         android:textAlignment="center"
                                         android:textSize="14sp" />
 
@@ -119,132 +121,9 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:elevation="12dp"
-                app:cardCornerRadius="6dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="2dp"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:background="@color/light_green_primary_dark" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/mulish_bold"
-                                android:padding="6dp"
-                                android:text="Equipado"
-                                android:textAlignment="center"
-                                android:textColor="@color/light_green_primary_dark"
-                                android:textSize="14sp" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="2dp"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:background="@color/light_green_primary_dark" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="2dp"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:background="@color/red" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/mulish_bold"
-                                android:padding="6dp"
-                                android:text="No equipado"
-                                android:textAlignment="center"
-                                android:textColor="@color/red"
-                                android:textSize="14sp" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="2dp"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:background="@color/red" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="2dp"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:background="@color/black" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/mulish_bold"
-                                android:padding="6dp"
-                                android:text="No requerido"
-                                android:textAlignment="center"
-                                android:textColor="@color/black"
-                                android:textSize="14sp" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="2dp"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:background="@color/black" />¿
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
+            <include
+                android:id="@+id/includeCardViewLegend"
+                layout="@layout/item_cardview_legend_validate_epp" />
 
             <include
                 android:id="@+id/includeCardViewValidateEPP"

@@ -167,3 +167,18 @@ fun setSVGColorFromResource(imageButton: ImageButton, colorResource: Int) {
         imageButton.setImageDrawable(clonedDrawable)
     }
 }
+
+fun showImageValidateEPP(context: Context) {
+    val customDialogView = LayoutInflater.from(context).inflate(R.layout.item_image_validate_epp, null)
+
+    val dialog = AlertDialog.Builder(context)
+        .setView(customDialogView)
+        .setCancelable(true)
+        .create()
+
+    if (dialog.window != null) {
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    dialog.show()
+}
