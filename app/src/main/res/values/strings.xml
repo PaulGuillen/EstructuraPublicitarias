@@ -139,4 +139,7 @@
     <string name="text_aceptar">Aceptar</string>
     <string name="recordar_usuario">Recordar Usuario/Contraseña</string>
     <string name="full_name">%1$s %2$s</string>
+
+
+
 </resources>

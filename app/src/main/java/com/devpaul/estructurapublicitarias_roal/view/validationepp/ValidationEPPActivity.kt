@@ -17,18 +17,11 @@ import com.devpaul.estructurapublicitarias_roal.data.repository.ValidationEPPRep
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityValidationEppactivityBinding
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.ValidationEPPUseCase
-import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
-import com.devpaul.estructurapublicitarias_roal.domain.utils.setSVGColorFromResource
-import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialog
-import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
-import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
+import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -112,7 +105,10 @@ class ValidationEPPActivity : BaseActivity() {
         val boots = allEquipment?.find { it.key.contentEquals("fourthEPP") }?.value
 
         val elementMap = mapOf(
-            helmet to binding.safetyHelmet, glasses to binding.safetyGlasses, gloves to binding.safetyGloves, boots to binding.safetyBoots
+            helmet to binding.includeCardViewValidateEPP.safetyHelmet,
+            glasses to binding.includeCardViewValidateEPP.safetyGlasses,
+            gloves to binding.includeCardViewValidateEPP.safetyGloves,
+            boots to binding.includeCardViewValidateEPP.safetyBoots
         )
 
         wearingEquipment?.forEach { item ->
@@ -120,7 +116,7 @@ class ValidationEPPActivity : BaseActivity() {
                 val colorResource = if (item.value == false) {
                     R.color.red
                 } else {
-                    R.color.green_checked
+                    R.color.light_green_primary_dark
                 }
                 setSVGColorFromResource(imageButton, colorResource)
             }
@@ -135,7 +131,6 @@ class ValidationEPPActivity : BaseActivity() {
                 setSVGColorFromResource(imageButton, R.color.black)
             }
         }
-
     }
 
     private fun hideViewItems() {
@@ -193,9 +188,9 @@ class ValidationEPPActivity : BaseActivity() {
     }
 
     private fun setDefaultColorEquipment() {
-        setSVGColorFromResource(binding.safetyHelmet, R.color.color_gray_items)
-        setSVGColorFromResource(binding.safetyGloves, R.color.color_gray_items)
-        setSVGColorFromResource(binding.safetyGlasses, R.color.color_gray_items)
-        setSVGColorFromResource(binding.safetyBoots, R.color.color_gray_items)
+        setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyHelmet, R.color.color_gray_items)
+        setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyGloves, R.color.color_gray_items)
+        setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyGlasses, R.color.color_gray_items)
+        setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyBoots, R.color.color_gray_items)
     }
 }

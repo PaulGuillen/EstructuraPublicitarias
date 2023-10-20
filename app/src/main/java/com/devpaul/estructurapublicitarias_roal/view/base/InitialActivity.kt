@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.devpaul.estructurapublicitarias_roal.R
-import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
-import com.devpaul.estructurapublicitarias_roal.domain.utils.TIME_OUT_DEFAULT
-import com.devpaul.estructurapublicitarias_roal.domain.utils.TimberFactory
+import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import timber.log.Timber
 
 abstract class InitialActivity : AppCompatActivity() {
@@ -19,10 +17,6 @@ abstract class InitialActivity : AppCompatActivity() {
     private var timeOutApp = TIME_OUT_DEFAULT
     private var scan = true
     private var onScreen = true
-    private var isShowDialog = false
-    private val logoutRunnable = Runnable {
-        showCustomLogoutView()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +41,6 @@ abstract class InitialActivity : AppCompatActivity() {
 
     private fun showCustomLogoutView() {
         if (!scan && onScreen) {
-            isShowDialog = true
             val customLogoutView = layoutInflater.inflate(R.layout.dialog_end_session, null)
             val rootView = findViewById<ViewGroup>(android.R.id.content)
             rootView.addView(customLogoutView)
@@ -59,7 +52,6 @@ abstract class InitialActivity : AppCompatActivity() {
             }
         }
     }
-
 
     override fun onUserInteraction() {
         super.onUserInteraction()
@@ -79,18 +71,14 @@ abstract class InitialActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        isShowDialog = false
         onScreen = false
     }
 
     override fun onResume() {
         super.onResume()
         onScreen = true
-        if (!scan && !isShowDialog) {
-            showCustomLogoutView()
-        }
+        showCustomLogoutView()
     }
-
 
     private fun clearPreferences() {
         val prefs = SharedPref(this)

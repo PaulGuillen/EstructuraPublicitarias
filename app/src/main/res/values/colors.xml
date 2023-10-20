@@ -31,6 +31,8 @@
     <color name="viewfinder_mask">#607CFC00</color>
     <color name="possible_result_points">#c07FFF00</color>
     <color name="green_checked">#A8DF8E</color>
+    <color name="light_green_primary">#8BC34A</color>
+    <color name="light_green_primary_dark">#689F38</color>
 
     <color name="transparent">#00000000</color>
     <color name="principal_yellow">#fbd760</color>
