@@ -20,14 +20,16 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/mulish_bold"
             android:padding="6dp"
-            android:text="Equipo de proteccion personal"
+            android:text="@string/title_card_view"
             android:textAlignment="center"
             android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -41,6 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/transparent"
+                    android:contentDescription="@string/todo"
                     app:srcCompat="@drawable/safety_helmet" />
 
             </LinearLayout>
@@ -57,6 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/transparent"
+                    android:contentDescription="@string/todo"
                     app:srcCompat="@drawable/safety_boots" />
 
             </LinearLayout>
@@ -73,6 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/transparent"
+                    android:contentDescription="@string/todo"
                     app:srcCompat="@drawable/safety_glasses" />
 
             </LinearLayout>
@@ -89,7 +94,85 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/transparent"
+                    android:contentDescription="@string/todo"
                     app:srcCompat="@drawable/safety_gloves" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/safety_harness"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/transparent"
+                    android:contentDescription="@string/todo"
+                    app:srcCompat="@drawable/safety_harness" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/safety_pants"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/transparent"
+                    android:contentDescription="@string/todo"
+                    app:srcCompat="@drawable/safety_pants" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/safety_headphones"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/transparent"
+                    android:contentDescription="@string/todo"
+                    app:srcCompat="@drawable/safety_headphones" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/safety_vest"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/transparent"
+                    android:contentDescription="@string/todo"
+                    app:srcCompat="@drawable/safety_vest" />
 
             </LinearLayout>
 

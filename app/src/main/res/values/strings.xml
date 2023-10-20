@@ -140,6 +140,7 @@
     <string name="recordar_usuario">Recordar Usuario/Contraseña</string>
     <string name="full_name">%1$s %2$s</string>
 
-
+    <!--ITEM CARD VIEW VALIDATE EPP-->
+    <string name="title_card_view">Equipo de protección personal</string>
 
 </resources>
