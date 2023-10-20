@@ -16,6 +16,10 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -27,12 +31,19 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.R
+import com.devpaul.estructurapublicitarias_roal.data.models.Worker
+import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityEmergencyBinding
+import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
+import com.devpaul.estructurapublicitarias_roal.domain.usecases.WorkerUseCase
+import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 import com.devpaul.estructurapublicitarias_roal.domain.utils.deleteCache
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.google.zxing.integration.android.IntentIntegrator
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
 
@@ -136,7 +147,6 @@ class EmergencyActivity : BaseActivity() {
         binding.searchBox.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val dni = binding.searchBox.text.toString()
-                showLoading()
                 getWorkers(dni)
                 performSearch()
             }
@@ -145,67 +155,88 @@ class EmergencyActivity : BaseActivity() {
     }
 
     private fun getWorkers(dni: String) {
-        workersProvider.getWorkers(dni)?.enqueue(object : Callback<WorkersResponse> {
-            override fun onResponse(call: Call<WorkersResponse>, response: Response<WorkersResponse>) {
-                if (response.body() != null) {
+        showLoading()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val workersRepository = WorkersRepository()
+                val workerUseCase = WorkerUseCase(this@EmergencyActivity, workersRepository)
+                val serviceWorker = workerUseCase.getWorkers(dni)
+                withContext(Dispatchers.Main) {
                     hideLoading()
-                    binding.linearDNI.visibility = View.VISIBLE
-                    binding.linearLayoutNoDataFound.visibility = View.GONE
+                    when (serviceWorker) {
+                        is CustomResult.OnSuccess -> {
+                            val data = serviceWorker.data
+                            hideLoading()
+                            showData(data)
+                        }
 
-                    /**Data base*/
-                    val textIdentification = response.body()?.dni
-                    val textName = response.body()?.name
-                    val textLastName = response.body()?.lastname
-                    val textFullName = "$textName $textLastName"
-
-                    /**Celulares*/
-                    val textPrincipalPhone = response.body()?.phone
-                    val textSecondaryPhone = response.body()?.phoneEmergency
-
-                    val textArea = response.body()?.area
-                    val textDateBirth = response.body()?.dateBirth
-                    val textJoinDate = response.body()?.dateJoin
-                    val textBloodType = response.body()?.bloodType
-                    val textDiseases = response.body()?.diseases
-                    val textAllergies = response.body()?.allergies
-
-                    if (textAllergies.isNullOrEmpty()) {
-                        binding.textAllergies.text = "No alergías"
-                    } else {
-                        binding.textAllergies.text = textAllergies
+                        is CustomResult.OnError -> {
+                            val codeState = SingletonError.code
+                            hideLoading()
+                            dismissData(codeState ?: 408)
+                        }
                     }
-                    if (textDiseases.isNullOrEmpty()) {
-                        binding.textDiseases.text = "No enfermedades"
-                    } else {
-                        binding.textDiseases.text = textDiseases
-                    }
-                    if (textBloodType.isNullOrEmpty()) {
-                        binding.textBloodType.text = "No grupo"
-                    } else {
-                        binding.textBloodType.text = textBloodType
-                    }
-
-                    binding.textDNI.text = textIdentification
-                    binding.textFullName.text = textFullName
-                    binding.textArea.text = textArea
-                    binding.textBornDate.text = textDateBirth
-                    binding.textJoinDate.text = textJoinDate
-                    binding.textPrincipal.text = textPrincipalPhone
-                    binding.textSecondary.text = textSecondaryPhone
-
-                } else {
-                    hideLoading()
-                    binding.linearDNI.visibility = View.GONE
-                    binding.linearLayoutNoDataFound.visibility = View.VISIBLE
-                    clearForm()
                 }
+
+            } catch (e: Exception) {
+                Timber.d("Response $e")
             }
 
-            override fun onFailure(call: Call<WorkersResponse>, t: Throwable) {
-                hideLoading()
-                Toast.makeText(this@EmergencyActivity, "Error: ${t.message}", Toast.LENGTH_LONG).show()
-            }
-        })
+        }
+    }
+
+    private fun showData(worker: Worker?) {
+
+        binding.linearDNI.visibility = View.VISIBLE
+        binding.linearLayoutNoDataFound.visibility = View.GONE
+
+        /**Data base*/
+        val textIdentification = worker?.dni
+        val textName = worker?.name
+        val textLastName = worker?.lastname
+        val textFullName = "$textName $textLastName"
+
+        /**Celulares*/
+        val textPrincipalPhone = worker?.phone
+        val textSecondaryPhone = worker?.phoneEmergency
+
+        val textArea = worker?.area
+        val textDateBirth = worker?.dateBirth
+        val textJoinDate = worker?.dateJoin
+        val textBloodType = worker?.bloodType
+        val textDiseases = worker?.diseases
+        val textAllergies = worker?.allergies
+
+        if (textAllergies.isNullOrEmpty()) {
+            binding.textAllergies.text = "No alergías"
+        } else {
+            binding.textAllergies.text = textAllergies
+        }
+        if (textDiseases.isNullOrEmpty()) {
+            binding.textDiseases.text = "No enfermedades"
+        } else {
+            binding.textDiseases.text = textDiseases
+        }
+        if (textBloodType.isNullOrEmpty()) {
+            binding.textBloodType.text = "No grupo"
+        } else {
+            binding.textBloodType.text = textBloodType
+        }
+
+        binding.textDNI.text = textIdentification
+        binding.textFullName.text = textFullName
+        binding.textArea.text = textArea
+        binding.textBornDate.text = textDateBirth
+        binding.textJoinDate.text = textJoinDate
+        binding.textPrincipal.text = textPrincipalPhone
+        binding.textSecondary.text = textSecondaryPhone
+
+    }
+
+    private fun dismissData(codState: Int) {
+        binding.linearDNI.visibility = View.GONE
+        binding.linearLayoutNoDataFound.visibility = View.VISIBLE
+        clearForm()
     }
 
     private fun sendImageToBE() {
