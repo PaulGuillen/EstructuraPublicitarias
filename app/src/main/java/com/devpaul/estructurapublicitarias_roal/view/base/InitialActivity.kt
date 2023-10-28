@@ -77,7 +77,6 @@ abstract class InitialActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         onScreen = true
-        showCustomLogoutView()
     }
 
     private fun clearPreferences() {

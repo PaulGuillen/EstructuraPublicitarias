@@ -16,10 +16,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
-import com.bumptech.glide.Glide
-import com.bumptech.glide.Priority
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -65,8 +61,8 @@ class EmergencyActivity : BaseActivity() {
         binding.btnSearchByPhoto.setOnClickListener { searchingByPhoto() }
         binding.btnSearchByQR.setOnClickListener { searchingByQR() }
 
-        binding.btnPhonePrincipal.setOnClickListener { goToCall("phonePrincipal") }
-        binding.btnPhoneSecondary.setOnClickListener { goToCall("phoneSecondary") }
+        binding.textPrincipal.setOnClickListener { goToCall("phonePrincipal") }
+        binding.textSecondary.setOnClickListener { goToCall("phoneSecondary") }
 
         binding.imagePhoto.setOnClickListener { selectImage() }
         binding.imageQR.setOnClickListener { initScanner() }
@@ -118,6 +114,8 @@ class EmergencyActivity : BaseActivity() {
     }
 
     private fun searchingByDNI() {
+        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, "Busquedad por DNI", true, HomeActivity::class.java)
+        binding.linearLayoutData.visibility = View.GONE
         binding.searchBox.visibility = View.VISIBLE
         binding.linearLayoutNoDataFound.visibility = View.GONE
         binding.imagePhoto.visibility = View.GONE
@@ -131,7 +129,7 @@ class EmergencyActivity : BaseActivity() {
         binding.imagePhoto.visibility = View.VISIBLE
         binding.linearLayoutNoDataFound.visibility = View.GONE
         binding.imageQR.visibility = View.GONE
-        binding.linearDNI.visibility = View.GONE
+        binding.linearLayoutData.visibility = View.GONE
     }
 
     private fun searchingByQR() {
@@ -140,7 +138,7 @@ class EmergencyActivity : BaseActivity() {
         binding.imagePhoto.visibility = View.GONE
         binding.linearLayoutNoDataFound.visibility = View.GONE
         binding.imageQR.visibility = View.VISIBLE
-        binding.linearDNI.visibility = View.GONE
+        binding.linearLayoutData.visibility = View.GONE
     }
 
     private fun searchWorkers() {
@@ -187,9 +185,8 @@ class EmergencyActivity : BaseActivity() {
 
     private fun showData(worker: Worker?) {
 
-        binding.linearDNI.visibility = View.VISIBLE
         binding.linearLayoutNoDataFound.visibility = View.GONE
-
+        binding.linearLayoutData.visibility = View.VISIBLE
         /**Data base*/
         val textIdentification = worker?.dni
         val textName = worker?.name
@@ -234,8 +231,8 @@ class EmergencyActivity : BaseActivity() {
     }
 
     private fun dismissData(codState: Int) {
-        binding.linearDNI.visibility = View.GONE
         binding.linearLayoutNoDataFound.visibility = View.VISIBLE
+        binding.linearLayoutData.visibility = View.GONE
         clearForm()
     }
 
@@ -253,13 +250,12 @@ class EmergencyActivity : BaseActivity() {
                         override fun onResponse(call: Call<WorkersResponse>, response: Response<WorkersResponse>) {
                             if (response.code() == 200) {
                                 hideLoading()
-                                binding.linearDNI.visibility = View.VISIBLE
                                 val dni = response.body()?.dni.toString()
                                 getWorkers(dni)
                             } else {
                                 hideLoading()
-                                binding.linearDNI.visibility = View.GONE
                                 binding.linearLayoutNoDataFound.visibility = View.VISIBLE
+                                binding.linearLayoutData.visibility = View.GONE
                                 clearForm()
                             }
                             deleteCache(this@EmergencyActivity)
@@ -267,7 +263,6 @@ class EmergencyActivity : BaseActivity() {
 
                         override fun onFailure(call: Call<WorkersResponse>, t: Throwable) {
                             hideLoading()
-                            binding.linearDNI.visibility = View.GONE
                             Toast.makeText(this@EmergencyActivity, "No se pudo guardar el dato", Toast.LENGTH_LONG).show()
                         }
                     })

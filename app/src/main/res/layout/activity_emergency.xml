@@ -21,56 +21,92 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/linearButtons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:gravity="center"
+        <View
+            android:id="@+id/view2"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@color/gray"
+            app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:orientation="vertical"
-            android:padding="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_percent="0.30" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/btnSearchByDNI"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:contentDescription="@string/todo"
+                android:text="@string/dni"
+                android:textAllCaps="false"
+                tools:ignore="ButtonStyle" />
 
-                <Button
-                    android:id="@+id/btnSearchByDNI"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/todo"
-                    android:text="@string/dni"
-                    android:textAllCaps="false"
-                    tools:ignore="ButtonStyle" />
+            <Button
+                android:id="@+id/btnSearchByPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/todo"
+                android:text="@string/foto"
+                android:textAllCaps="false"
+                tools:ignore="ButtonStyle" />
 
-                <Button
-                    android:id="@+id/btnSearchByPhoto"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/todo"
-                    android:text="@string/foto"
-                    android:textAllCaps="false"
-                    tools:ignore="ButtonStyle" />
+            <Button
+                android:id="@+id/btnSearchByQR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/todo"
+                android:text="@string/qr"
+                android:textAllCaps="false"
+                tools:ignore="ButtonStyle" />
 
-                <Button
-                    android:id="@+id/btnSearchByQR"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/todo"
-                    android:text="@string/qr"
-                    android:textAllCaps="false"
-                    tools:ignore="ButtonStyle" />
+        </LinearLayout>
 
-            </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutNoDataFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view2"
+            app:layout_constraintTop_toBottomOf="@+id/include">
+
+            <TextView
+                android:id="@+id/textNoData"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:text="@string/informacion_respuesta_no_encontrada"
+                android:textAlignment="center"
+                android:textAppearance="@style/subtitulosGeneral"
+                app:drawableTopCompat="@drawable/data_not_found" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view2"
+            app:layout_constraintTop_toBottomOf="@+id/include">
 
             <EditText
                 android:id="@+id/searchBox"
@@ -85,7 +121,7 @@
                 android:hint="@string/DNI_empleado"
                 android:imeOptions="actionSearch"
                 android:inputType="number"
-                android:maxLength="8"
+                android:maxLength="9"
                 android:maxLines="1"
                 android:padding="12dp"
                 android:textSize="14sp"
@@ -97,9 +133,9 @@
 
             <ImageView
                 android:id="@+id/imagePhoto"
-                android:layout_width="250dp"
-                android:layout_height="210dp"
-                android:layout_marginTop="5dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="12dp"
                 android:background="@color/gray_light"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_baseline_image_24"
@@ -110,9 +146,9 @@
 
             <ImageView
                 android:id="@+id/imageQR"
-                android:layout_width="250dp"
-                android:layout_height="210dp"
-                android:layout_marginTop="5dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="12dp"
                 android:background="@color/gray_light"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_baseline_camera_alt_24"
@@ -124,96 +160,37 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayoutNoDataFound"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="40dp"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearButtons">
-
-            <TextView
-                android:id="@+id/textNoData"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/informacion_respuesta_no_encontrada"
-                android:textAlignment="center"
-                android:textAppearance="@style/subtitulosGeneral"
-                app:drawableTopCompat="@drawable/data_not_found" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearDNI"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearButtons">
+            app:layout_constraintStart_toEndOf="@+id/view2"
+            app:layout_constraintTop_toBottomOf="@+id/include">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="20dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="15dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/linearLayoutData"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_margin="10dp"
                         android:fontFamily="@font/mulish_bold"
                         android:text="@string/datos_generales"
                         android:textAlignment="center"
                         android:textAppearance="@style/subtitulosGeneral"
-                        android:textSize="20sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/gray" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textFullName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:text="@string/nombre_completo"
-                            android:textAlignment="center"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:id="@+id/textDNI"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:text="@string/dni"
-                            android:textAlignment="textEnd"
-                            android:textSize="20sp" />
-
-                    </LinearLayout>
+                        android:textSize="18sp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -221,312 +198,104 @@
                         android:background="@color/gray" />
 
                     <TextView
+                        android:id="@+id/textDNI"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
                         android:fontFamily="@font/mulish_bold"
-                        android:text="@string/celulares"
-                        android:textAlignment="textStart"
-                        android:textAppearance="@style/subtitulosGeneral"
-                        android:textSize="20sp" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/textPrincipal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:paddingStart="10dp"
-                            android:text="@string/celular_principal"
-                            android:textAlignment="textStart"
-                            android:textSize="20sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/btnPhonePrincipal"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/btnPhonePrincipal"
-                            tools:ignore="RtlSymmetry" />
-
-                        <Button
-                            android:id="@+id/btnPhonePrincipal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:padding="15dp"
-                            android:text="@string/llamar"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/textSecondary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:paddingStart="10dp"
-                            android:text="@string/celular_secundario"
-                            android:textAlignment="textStart"
-                            android:textSize="20sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/btnPhoneSecondary"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/btnPhoneSecondary"
-                            tools:ignore="RtlSymmetry" />
-
-                        <Button
-                            android:id="@+id/btnPhoneSecondary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:padding="15dp"
-                            android:text="@string/llamar"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/gray" />
+                        android:text="@string/dni"
+                        android:textAlignment="center"
+                        android:textSize="16sp" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:id="@+id/textFullName"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
                         android:fontFamily="@font/mulish_bold"
-                        android:text="@string/fechas"
-                        android:textAlignment="textStart"
-                        android:textAppearance="@style/subtitulosGeneral"
-                        android:textSize="20sp" />
+                        android:text="@string/nombre_completo"
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/textPrincipal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:fontFamily="@font/mulish_bold"
+                        android:paddingStart="10dp"
+                        android:text="@string/celular_principal"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        tools:ignore="RtlSymmetry" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:paddingStart="10dp"
-                            android:text="@string/nacimiento"
-                            android:textAlignment="textStart"
-                            android:textSize="20sp"
-                            tools:ignore="RtlSymmetry" />
-
-                        <View
-                            android:layout_width="3dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@color/gray" />
-
-                        <TextView
-                            android:id="@+id/textBornDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:text="@string/_12_10_1998"
-                            android:textAlignment="textStart"
-                            android:textSize="20sp"
-                            tools:ignore="RtlSymmetry" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/textSecondary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:fontFamily="@font/mulish_bold"
+                        android:paddingStart="10dp"
+                        android:text="@string/celular_secundario"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        tools:ignore="RtlSymmetry" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:paddingStart="10dp"
-                            android:text="@string/ingreso"
-                            android:textAlignment="textStart"
-                            android:textSize="20sp"
-                            tools:ignore="RtlSymmetry" />
-
-                        <View
-                            android:layout_width="3dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@color/gray" />
-
-                        <TextView
-                            android:id="@+id/textJoinDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:text="@string/_12_10_1998"
-                            android:textAlignment="textStart"
-                            android:textSize="20sp"
-                            tools:ignore="RtlSymmetry" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/gray" />
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/textBornDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:fontFamily="@font/mulish_bold"
+                        android:text="@string/_12_10_1998"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        tools:ignore="RtlSymmetry" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:text="@string/area_form"
-                            android:textAlignment="center"
-                            android:textSize="20sp" />
-
-                        <View
-                            android:layout_width="3dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@color/gray" />
-
-                        <TextView
-                            android:id="@+id/textArea"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:text="@string/area_form"
-                            android:textAlignment="textStart"
-                            android:textSize="20sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/textJoinDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:fontFamily="@font/mulish_bold"
+                        android:text="@string/_12_10_1998"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        tools:ignore="RtlSymmetry" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:text="@string/alergias_form"
-                            android:textAlignment="center"
-                            android:textSize="20sp" />
-
-                        <View
-                            android:layout_width="3dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@color/gray" />
-
-                        <TextView
-                            android:id="@+id/textAllergies"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:text="@string/alergias_form"
-                            android:textAlignment="textStart"
-                            android:textSize="20sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/textArea"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:fontFamily="@font/mulish_bold"
+                        android:text="@string/area_form"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        tools:ignore="RtlSymmetry" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:text="@string/enfermedades_pre_existentes_form"
-                            android:textAlignment="center"
-                            android:textSize="20sp" />
-
-                        <View
-                            android:layout_width="3dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@color/gray" />
-
-                        <TextView
-                            android:id="@+id/textDiseases"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:text="@string/posible_lista_de_enf"
-                            android:textAlignment="textStart"
-                            android:textSize="20sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/textAllergies"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:fontFamily="@font/mulish_bold"
+                        android:text="@string/alergias_form"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        tools:ignore="RtlSymmetry" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:text="@string/grupo_sangu_neo_form"
-                            android:textAlignment="center"
-                            android:textSize="20sp" />
+                    <TextView
+                        android:id="@+id/textDiseases"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mulish_bold"
+                        android:text="@string/posible_lista_de_enf"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        tools:ignore="RtlSymmetry" />
 
-                        <View
-                            android:layout_width="3dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@color/gray" />
-
-                        <TextView
-                            android:id="@+id/textBloodType"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:fontFamily="@font/mulish_bold"
-                            android:text="@string/A"
-                            android:textAlignment="textStart"
-                            android:textSize="20sp" />
-
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/textBloodType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mulish_bold"
+                        android:text="@string/A"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        tools:ignore="RtlSymmetry" />
 
                 </LinearLayout>
 
