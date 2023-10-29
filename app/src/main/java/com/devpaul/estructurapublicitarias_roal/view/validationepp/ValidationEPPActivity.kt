@@ -3,12 +3,15 @@ package com.devpaul.estructurapublicitarias_roal.view.validationepp
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.ActivityInfo
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import android.view.View
+import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.data.models.ValidationEPP
@@ -98,6 +101,8 @@ class ValidationEPPActivity : BaseActivity() {
     private fun validateEquipment(data: ValidationEPP?) {
         val allEquipment = data?.allEquipment
         val wearingEquipment = data?.wearingEquipment
+        val descriptionEquipment = data?.descriptionEquipment
+        val areaEquipment = data?.area
 
         val helmet = allEquipment?.find { it.key.contentEquals("firstEPP") }?.value
         val gloves = allEquipment?.find { it.key.contentEquals("secondEPP") }?.value
@@ -139,6 +144,21 @@ class ValidationEPPActivity : BaseActivity() {
                 setSVGColorFromResource(imageButton, R.color.black)
             }
         }
+
+        val colorBlueLight = ContextCompat.getColor(this, R.color.color_blue_light)
+        val cardDetailsTextView = binding.includeCardViewValidateEPP.textViewCardDetails
+        cardDetailsTextView.setBackgroundColor(colorBlueLight)
+
+        if (cardDetailsTextView.background is ColorDrawable) {
+            val currentColor = (cardDetailsTextView.background as ColorDrawable).color
+
+            if (currentColor == colorBlueLight) {
+                cardDetailsTextView.setOnClickListener {
+                    showDialogDetails(this@ValidationEPPActivity, descriptionEquipment, areaEquipment)
+                }
+            }
+        }
+
     }
 
     private fun hideViewItems() {

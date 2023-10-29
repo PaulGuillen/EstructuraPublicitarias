@@ -146,5 +146,9 @@
     <string name="text_legend_equipped">Equipado</string>
     <string name="text_legend_not_equipped">No equipado</string>
     <string name="text_legend_not_required">No requerido</string>
+    <string name="text_title_card_details">Area del trabajdor</string>
+    <string name="text_details_card">Detalles del equipo que lleva puesto</string>
+    <string name="text_view_details_card">Ver detalles</string>
+
 
 </resources>

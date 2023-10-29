@@ -16,14 +16,14 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/cardDetails"
+            android:id="@+id/textViewCardDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:background="@android:color/holo_blue_light"
-            android:elevation="10dp"
+            android:background="@color/gray"
+            android:elevation="2dp"
             android:padding="8dp"
-            android:text="Ver detalles"
+            android:text="@string/text_view_details_card"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textColorHighlight="@android:color/black"

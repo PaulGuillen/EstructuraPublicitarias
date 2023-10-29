@@ -182,3 +182,36 @@ fun showImageValidateEPP(context: Context) {
 
     dialog.show()
 }
+
+fun showDialogDetails(context: Context, details: String?, area: String?) {
+    val customDialogView = LayoutInflater.from(context).inflate(R.layout.cardview_details_validate_epp, null)
+
+    val dialog = AlertDialog.Builder(context)
+        .setView(customDialogView)
+        .setCancelable(true)
+        .create()
+
+    if (dialog.window != null) {
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    val areaTextView = customDialogView.findViewById<TextView>(R.id.area)
+    val detailsTextView = customDialogView.findViewById<TextView>(R.id.details)
+    val buttonCloseDialog = customDialogView.findViewById<ImageButton>(R.id.btnCloseDialog)
+
+    val formattedDetails = formatDetailsText(details)
+
+    areaTextView.text = area
+    detailsTextView.text = formattedDetails
+
+    buttonCloseDialog.setOnClickListener {
+        dialog.dismiss()
+    }
+
+    dialog.show()
+}
+
+private fun formatDetailsText(details: String?): String {
+    val lines = details?.split("\n")
+    return lines?.joinToString("\n") ?: ""
+}
