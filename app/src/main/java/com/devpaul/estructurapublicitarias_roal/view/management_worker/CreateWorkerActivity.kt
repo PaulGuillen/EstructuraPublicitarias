@@ -2,6 +2,7 @@ package com.devpaul.estructurapublicitarias_roal.view.management_worker
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.pm.ActivityInfo
@@ -25,6 +26,7 @@ import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
 import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityCreateWorkerBinding
+import com.devpaul.estructurapublicitarias_roal.domain.utils.applyCustomTextStyleToTextView
 import com.devpaul.estructurapublicitarias_roal.domain.utils.deleteCache
 import com.devpaul.estructurapublicitarias_roal.domain.utils.isValidPhoneNumber
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showErrorAlert
@@ -91,7 +93,32 @@ class CreateWorkerActivity : BaseActivity() {
         binding.viewBloodType.setOnClickListener {
             showTextBloodyType()
         }
+
+        binding.textLegendArea.setOnClickListener {
+            dialogLegendArea()
+        }
+
+        applyCustomTextStyleToTextView(binding.textLegendArea, "Leyenda")
     }
+
+    private fun dialogLegendArea() {
+        val tiText = "TI = Tecnologia de informacion"
+        val soText = "SO = Soldadura"
+        val coText = "CO = CORTES"
+
+        val message = "$tiText\n$soText\n$coText"
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Leyendas")
+            .setMessage(message)
+            .setPositiveButton("Aceptar") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
 
     private fun showTextBloodyType() {
 

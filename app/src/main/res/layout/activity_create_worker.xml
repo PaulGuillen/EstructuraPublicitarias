@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -210,20 +211,14 @@
                 android:background="#66000000" />
 
             <TextView
+                android:id="@+id/textLegendArea"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:layout_marginTop="10dp"
-                android:text="TI = Tecnologia de Informacion" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SO = Soldadura" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CO = Corte" />
+                android:fontFamily="@font/mulish_bold"
+                tools:text="Leyenda"
+                android:textSize="16sp" />
 
             <include
                 android:id="@+id/includedCheckbox"
