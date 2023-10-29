@@ -16,6 +16,21 @@
         android:padding="10dp">
 
         <TextView
+            android:id="@+id/cardDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@android:color/holo_blue_light"
+            android:elevation="10dp"
+            android:padding="8dp"
+            android:text="Ver detalles"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textColorHighlight="@android:color/black"
+            android:textColorLink="@android:color/white"
+            android:textStyle="bold" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/mulish_bold"

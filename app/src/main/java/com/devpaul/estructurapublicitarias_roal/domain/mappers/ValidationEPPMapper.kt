@@ -27,6 +27,8 @@ class ValidationEPPMapper {
             )
         }
 
+        validationEPP.descriptionEquipment = validationEPPResponse.descriptionEquipment
+
         return validationEPP
     }
 }

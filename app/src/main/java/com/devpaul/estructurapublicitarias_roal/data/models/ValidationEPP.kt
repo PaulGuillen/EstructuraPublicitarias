@@ -5,7 +5,8 @@ data class ValidationEPP(
     var message: String? = null,
     var area: String? = null,
     var allEquipment: List<AllEquipment>? = null,
-    var wearingEquipment: List<EquipmentItem>? = null
+    var wearingEquipment: List<EquipmentItem>? = null,
+    var descriptionEquipment: String? = null
 )
 
 data class AllEquipment(
