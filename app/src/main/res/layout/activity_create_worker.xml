@@ -75,6 +75,7 @@
                     android:background="@drawable/edittext_background_selector"
                     android:hint="@string/text_documento"
                     android:inputType="number"
+                    android:maxLength="9"
                     android:padding="14dp"
                     android:textSize="16sp" />
 
@@ -208,13 +209,28 @@
                 android:layout_marginTop="10dp"
                 android:background="#66000000" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="TI = Tecnologia de Informacion" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SO = Soldadura" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CO = Corte" />
+
             <include
                 android:id="@+id/includedCheckbox"
                 layout="@layout/custom_checkbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" />
-
 
             <TextView
                 android:layout_width="match_parent"
@@ -406,10 +422,10 @@
 
         <Button
             android:id="@+id/btnRegistrarTrabajador"
+            style="@style/botonesGeneral"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/registrar_trabajador"
-            style="@style/botonesGeneral"
             app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

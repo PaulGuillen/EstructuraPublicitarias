@@ -53,6 +53,7 @@ class CreateWorkerActivity : BaseActivity() {
     private var imageFile: File? = null
     private var isSelectedTI = false
     private var isSelectedSI = false
+    private var isSelectedCO = false
     private var documentType: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,8 +78,13 @@ class CreateWorkerActivity : BaseActivity() {
             validateStateTI()
         }
         binding.includedCheckbox.customCheckboxSI.setOnClickListener {
-            validateStateSI()
+            validateStateSO()
         }
+
+        binding.includedCheckbox.customCheckboxCO.setOnClickListener {
+            validateStateCO()
+        }
+
         binding.textBornDate.addTextChangedListener(DateTextWatcher())
         binding.textJoinDate.addTextChangedListener(DateTextWatcher())
 
@@ -151,6 +157,7 @@ class CreateWorkerActivity : BaseActivity() {
         if (!isSelectedTI) {
             isSelectedTI = true
             isSelectedSI = false
+            isSelectedCO = false
 
             val orangeColor = ContextCompat.getColor(this, R.color.orange_principal)
             val grayIconsColor = ContextCompat.getColor(this, R.color.color_gray_icons)
@@ -169,8 +176,16 @@ class CreateWorkerActivity : BaseActivity() {
                 binding.includedCheckbox.viewRightSI
             )
 
+            val coViewIds = arrayOf(
+                binding.includedCheckbox.viewTopCO,
+                binding.includedCheckbox.viewBottomCO,
+                binding.includedCheckbox.viewLeftCO,
+                binding.includedCheckbox.viewRightCO
+            )
+
             tiViewIds.forEach { it.setBackgroundColor(orangeColor) }
             siViewIds.forEach { it.setBackgroundColor(grayIconsColor) }
+            coViewIds.forEach { it.setBackgroundColor(grayIconsColor) }
 
             binding.includedCheckbox.checkBoxImageTI.setImageResource(R.drawable.checked_box)
             binding.includedCheckbox.checkBoxLabelTI.setTextColor(orangeColor)
@@ -178,14 +193,66 @@ class CreateWorkerActivity : BaseActivity() {
             binding.includedCheckbox.checkBoxImageSI.setImageResource(R.drawable.not_checked_box)
             binding.includedCheckbox.checkBoxLabelSI.setTextColor(grayIconsColor)
 
-            documentType = "Tecnologia de Información"
+            binding.includedCheckbox.checkBoxImageCO.setImageResource(R.drawable.not_checked_box)
+            binding.includedCheckbox.checkBoxLabelCO.setTextColor(grayIconsColor)
+
+            documentType = "1"
             Timber.d("DocumentType -> $documentType")
         }
     }
 
-    private fun validateStateSI() {
+    private fun validateStateSO() {
         if (!isSelectedSI) {
             isSelectedSI = true
+            isSelectedTI = false
+            isSelectedCO = false
+
+            val orangeColor = ContextCompat.getColor(this, R.color.orange_principal)
+            val grayIconsColor = ContextCompat.getColor(this, R.color.color_gray_icons)
+
+            val siViewIds = arrayOf(
+                binding.includedCheckbox.viewTopSI,
+                binding.includedCheckbox.viewBottomSI,
+                binding.includedCheckbox.viewLeftSI,
+                binding.includedCheckbox.viewRightSI
+            )
+
+            val tiViewIds = arrayOf(
+                binding.includedCheckbox.viewTopTI,
+                binding.includedCheckbox.viewBottomTI,
+                binding.includedCheckbox.viewLeftTI,
+                binding.includedCheckbox.viewRightTI
+            )
+
+            val coViewIds = arrayOf(
+                binding.includedCheckbox.viewTopCO,
+                binding.includedCheckbox.viewBottomCO,
+                binding.includedCheckbox.viewLeftCO,
+                binding.includedCheckbox.viewRightCO
+            )
+
+            siViewIds.forEach { it.setBackgroundColor(orangeColor) }
+            tiViewIds.forEach { it.setBackgroundColor(grayIconsColor) }
+            coViewIds.forEach { it.setBackgroundColor(grayIconsColor) }
+
+            binding.includedCheckbox.checkBoxImageSI.setImageResource(R.drawable.checked_box)
+            binding.includedCheckbox.checkBoxLabelSI.setTextColor(orangeColor)
+
+            binding.includedCheckbox.checkBoxImageTI.setImageResource(R.drawable.not_checked_box)
+            binding.includedCheckbox.checkBoxLabelTI.setTextColor(grayIconsColor)
+
+            binding.includedCheckbox.checkBoxImageCO.setImageResource(R.drawable.not_checked_box)
+            binding.includedCheckbox.checkBoxLabelCO.setTextColor(grayIconsColor)
+
+            documentType = "2"
+            Timber.d("DocumentType -> $documentType")
+        }
+    }
+
+    private fun validateStateCO() {
+        if (!isSelectedCO) {
+            isSelectedCO = true
+            isSelectedSI = false
             isSelectedTI = false
 
             val orangeColor = ContextCompat.getColor(this, R.color.orange_principal)
@@ -205,16 +272,27 @@ class CreateWorkerActivity : BaseActivity() {
                 binding.includedCheckbox.viewRightTI
             )
 
-            siViewIds.forEach { it.setBackgroundColor(orangeColor) }
+            val coViewIds = arrayOf(
+                binding.includedCheckbox.viewTopCO,
+                binding.includedCheckbox.viewBottomCO,
+                binding.includedCheckbox.viewLeftCO,
+                binding.includedCheckbox.viewRightCO
+            )
+
+            coViewIds.forEach { it.setBackgroundColor(orangeColor) }
+            siViewIds.forEach { it.setBackgroundColor(grayIconsColor) }
             tiViewIds.forEach { it.setBackgroundColor(grayIconsColor) }
 
-            binding.includedCheckbox.checkBoxImageSI.setImageResource(R.drawable.checked_box)
-            binding.includedCheckbox.checkBoxLabelSI.setTextColor(orangeColor)
+            binding.includedCheckbox.checkBoxImageCO.setImageResource(R.drawable.checked_box)
+            binding.includedCheckbox.checkBoxLabelCO.setTextColor(orangeColor)
+
+            binding.includedCheckbox.checkBoxImageSI.setImageResource(R.drawable.not_checked_box)
+            binding.includedCheckbox.checkBoxLabelSI.setTextColor(grayIconsColor)
 
             binding.includedCheckbox.checkBoxImageTI.setImageResource(R.drawable.not_checked_box)
             binding.includedCheckbox.checkBoxLabelTI.setTextColor(grayIconsColor)
 
-            documentType = "Sistemas de Información"
+            documentType = "3"
             Timber.d("DocumentType -> $documentType")
         }
     }
