@@ -16,6 +16,7 @@ import android.util.Base64
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -90,12 +91,20 @@ class CreateWorkerActivity : BaseActivity() {
         binding.textBornDate.addTextChangedListener(DateTextWatcher())
         binding.textJoinDate.addTextChangedListener(DateTextWatcher())
 
+        binding.textLegendArea.setOnClickListener {
+            dialogLegendArea()
+        }
+
         binding.viewBloodType.setOnClickListener {
             showTextBloodyType()
         }
 
-        binding.textLegendArea.setOnClickListener {
-            dialogLegendArea()
+        binding.viewGender.setOnClickListener {
+            showGender()
+        }
+
+        binding.viewNationality.setOnClickListener {
+            showTextNationality()
         }
 
         applyCustomTextStyleToTextView(binding.textLegendArea, "Leyenda")
@@ -119,6 +128,50 @@ class CreateWorkerActivity : BaseActivity() {
         dialog.show()
     }
 
+    private fun showTextNationality() {
+
+        val arrayList = ArrayList<String>().apply {
+            add("Argentina")
+            add("Brasil")
+            add("Chile")
+            add("Colombia")
+            add("Ecuador")
+            add("Perú")
+            add("Venezuela")
+            add("Uruguay")
+            add("Paraguay")
+            add("Bolivia")
+        }
+
+        val dialog = Dialog(this@CreateWorkerActivity)
+        dialog.setContentView(R.layout.dialog_searchable_spinner)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+
+        val editText: EditText = dialog.findViewById(R.id.edit_text)
+        val listView: ListView = dialog.findViewById(R.id.list_view)
+        val textTitle: TextView = dialog.findViewById(R.id.titleSearchView)
+
+        val adapter = ArrayAdapter(this@CreateWorkerActivity, android.R.layout.simple_list_item_1, arrayList)
+        listView.adapter = adapter
+        textTitle.text = "Selecciona una nación"
+
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                adapter.filter.filter(charSequence)
+            }
+
+            override fun afterTextChanged(editable: Editable) {}
+        })
+
+        listView.setOnItemClickListener { _, _, i, _ ->
+            binding.viewNationality.text = adapter.getItem(i)
+            dialog.dismiss()
+        }
+
+    }
 
     private fun showTextBloodyType() {
 
@@ -140,9 +193,11 @@ class CreateWorkerActivity : BaseActivity() {
 
         val editText: EditText = dialog.findViewById(R.id.edit_text)
         val listView: ListView = dialog.findViewById(R.id.list_view)
+        val textTitle: TextView = dialog.findViewById(R.id.titleSearchView)
 
         val adapter = ArrayAdapter(this@CreateWorkerActivity, android.R.layout.simple_list_item_1, arrayList)
         listView.adapter = adapter
+        textTitle.text = "Tipo de Sangre"
 
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
@@ -156,6 +211,44 @@ class CreateWorkerActivity : BaseActivity() {
 
         listView.setOnItemClickListener { _, _, i, _ ->
             binding.viewBloodType.text = adapter.getItem(i)
+            dialog.dismiss()
+        }
+
+    }
+
+    private fun showGender() {
+
+        val arrayList = ArrayList<String>().apply {
+            add("Masculino")
+            add("Femenino")
+            add("Otros")
+        }
+
+        val dialog = Dialog(this@CreateWorkerActivity)
+        dialog.setContentView(R.layout.dialog_searchable_spinner)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+
+        val textTitle: TextView = dialog.findViewById(R.id.titleSearchView)
+        val editText: EditText = dialog.findViewById(R.id.edit_text)
+        val listView: ListView = dialog.findViewById(R.id.list_view)
+        val adapter = ArrayAdapter(this@CreateWorkerActivity, android.R.layout.simple_list_item_1, arrayList)
+
+        listView.adapter = adapter
+        textTitle.text = "Selecciona el género"
+
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                adapter.filter.filter(charSequence)
+            }
+
+            override fun afterTextChanged(editable: Editable) {}
+        })
+
+        listView.setOnItemClickListener { _, _, i, _ ->
+            binding.viewGender.text = adapter.getItem(i)
             dialog.dismiss()
         }
 
@@ -363,6 +456,8 @@ class CreateWorkerActivity : BaseActivity() {
         val phone = binding.textPhone.text.toString()
         val phoneEmergency = binding.textPhoneEmergency.text.toString()
         val photo = binding.imageViewUser
+        val gender = binding.viewGender.text.toString()
+        val nationality = binding.viewNationality.text.toString()
 
         val regexPhone = Regex(getString(R.string.pattern_principal_number))
 
@@ -397,7 +492,25 @@ class CreateWorkerActivity : BaseActivity() {
             return
         }
 
-        if (!isSelectedTI && !isSelectedSI) {
+        if (gender.contentEquals("Sexo")) {
+            showErrorAlert(
+                this@CreateWorkerActivity,
+                getString(R.string.title_missing_parameters),
+                getString(R.string.subtitle_missing_gender)
+            )
+            return
+        }
+
+        if (nationality.contentEquals("Nacionalidad")) {
+            showErrorAlert(
+                this@CreateWorkerActivity,
+                getString(R.string.title_missing_parameters),
+                getString(R.string.subtitle_missing_nationality)
+            )
+            return
+        }
+
+        if (!isSelectedTI && !isSelectedSI && !isSelectedCO) {
             showErrorAlert(
                 this@CreateWorkerActivity,
                 getString(R.string.title_missing_parameters),
@@ -415,6 +528,7 @@ class CreateWorkerActivity : BaseActivity() {
             return
         }
 
+
         if (photo.drawable.constantState == ContextCompat.getDrawable(this, R.drawable.ic_baseline_image_24)?.constantState) {
             showErrorAlert(this@CreateWorkerActivity, getString(R.string.title_404_image), getString(R.string.subtitle_image_description))
             return
@@ -429,7 +543,7 @@ class CreateWorkerActivity : BaseActivity() {
                     name = name,
                     lastname = lastname,
                     dateBirth = dateBirth,
-                    dateJoin = dateJoin,
+                    admissionDate = dateJoin,
                     area = documentType,
                     bloodType = bloodType,
                     diseases = diseases,
@@ -437,7 +551,9 @@ class CreateWorkerActivity : BaseActivity() {
                     phone = phone,
                     phoneEmergency = phoneEmergency,
                     photo = imageBase,
-                    photoFormat = imageFile?.name
+                    photoFormat = imageFile?.name,
+                    gender = gender,
+                    nationality = nationality
                 )
                 CoroutineScope(Dispatchers.Default).launch {
                     postWorkersProvider.postWorkers(workerUser)?.enqueue(object : Callback<ResponseHttp> {

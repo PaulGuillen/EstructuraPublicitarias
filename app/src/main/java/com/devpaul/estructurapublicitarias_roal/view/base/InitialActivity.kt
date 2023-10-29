@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import timber.log.Timber
+import kotlin.system.exitProcess
 
 abstract class InitialActivity : AppCompatActivity() {
 
@@ -49,6 +50,7 @@ abstract class InitialActivity : AppCompatActivity() {
             customLogoutButton.setOnClickListener {
                 clearPreferences()
                 finish()
+                exitProcess(0)
             }
         }
     }

@@ -20,6 +20,9 @@ class WorkersResponse(
     @SerializedName("date_join")
     val dateJoin: String? = null,
 
+    @SerializedName("admission_date")
+    val admissionDate: String? = null,
+
     @SerializedName("area")
     val area: String? = null,
 
@@ -42,7 +45,13 @@ class WorkersResponse(
     val photo: String? = null,
 
     @SerializedName("photo_format")
-    val photoFormat: String? = null
+    val photoFormat: String? = null,
+
+    @SerializedName("gender")
+    val gender: String? = null,
+
+    @SerializedName("nationality")
+    val nationality: String? = null
 ) {
 
     fun toJson(): String {
@@ -50,8 +59,7 @@ class WorkersResponse(
     }
 
     override fun toString(): String {
-        return "Workers(dni=$dni, name=$name, lastname=$lastname, date_birth=$dateBirth, date_join=$dateJoin, area=$area, blood_type=$bloodType, diseases=$diseases, allergies=$allergies, phone=$phone, phone_emergency=$phoneEmergency, photo=$photo, photoFormat=$photoFormat)"
+        return "WorkersResponse(dni=$dni, name=$name, lastname=$lastname, dateBirth=$dateBirth, dateJoin=$dateJoin, admissionDate=$admissionDate, area=$area, bloodType=$bloodType, diseases=$diseases, allergies=$allergies, phone=$phone, phoneEmergency=$phoneEmergency, photo=$photo, photoFormat=$photoFormat, gender=$gender, nationality=$nationality)"
     }
-
 
 }
