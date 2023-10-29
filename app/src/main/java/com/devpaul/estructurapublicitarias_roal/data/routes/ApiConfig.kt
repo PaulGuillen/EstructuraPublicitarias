@@ -15,7 +15,7 @@ import retrofit2.http.Query
 
 interface ApiConfig {
 
-    @GET("https://run.mocky.io/v3/506ae647-56cf-4300-be6e-9d2ea6526395")
+    @GET("https://run.mocky.io/v3/0645b54d-ccbe-4e49-a61a-7eb3f702982f")
     fun getOptions(
     ): Call<List<OptionsResponse>>
 

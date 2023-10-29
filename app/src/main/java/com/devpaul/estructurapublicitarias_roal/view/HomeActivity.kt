@@ -69,11 +69,12 @@ class HomeActivity : BaseActivity() {
     private fun getCategories() {
         val prefs = SharedPref(applicationContext)
         val optionsCategory = prefs.getJsonListOptions("OptionsCategory")
-        if (!optionsCategory.isNullOrEmpty()) {
-            displayCategories(optionsCategory)
-        } else {
-            callServiceGetCategories()
-        }
+//        if (!optionsCategory.isNullOrEmpty()) {
+//            displayCategories(optionsCategory)
+//        } else {
+//            callServiceGetCategories()
+//        }
+        callServiceGetCategories()
     }
 
     private fun callServiceGetCategories() {
