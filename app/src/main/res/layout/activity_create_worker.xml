@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -196,29 +196,35 @@
 
             </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/mulish_black"
-                android:text="@string/text_reas"
-                android:textSize="24sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/mulish_black"
+                    android:text="@string/text_reas"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textLegendArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/mulish_bold"
+                    android:gravity="end|center"
+                    android:textSize="18sp"
+                    tools:text="Leyenda" />
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="10dp"
                 android:background="#66000000" />
-
-            <TextView
-                android:id="@+id/textLegendArea"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/mulish_bold"
-                tools:text="Leyenda"
-                android:textSize="16sp" />
 
             <include
                 android:id="@+id/includedCheckbox"

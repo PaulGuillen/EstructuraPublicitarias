@@ -109,7 +109,7 @@ class CreateWorkerActivity : BaseActivity() {
         val message = "$tiText\n$soText\n$coText"
 
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Leyendas")
+        builder.setTitle("Leyenda")
             .setMessage(message)
             .setPositiveButton("Aceptar") { dialog, _ ->
                 dialog.dismiss()
