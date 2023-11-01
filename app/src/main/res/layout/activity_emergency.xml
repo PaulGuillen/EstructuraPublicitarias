@@ -198,6 +198,16 @@
                         android:background="@color/gray" />
 
                     <TextView
+                        android:id="@+id/textArea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mulish_bold"
+                        android:text="@string/area_form"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        tools:ignore="RtlSymmetry" />
+
+                    <TextView
                         android:id="@+id/textDNI"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -257,15 +267,6 @@
                         android:textSize="18sp"
                         tools:ignore="RtlSymmetry" />
 
-                    <TextView
-                        android:id="@+id/textArea"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:text="@string/area_form"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        tools:ignore="RtlSymmetry" />
 
                     <TextView
                         android:id="@+id/textAllergies"

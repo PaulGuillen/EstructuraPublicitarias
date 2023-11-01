@@ -33,6 +33,7 @@ import com.devpaul.estructurapublicitarias_roal.databinding.ActivityEmergencyBin
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.WorkerUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
+import com.devpaul.estructurapublicitarias_roal.domain.utils.applyCustomTextStyleToTextView
 import com.devpaul.estructurapublicitarias_roal.domain.utils.deleteCache
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
@@ -47,7 +48,6 @@ class EmergencyActivity : BaseActivity() {
 
     lateinit var binding: ActivityEmergencyBinding
     private var workersProvider = WorkersProvider()
-    private var progressDialog: Dialog? = null
     private var imageFile: File? = null
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -93,6 +93,7 @@ class EmergencyActivity : BaseActivity() {
     }
 
     private fun goToCall(text: String) {
+
         when (text) {
             "phonePrincipal" -> {
                 val number: String = binding.textPrincipal.text.toString()
@@ -164,13 +165,11 @@ class EmergencyActivity : BaseActivity() {
                     when (serviceWorker) {
                         is CustomResult.OnSuccess -> {
                             val data = serviceWorker.data
-                            hideLoading()
                             showData(data)
                         }
 
                         is CustomResult.OnError -> {
                             val codeState = SingletonError.code
-                            hideLoading()
                             dismissData(codeState ?: 408)
                         }
                     }
@@ -184,7 +183,7 @@ class EmergencyActivity : BaseActivity() {
     }
 
     private fun showData(worker: Worker?) {
-
+        hideLoading()
         binding.linearLayoutNoDataFound.visibility = View.GONE
         binding.linearLayoutData.visibility = View.VISIBLE
         /**Data base*/
@@ -228,9 +227,13 @@ class EmergencyActivity : BaseActivity() {
         binding.textPrincipal.text = textPrincipalPhone
         binding.textSecondary.text = textSecondaryPhone
 
+        applyCustomTextStyleToTextView(binding.textPrincipal, binding.textPrincipal.text.toString())
+        applyCustomTextStyleToTextView(binding.textSecondary, binding.textSecondary.text.toString())
+
     }
 
     private fun dismissData(codState: Int) {
+        hideLoading()
         binding.linearLayoutNoDataFound.visibility = View.VISIBLE
         binding.linearLayoutData.visibility = View.GONE
         clearForm()
