@@ -113,7 +113,7 @@ class CreateWorkerActivity : BaseActivity() {
     private fun dialogLegendArea() {
         val tiText = "TI = Tecnologia de informacion"
         val soText = "SO = Soldadura"
-        val coText = "CO = CORTES"
+        val coText = "CO = Corte"
 
         val message = "$tiText\n$soText\n$coText"
 
@@ -256,7 +256,7 @@ class CreateWorkerActivity : BaseActivity() {
 
     inner class DateTextWatcher : TextWatcher {
         private val separator = "-"
-        private val positionsToAddSeparator = listOf(2, 5)
+        private val positionsToAddSeparator = listOf(4, 7)
 
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
@@ -272,6 +272,7 @@ class CreateWorkerActivity : BaseActivity() {
             }
         }
     }
+
 
     private fun validateStateTI() {
         if (!isSelectedTI) {
@@ -436,7 +437,7 @@ class CreateWorkerActivity : BaseActivity() {
     }
 
     private fun updateLabel(myCalendar: Calendar, direction: Int) {
-        val myFormat = "dd-MM-yyyy"
+        val myFormat = "yyyy-MM-dd"
         val sdf = SimpleDateFormat(myFormat, Locale.US)
 
         val textField = if (direction == 0) binding.textBornDate else binding.textJoinDate
@@ -458,6 +459,14 @@ class CreateWorkerActivity : BaseActivity() {
         val photo = binding.imageViewUser
         val gender = binding.viewGender.text.toString()
         val nationality = binding.viewNationality.text.toString()
+
+        val abbreviationGender = when (gender) {
+            "Femenino" -> "F"
+            "Masculino" -> "M"
+            else -> {
+                "Otro"
+            }
+        }
 
         val regexPhone = Regex(getString(R.string.pattern_principal_number))
 
@@ -545,14 +554,14 @@ class CreateWorkerActivity : BaseActivity() {
                     dateBirth = dateBirth,
                     admissionDate = dateJoin,
                     area = documentType,
-                    bloodType = bloodType,
+                    bloodType = bloodType,Ë
                     diseases = diseases,
                     allergies = allergies,
                     phone = phone,
                     phoneEmergency = phoneEmergency,
                     photo = imageBase,
                     photoFormat = imageFile?.name,
-                    gender = gender,
+                    gender = abbreviationGender,
                     nationality = nationality
                 )
                 CoroutineScope(Dispatchers.Default).launch {

@@ -118,7 +118,7 @@
     <string name="text_reas">Áreas</string>
     <string name="text_fechas">Fechas</string>
     <string name="text_ingreso">Ingreso</string>
-    <string name="hint_fecha">dd-mm-yyyy</string>
+    <string name="hint_fecha">yyyy-mm-dd</string>
     <string name="text_nacimiento">Nacimiento</string>
     <string name="text_opcional">Opcional</string>
     <string name="hint_grupo_sanguineo">A, B, AB, O</string>
