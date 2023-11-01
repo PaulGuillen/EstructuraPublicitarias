@@ -554,7 +554,7 @@ class CreateWorkerActivity : BaseActivity() {
                     dateBirth = dateBirth,
                     admissionDate = dateJoin,
                     area = documentType,
-                    bloodType = bloodType,Ë
+                    bloodType = bloodType,
                     diseases = diseases,
                     allergies = allergies,
                     phone = phone,
