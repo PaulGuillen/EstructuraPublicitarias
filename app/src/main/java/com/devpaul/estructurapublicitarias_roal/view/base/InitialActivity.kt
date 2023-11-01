@@ -1,5 +1,6 @@
 package com.devpaul.estructurapublicitarias_roal.view.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,6 +9,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
+import com.devpaul.estructurapublicitarias_roal.view.WelcomeActivity
 import timber.log.Timber
 import kotlin.system.exitProcess
 
@@ -49,8 +51,9 @@ abstract class InitialActivity : AppCompatActivity() {
             val customLogoutButton = customLogoutView.findViewById<Button>(R.id.dialogButton)
             customLogoutButton.setOnClickListener {
                 clearPreferences()
+                val intent = Intent(this, WelcomeActivity::class.java)
+                startActivity(intent)
                 finish()
-                exitProcess(0)
             }
         }
     }
