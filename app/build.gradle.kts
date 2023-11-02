@@ -12,8 +12,6 @@ android {
         applicationId = "com.devpaul.estructurapublicitarias_roal"
         minSdk = 24
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -33,12 +31,16 @@ android {
             dimension = "environment"
             applicationId = "com.devpaul.estructurapublicitarias_roal.prod"
             buildConfigField("String", "BASE_URL", "\"https://nbyz455qc9.execute-api.us-east-1.amazonaws.com/prod/\"")
+            versionCode = 1
+            versionName = "1.0"
         }
 
         create("cert") {
             dimension = "environment"
             applicationId = "com.devpaul.estructurapublicitarias_roal.cert"
             buildConfigField("String", "BASE_URL", "\"https://nbyz455qc9.execute-api.us-east-1.amazonaws.com/cert/\"")
+            versionCode = 1000
+            versionName = "1.1"
         }
     }
 
@@ -94,6 +96,9 @@ dependencies {
 
     //  Facebook animation loading
     implementation("com.facebook.shimmer:shimmer:0.1.0@aar")
+
+    // PlayCore appUpdate Google Play
+    implementation("com.google.android.play:core:1.10.3")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

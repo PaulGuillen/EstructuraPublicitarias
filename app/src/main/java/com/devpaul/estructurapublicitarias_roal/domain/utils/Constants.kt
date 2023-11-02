@@ -8,3 +8,4 @@ const val TIME_OUT_EDITED = 30 * 60 * 1000
 const val SaveUserInSession = "SaveUserInSession"
 const val ACTIVE = "Active"
 const val INACTIVE = "Inactive"
+const val WAIT_TIME = 4000

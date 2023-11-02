@@ -12,7 +12,7 @@ abstract class WelcomeBaseActivity : InitialActivity() {
         super.onCreate(savedInstanceState)
     }
 
-     fun hideLoading() {
+    fun hideLoading() {
         progressDialog?.let { if (it.isShowing) it.cancel() }
     }
 

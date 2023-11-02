@@ -1,9 +1,11 @@
 package com.devpaul.estructurapublicitarias_roal.view
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import com.devpaul.estructurapublicitarias_roal.R
@@ -12,10 +14,20 @@ import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.WelcomeBaseActivity
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.android.play.core.tasks.Task
 
 class WelcomeActivity : WelcomeBaseActivity() {
 
     lateinit var binding: ActivityMainBinding
+    private val appUpdateManager by lazy {
+        AppUpdateManagerFactory.create(this)
+    }
+
+    private val updateRequestCode = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_ROAL)
@@ -25,21 +37,33 @@ class WelcomeActivity : WelcomeBaseActivity() {
         binding.btnIngresar.setOnClickListener {
             startNewActivityWithAnimation(this@WelcomeActivity, LoginActivity::class.java, null, true)
         }
+        checkForAppUpdate()
         validateUserInSessionAndThemeDark()
     }
 
     private fun validateUserInSession() {
-        val prefs = SharedPref(this)
-        val savedValue = prefs.getData(SaveUserInSession)
-        if (savedValue == ACTIVE) {
+        if (isUserInSession()) {
+            disableLoginButton()
             showLoading()
-            binding.btnIngresar.isFocusable = false
-            binding.btnIngresar.isClickable = false
             Handler(Looper.getMainLooper()).postDelayed({
                 hideLoading()
-                startNewActivityWithAnimation(this@WelcomeActivity, HomeActivity::class.java, null, true)
-            }, 5000)
+                navigateToHome()
+            }, WAIT_TIME.toLong())
         }
+    }
+
+    private fun isUserInSession(): Boolean {
+        val prefs = SharedPref(this)
+        return prefs.getData(SaveUserInSession) == ACTIVE
+    }
+
+    private fun disableLoginButton() {
+        binding.btnIngresar.isFocusable = false
+        binding.btnIngresar.isClickable = false
+    }
+
+    private fun navigateToHome() {
+        startNewActivityWithAnimation(this@WelcomeActivity, HomeActivity::class.java, null, true)
     }
 
     private fun validateUserInSessionAndThemeDark() {
@@ -60,6 +84,32 @@ class WelcomeActivity : WelcomeBaseActivity() {
         }
         builder.setCancelable(false)
         builder.show()
+    }
+
+    private fun checkForAppUpdate() {
+        val appUpdateInfoTask: Task<AppUpdateInfo> = appUpdateManager.appUpdateInfo
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
+            ) {
+                appUpdateManager.startUpdateFlowForResult(
+                    appUpdateInfo,
+                    AppUpdateType.FLEXIBLE,
+                    this,
+                    updateRequestCode
+                )
+            }
+        }
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == updateRequestCode) {
+            if (resultCode != RESULT_OK) {
+                Toast.makeText(this, "Debe actualziar", Toast.LENGTH_LONG).show()
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
 }

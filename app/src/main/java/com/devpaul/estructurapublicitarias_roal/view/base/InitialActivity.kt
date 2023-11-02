@@ -41,6 +41,10 @@ abstract class InitialActivity : AppCompatActivity() {
         }
     }
 
+    private fun startHandler() {
+        handler?.postDelayed(runnable!!, timeOutApp.toLong())
+    }
+
     private fun showCustomLogoutView() {
         if (!scan && onScreen) {
             val customLogoutView = layoutInflater.inflate(R.layout.dialog_end_session, null)
@@ -69,9 +73,6 @@ abstract class InitialActivity : AppCompatActivity() {
         handler?.removeCallbacks(runnable!!)
     }
 
-    private fun startHandler() {
-        handler?.postDelayed(runnable!!, timeOutApp.toLong())
-    }
 
     override fun onPause() {
         super.onPause()
