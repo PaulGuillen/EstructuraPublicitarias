@@ -99,7 +99,7 @@ fun String.isEmailValid(): Boolean {
     return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
 }
 
-fun showCustomDialog(
+fun showCustomDialogErrorSingleton(
     context: Context,
     title: String? = null,
     message: String? = null,
@@ -186,7 +186,7 @@ fun showImageValidateEPP(context: Context) {
     dialog.show()
 }
 
-fun showDialogDetails(context: Context, details: String?, area: String?) {
+fun showDialogDetailsValidateEquipment(context: Context, details: String?, area: String?) {
     val customDialogView = LayoutInflater.from(context).inflate(R.layout.cardview_details_validate_epp, null)
 
     val dialog = AlertDialog.Builder(context)
@@ -220,7 +220,7 @@ private fun formatDetailsText(details: String?): String {
 }
 
 
-fun applyCustomTextStyleToTextView(textView: TextView, titleText : String?) {
+fun applyCustomTextStyleToTextView(textView: TextView, titleText: String?) {
     textView.text = titleText
     textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16F)
     textView.typeface = ResourcesCompat.getFont(textView.context, R.font.mulish_bold)

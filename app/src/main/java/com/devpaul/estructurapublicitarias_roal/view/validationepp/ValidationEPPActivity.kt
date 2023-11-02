@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import android.view.View
-import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -18,6 +17,7 @@ import com.devpaul.estructurapublicitarias_roal.data.models.ValidationEPP
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidationEPPRequest
 import com.devpaul.estructurapublicitarias_roal.data.repository.ValidationEPPRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityValidationEppactivityBinding
+import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomError
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.ValidationEPPUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
@@ -62,8 +62,6 @@ class ValidationEPPActivity : BaseActivity() {
                         val requestValidateEPPService = validateUseCase.validateEPP(validateEPP)
 
                         withContext(Dispatchers.Main) {
-
-                            hideLoading()
                             when (requestValidateEPPService) {
                                 is CustomResult.OnSuccess -> {
                                     val data = requestValidateEPPService.data
@@ -71,20 +69,8 @@ class ValidationEPPActivity : BaseActivity() {
                                 }
 
                                 is CustomResult.OnError -> {
-                                    val codeState = SingletonError.code
-                                    val titleState = SingletonError.title
-                                    val subTitleState = if (SingletonError.subTitle.isNullOrEmpty()) {
-                                        "No data"
-                                    } else {
-                                        SingletonError.subTitle
-                                    }
-
-                                    showCustomDialog(this@ValidationEPPActivity,
-                                        titleState,
-                                        subTitleState,
-                                        codeState,
-                                        "Aceptar",
-                                        onClickListener = {})
+                                    val dataError = requestValidateEPPService.error
+                                    validateEquipmentErrorData(dataError)
                                 }
                             }
                         }
@@ -98,7 +84,18 @@ class ValidationEPPActivity : BaseActivity() {
         }
     }
 
+    private fun validateEquipmentErrorData(dataError: CustomError) {
+        hideLoading()
+        showCustomDialogErrorSingleton(this@ValidationEPPActivity,
+            dataError.title ?: SingletonError.title,
+            dataError.subtitle ?: SingletonError.subTitle,
+            dataError.code ?: SingletonError.code,
+            "Aceptar",
+            onClickListener = {})
+    }
+
     private fun validateEquipment(data: ValidationEPP?) {
+        hideLoading()
         val allEquipment = data?.allEquipment
         val wearingEquipment = data?.wearingEquipment
         val descriptionEquipment = data?.descriptionEquipment
@@ -154,7 +151,7 @@ class ValidationEPPActivity : BaseActivity() {
 
             if (currentColor == colorBlueLight) {
                 cardDetailsTextView.setOnClickListener {
-                    showDialogDetails(this@ValidationEPPActivity, descriptionEquipment, areaEquipment)
+                    showDialogDetailsValidateEquipment(this@ValidationEPPActivity, descriptionEquipment, areaEquipment)
                 }
             }
         }

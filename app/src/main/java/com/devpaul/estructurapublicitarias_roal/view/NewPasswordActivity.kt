@@ -8,7 +8,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.usecases.LoginUseCase
 import com.devpaul.estructurapublicitarias_roal.data.repository.LoginRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityNewPasswordBinding
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
-import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialog
+import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
@@ -59,7 +59,7 @@ class NewPasswordActivity : BaseActivity() {
                                 val codeState = SingletonError.code
                                 val title = SingletonError.title
                                 val subTitle = SingletonError.subTitle
-                                showCustomDialog(this@NewPasswordActivity, title, subTitle, codeState, "Aceptar", onClickListener = {})
+                                showCustomDialogErrorSingleton(this@NewPasswordActivity, title, subTitle, codeState, "Aceptar", onClickListener = {})
                             }
                         }
                     }

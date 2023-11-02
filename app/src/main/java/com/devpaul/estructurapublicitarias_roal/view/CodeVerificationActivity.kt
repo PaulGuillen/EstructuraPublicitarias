@@ -11,7 +11,7 @@ import com.devpaul.estructurapublicitarias_roal.data.models.response.MainUser
 import com.devpaul.estructurapublicitarias_roal.data.repository.LoginRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityCodeVerificationBinding
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
-import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialog
+import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
@@ -64,7 +64,7 @@ class CodeVerificationActivity : BaseActivity() {
                             val codeState = SingletonError.code
                             val title = SingletonError.title
                             val subTitle = SingletonError.subTitle
-                            showCustomDialog(this@CodeVerificationActivity, title, subTitle, codeState, "Aceptar", onClickListener = {})
+                            showCustomDialogErrorSingleton(this@CodeVerificationActivity, title, subTitle, codeState, "Aceptar", onClickListener = {})
                         }
                     }
                 }
@@ -101,7 +101,7 @@ class CodeVerificationActivity : BaseActivity() {
                         hideLoading()
                         when (requestLoginService) {
                             is CustomResult.OnSuccess -> {
-                                val datas = requestLoginService.data
+                                val data = requestLoginService.data
                                 goToNewPasswordView()
                             }
 
@@ -109,7 +109,7 @@ class CodeVerificationActivity : BaseActivity() {
                                 val codeState = SingletonError.code
                                 val title = SingletonError.title
                                 val subTitle = SingletonError.subTitle
-                                showCustomDialog(this@CodeVerificationActivity, title, subTitle, codeState, "Aceptar", onClickListener = {})
+                                showCustomDialogErrorSingleton(this@CodeVerificationActivity, title, subTitle, codeState, "Aceptar", onClickListener = {})
                             }
                         }
                     }

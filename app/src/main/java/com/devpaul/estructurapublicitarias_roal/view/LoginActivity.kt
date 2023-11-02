@@ -12,7 +12,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.usecases.LoginUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 import com.devpaul.estructurapublicitarias_roal.domain.utils.isEmailValid
-import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialog
+import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import kotlinx.coroutines.CoroutineScope
@@ -70,7 +70,7 @@ class LoginActivity : BaseActivity() {
                                     SingletonError.subTitle
                                 }
 
-                                showCustomDialog(this@LoginActivity, titleState, subTitleState, codeState, "Aceptar", onClickListener = {})
+                                showCustomDialogErrorSingleton(this@LoginActivity, titleState, subTitleState, codeState, "Aceptar", onClickListener = {})
                             }
                         }
                     }

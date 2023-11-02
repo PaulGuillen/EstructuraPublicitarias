@@ -13,7 +13,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.WorkerUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
-import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialog
+import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.devpaul.estructurapublicitarias_roal.view.emergency.EmergencyActivity
@@ -116,7 +116,7 @@ class HomeActivity : BaseActivity() {
         val codeState = SingletonError.code
         val title = SingletonError.title
         val subTitle = SingletonError.subTitle
-        showCustomDialog(this@HomeActivity, title, subTitle, codeState, "Aceptar", onClickListener = {})
+        showCustomDialogErrorSingleton(this@HomeActivity, title, subTitle, codeState, "Aceptar", onClickListener = {})
     }
 
     override fun onResume() {

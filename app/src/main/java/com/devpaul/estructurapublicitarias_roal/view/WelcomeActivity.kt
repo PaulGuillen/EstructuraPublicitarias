@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatDelegate
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityMainBinding
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
@@ -69,21 +67,10 @@ class WelcomeActivity : WelcomeBaseActivity() {
     private fun validateUserInSessionAndThemeDark() {
         val isDarkMode = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
         if (isDarkMode) {
-            showConfirmationDialog()
+            showConfirmationThemeDarkDialog()
         } else {
             validateUserInSession()
         }
-    }
-
-    private fun showConfirmationDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setMessage(getString(R.string.dark_mode_message))
-        builder.setPositiveButton(getString(R.string.message_ok_welcome)) { _, _ ->
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            recreate()
-        }
-        builder.setCancelable(false)
-        builder.show()
     }
 
     private fun checkForAppUpdate() {
@@ -101,7 +88,6 @@ class WelcomeActivity : WelcomeBaseActivity() {
             }
         }
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == updateRequestCode) {

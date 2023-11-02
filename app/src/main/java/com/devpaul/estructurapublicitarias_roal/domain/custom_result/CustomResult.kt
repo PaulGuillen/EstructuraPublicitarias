@@ -10,10 +10,10 @@ sealed class CustomResult<out T> {
 open class CustomError(
     val code: Int? = 0,
     val title: String? = null,
-    private val subtitle: String? = null,
-    val cause: Throwable? = null,
+    val subtitle: String? = null,
 ) {
-    private val generalMessage = "En este momento el servicio no está disponible"
+
+    private val generalMessage: String = "En este momento el servicio no está disponible"
 
     init {
         if (code == 400 || code == 401 || code == 404 || code == 503 || code == 504

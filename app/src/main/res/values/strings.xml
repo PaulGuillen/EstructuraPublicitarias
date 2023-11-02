@@ -159,7 +159,7 @@
     <string name="text_drop_down_nationality">Nacionalidad</string>
 
     <!--ACTIVITY WElCOME -->
-    <string name="dark_mode_message">Lo siento, nuestra aplicación actualmente no admite el modo oscuro. Pero no te preocupes, desactivaremos el modo oscuro para ti en esta aplicación</string>
+    <string name="dark_mode_message">Lo sentimos, nuestra aplicación actualmente no admite el modo oscuro. Pero no te preocupes, desactivaremos el modo oscuro para ti en esta aplicación.</string>
     <string name="message_ok_welcome">OK</string>
 
 </resources>

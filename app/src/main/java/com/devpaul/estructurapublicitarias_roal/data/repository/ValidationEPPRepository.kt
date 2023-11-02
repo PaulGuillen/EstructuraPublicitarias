@@ -50,7 +50,7 @@ class ValidationEPPRepository : ValidationEPPRepositoryNetwork {
                         HttpError(
                             code = callApi.code(),
                             title = serviceTitle,
-                            subtitle = errorResponse.message
+                            subtitle = errorResponse?.message ?: callApi.message()
                         )
                     )
                 }
