@@ -84,7 +84,7 @@ abstract class InitialActivity : AppCompatActivity() {
         onScreen = true
     }
 
-    private fun clearPreferences() {
+    fun clearPreferences() {
         val prefs = SharedPref(this)
         prefs.clearPreferences()
     }

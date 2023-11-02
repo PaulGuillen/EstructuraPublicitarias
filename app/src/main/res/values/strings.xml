@@ -75,10 +75,10 @@
     <string name="fecha_de_creaci_n">Fecha de creación</string>
     <string name="password">*************</string>
     <string name="salir">Salir</string>
-    <string name="texto_card_view">Seguirás escuchando sobre nosotros, somos un grupo pequeño de desarolladores,que aun sigue en progreso.</string>
-    <string name="textAlerta">La aplicación aun sigue en mejores, si tienes problemas comunicate con nosotros.</string>
+    <string name="texto_card_view">Seguirás escuchando sobre nosotros, somos un grupo pequeño de desarolladores, que aun sigue en progreso.</string>
+    <string name="textAlerta">La aplicación aun sigue en mejoras funcionales, si tienes problemas comunicate con nosotros.</string>
     <string name="textVerififacion">Se verifica que la aplicación cumple con los Terminos y Condiciones correspondientes.</string>
-    <string name="textSegundaVerificacion">Desarollo por parte de Ingenieros de Siste,as.</string>
+    <string name="textSegundaVerificacion">Desarrollo por parte de Ingenieros de Sistemas.</string>
     <string name="buscar">Buscar</string>
     <string name="tipos_de_busquedad">Tipos de sangre</string>
     <string name="foto">Foto</string>
@@ -157,5 +157,9 @@
     <string name="text_gender">Género</string>
     <string name="text_nationality">Nación</string>
     <string name="text_drop_down_nationality">Nacionalidad</string>
+
+    <!--ACTIVITY WElCOME -->
+    <string name="dark_mode_message">Lo siento, nuestra aplicación actualmente no admite el modo oscuro. Pero no te preocupes, desactivaremos el modo oscuro para ti en esta aplicación</string>
+    <string name="message_ok_welcome">OK</string>
 
 </resources>

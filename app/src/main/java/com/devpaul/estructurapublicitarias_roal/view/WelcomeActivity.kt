@@ -77,8 +77,8 @@ class WelcomeActivity : WelcomeBaseActivity() {
 
     private fun showConfirmationDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage("Actualmente la aplicación no soporta el modo oscuro. Solo se desactivara en la aplicación actual")
-        builder.setPositiveButton("Sí") { _, _ ->
+        builder.setMessage(getString(R.string.dark_mode_message))
+        builder.setPositiveButton(getString(R.string.message_ok_welcome)) { _, _ ->
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             recreate()
         }
@@ -106,7 +106,7 @@ class WelcomeActivity : WelcomeBaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == updateRequestCode) {
             if (resultCode != RESULT_OK) {
-                Toast.makeText(this, "Debe actualziar", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Debe actualizar", Toast.LENGTH_LONG).show()
             }
         }
         super.onActivityResult(requestCode, resultCode, data)

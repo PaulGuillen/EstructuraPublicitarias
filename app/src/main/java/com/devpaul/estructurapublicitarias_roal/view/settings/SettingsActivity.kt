@@ -11,6 +11,7 @@ import com.devpaul.estructurapublicitarias_roal.databinding.ActivitySettingsBind
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
+import com.devpaul.estructurapublicitarias_roal.view.LoginActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 
 @SuppressLint("SourceLockedOrientationActivity")
@@ -57,6 +58,14 @@ class SettingsActivity : BaseActivity() {
         val versionName = BuildConfig.VERSION_NAME
         val textFullVersion = getString(R.string.app_versi_n) + "\r" + versionName
         binding.version.text = textFullVersion
+
+        binding.btnSalir.setOnClickListener {
+            val i = Intent(this, LoginActivity::class.java)
+            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(i)
+            clearPreferences()
+        }
+
     }
 
     override fun onBackPressed() {

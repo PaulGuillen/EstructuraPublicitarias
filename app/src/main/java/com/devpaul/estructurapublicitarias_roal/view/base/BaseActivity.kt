@@ -5,7 +5,9 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.domain.utils.ChargeDialog
+import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
 
 abstract class BaseActivity : InitialActivity() {
 
@@ -25,8 +27,8 @@ abstract class BaseActivity : InitialActivity() {
 
     private fun showConfirmationDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage("Actualmente la aplicación no soporta el modo oscuro. Solo se desactivara en la aplicación actual")
-        builder.setPositiveButton("Sí") { _, _ ->
+        builder.setMessage(getString(R.string.dark_mode_message))
+        builder.setPositiveButton(getString(R.string.message_ok_welcome)) { _, _ ->
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             recreate()
         }
@@ -41,4 +43,5 @@ abstract class BaseActivity : InitialActivity() {
     fun showLoading() {
         progressDialog = ChargeDialog.showLoadingDialog(this)
     }
+
 }

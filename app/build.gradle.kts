@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.devpaul.estructurapublicitarias_roal"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
