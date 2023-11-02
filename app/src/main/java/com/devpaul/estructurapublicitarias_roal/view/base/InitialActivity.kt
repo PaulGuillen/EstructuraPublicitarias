@@ -11,7 +11,6 @@ import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import com.devpaul.estructurapublicitarias_roal.view.WelcomeActivity
 import timber.log.Timber
-import kotlin.system.exitProcess
 
 abstract class InitialActivity : AppCompatActivity() {
 
