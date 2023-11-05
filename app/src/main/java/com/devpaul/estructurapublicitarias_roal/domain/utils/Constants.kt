@@ -10,5 +10,6 @@ const val ACTIVE = "Active"
 const val INACTIVE = "Inactive"
 const val WAIT_TIME = 4000
 const val GENERIC_ERROR_MESSAGE_LOGIN = "Clave y/o usuarios incorrectos"
-const val MESSAGE_DATA_NOT_VALID = "Porfavor, valide que los campos esten completos"
+const val MESSAGE_DATA_NOT_VALID = "Porfavor, valide los campos"
+const val SUCCESS_MESSAGE_CHANGE_PASSWORD = "Contraseña actualizada exitosamente"
 const val TIME_LEFT_FORGOT_PASSWORD = 60000

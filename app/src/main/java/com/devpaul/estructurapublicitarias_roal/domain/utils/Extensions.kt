@@ -15,6 +15,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityOptionsCompat
@@ -267,4 +268,21 @@ fun isValidFormCodeVerification(
         return false
     }
     return true
+}
+
+fun isValidFormNewPassword(password: String, confirmPassword: String): Boolean {
+    if (password.isBlank()) {
+        return false
+    }
+    if (confirmPassword.isBlank()) {
+        return false
+    }
+    if (password != confirmPassword) {
+        return false
+    }
+    return true
+}
+
+fun Context.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, message, duration).show()
 }
