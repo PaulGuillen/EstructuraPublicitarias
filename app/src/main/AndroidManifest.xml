@@ -80,7 +80,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.NewPasswordActivity"
+            android:name=".view.forgot_password.newPassword.NewPasswordActivity"
             android:exported="false"
             android:windowSoftInputMode="stateHidden">
             <meta-data
@@ -88,14 +88,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.codeVerfication.CodeVerificationActivity"
+            android:name=".view.forgot_password.codeVerification.CodeVerificationActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.ForgotPasswordActivity"
+            android:name=".view.forgot_password.forgotPassword.ForgotPasswordActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

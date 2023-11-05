@@ -1,4 +1,4 @@
-package com.devpaul.estructurapublicitarias_roal.view
+package com.devpaul.estructurapublicitarias_roal.view.forgot_password.newPassword
 
 import android.os.Bundle
 import android.widget.Toast
@@ -11,6 +11,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
+import com.devpaul.estructurapublicitarias_roal.view.forgot_password.forgotPassword.ForgotPasswordActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.devpaul.estructurapublicitarias_roal.view.login.LoginActivity
 import kotlinx.coroutines.CoroutineScope

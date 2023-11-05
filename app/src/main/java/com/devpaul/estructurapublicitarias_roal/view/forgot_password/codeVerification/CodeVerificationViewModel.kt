@@ -1,4 +1,4 @@
-package com.devpaul.estructurapublicitarias_roal.view.codeVerfication
+package com.devpaul.estructurapublicitarias_roal.view.forgot_password.codeVerification
 
 import android.content.Context
 import android.os.CountDownTimer
@@ -18,7 +18,6 @@ import com.devpaul.estructurapublicitarias_roal.domain.utils.isValidFormCodeVeri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 class CodeVerificationViewModel(context: Context) : ViewModel() {
 

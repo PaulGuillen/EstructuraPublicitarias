@@ -1,4 +1,4 @@
-package com.devpaul.estructurapublicitarias_roal.view.codeVerfication
+package com.devpaul.estructurapublicitarias_roal.view.forgot_password.codeVerification
 
 import android.os.Bundle
 import android.view.View
@@ -8,8 +8,8 @@ import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityCodeVerificationBinding
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordResult
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
-import com.devpaul.estructurapublicitarias_roal.view.ForgotPasswordActivity
-import com.devpaul.estructurapublicitarias_roal.view.NewPasswordActivity
+import com.devpaul.estructurapublicitarias_roal.view.forgot_password.forgotPassword.ForgotPasswordActivity
+import com.devpaul.estructurapublicitarias_roal.view.forgot_password.newPassword.NewPasswordActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 
 class CodeVerificationActivity : BaseActivity() {
@@ -79,9 +79,10 @@ class CodeVerificationActivity : BaseActivity() {
                 Toast.makeText(this, MESSAGE_DATA_NOT_VALID, Toast.LENGTH_SHORT).show()
             }
 
-            ForgotPasswordResult.ValidationError -> {
+            is ForgotPasswordResult.ValidationError -> {
                 setButtonVisibility(showReSendEmail = true, showRecoverPassword = false)
             }
+
         }
     }
 

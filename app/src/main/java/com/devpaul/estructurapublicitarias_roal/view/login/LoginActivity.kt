@@ -7,7 +7,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.LoginResul
 import com.devpaul.estructurapublicitarias_roal.domain.utils.ViewModelFactory
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
-import com.devpaul.estructurapublicitarias_roal.view.ForgotPasswordActivity
+import com.devpaul.estructurapublicitarias_roal.view.forgot_password.forgotPassword.ForgotPasswordActivity
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import timber.log.Timber

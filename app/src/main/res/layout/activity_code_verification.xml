@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.ForgotPasswordActivity">
+    tools:context=".view.forgot_password.forgotPassword.ForgotPasswordActivity">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.devpaul.estructurapublicitarias_roal.view.codeVerfication.CodeVerificationViewModel" />
+            type="com.devpaul.estructurapublicitarias_roal.view.forgot_password.codeVerification.CodeVerificationViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

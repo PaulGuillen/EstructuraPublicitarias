@@ -1,4 +1,4 @@
-package com.devpaul.estructurapublicitarias_roal.view
+package com.devpaul.estructurapublicitarias_roal.view.forgot_password.forgotPassword
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -13,7 +13,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErr
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
-import com.devpaul.estructurapublicitarias_roal.view.codeVerfication.CodeVerificationActivity
+import com.devpaul.estructurapublicitarias_roal.view.forgot_password.codeVerification.CodeVerificationActivity
 import com.devpaul.estructurapublicitarias_roal.view.login.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
