@@ -1,4 +1,4 @@
-package com.devpaul.estructurapublicitarias_roal.domain.usecases.login
+package com.devpaul.estructurapublicitarias_roal.domain.utils
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

@@ -11,7 +11,6 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.LoginResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.LoginUseCase2
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
-import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

@@ -23,7 +23,7 @@ class LoginUseCase2(private val loginRepositoryNetwork: LoginRepositoryNetwork) 
         return@withContext login
     }
 
-    fun forgotPassword(mainUser: MainUser): CustomResult<PrincipalUser> {
+    suspend fun forgotPassword(mainUser: MainUser): CustomResult<PrincipalUser> = withContext(Dispatchers.IO) {
         val forgotPassword = loginRepositoryNetwork.forgotPassword(mainUser)
         when (forgotPassword) {
             is CustomResult.OnSuccess -> {
@@ -34,10 +34,10 @@ class LoginUseCase2(private val loginRepositoryNetwork: LoginRepositoryNetwork) 
                 PrincipalUser()
             }
         }
-        return forgotPassword
+        return@withContext forgotPassword
     }
 
-    fun codeVerification(mainUser: MainUser): CustomResult<PrincipalUser> {
+    suspend fun codeVerification(mainUser: MainUser): CustomResult<PrincipalUser> = withContext(Dispatchers.IO) {
         val codeVerification = loginRepositoryNetwork.codeVerification(mainUser)
         when (codeVerification) {
             is CustomResult.OnSuccess -> {
@@ -48,7 +48,7 @@ class LoginUseCase2(private val loginRepositoryNetwork: LoginRepositoryNetwork) 
                 PrincipalUser()
             }
         }
-        return codeVerification
+        return@withContext codeVerification
     }
 
 

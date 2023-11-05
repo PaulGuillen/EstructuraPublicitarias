@@ -4,13 +4,12 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityLoginBinding
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.LoginResult
-import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.ViewModelFactory
+import com.devpaul.estructurapublicitarias_roal.domain.utils.ViewModelFactory
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import timber.log.Timber
-
 
 class LoginActivity : BaseActivity() {
 
