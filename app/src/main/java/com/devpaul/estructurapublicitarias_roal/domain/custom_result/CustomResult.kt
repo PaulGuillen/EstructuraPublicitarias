@@ -17,15 +17,8 @@ open class CustomError(
 
     init {
         if (code == 400 || code == 401 || code == 404 || code == 503 || code == 504
-            || code == 502 || code == 408
+            || code == 502 || code == 408 || code == 500
         ) {
-            SingletonError.subTitle = subtitle?.let {
-                it.ifEmpty {
-                    generalMessage
-                }
-            } ?: generalMessage
-        }
-        if (code == 500) {
             SingletonError.subTitle = subtitle?.let {
                 it.ifEmpty {
                     generalMessage

@@ -230,3 +230,16 @@ fun applyCustomTextStyleToTextView(textView: TextView, titleText: String?) {
     textView.paintFlags = textView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 }
 
+fun isValidForm(email: String, password: String): Boolean {
+
+    if (email.isBlank()) {
+        return false
+    }
+    if (password.isBlank()) {
+        return false
+    }
+    if (!email.isEmailValid()) {
+        return false
+    }
+    return true
+}

@@ -11,7 +11,7 @@ import com.devpaul.estructurapublicitarias_roal.databinding.ActivitySettingsBind
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
-import com.devpaul.estructurapublicitarias_roal.view.LoginActivity
+import com.devpaul.estructurapublicitarias_roal.view.login.LoginActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 
 @SuppressLint("SourceLockedOrientationActivity")

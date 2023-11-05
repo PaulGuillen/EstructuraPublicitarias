@@ -12,6 +12,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErr
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
+import com.devpaul.estructurapublicitarias_roal.view.login.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -12,6 +12,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.WelcomeBaseActivity
+import com.devpaul.estructurapublicitarias_roal.view.login.LoginActivity
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType

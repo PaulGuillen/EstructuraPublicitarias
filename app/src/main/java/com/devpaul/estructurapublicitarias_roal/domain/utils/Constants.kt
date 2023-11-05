@@ -9,3 +9,4 @@ const val SaveUserInSession = "SaveUserInSession"
 const val ACTIVE = "Active"
 const val INACTIVE = "Inactive"
 const val WAIT_TIME = 4000
+const val GENERIC_ERROR_MESSAGE_LOGIN = "Clave y/o usuarios incorrectos"

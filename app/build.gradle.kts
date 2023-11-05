@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
 }
 
 android {
@@ -24,6 +25,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        dataBinding = true
     }
 
     productFlavors {
@@ -53,6 +55,7 @@ android {
         jvmTarget = "1.8"
     }
     viewBinding.isEnabled = true
+    dataBinding.isEnabled = true
 }
 
 dependencies {
@@ -99,6 +102,14 @@ dependencies {
 
     // PlayCore appUpdate Google Play
     implementation("com.google.android.play:core:1.10.3")
+
+    val lifeCycleVersion = "2.2.0"
+    dependencies {
+        add("implementation", "androidx.lifecycle:lifecycle-extensions:$lifeCycleVersion")
+        add("implementation", "androidx.lifecycle:lifecycle-runtime-ktx:$lifeCycleVersion")
+        add("implementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycleVersion")
+        add("implementation", "androidx.lifecycle:lifecycle-livedata-ktx:$lifeCycleVersion")
+    }
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

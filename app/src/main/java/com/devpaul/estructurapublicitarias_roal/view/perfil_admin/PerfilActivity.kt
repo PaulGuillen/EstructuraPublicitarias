@@ -9,7 +9,7 @@ import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityPerfilBinding
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
-import com.devpaul.estructurapublicitarias_roal.view.LoginActivity
+import com.devpaul.estructurapublicitarias_roal.view.login.LoginActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import timber.log.Timber
 
