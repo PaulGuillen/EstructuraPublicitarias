@@ -88,7 +88,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.CodeVerificationActivity"
+            android:name=".view.codeVerfication.CodeVerificationActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

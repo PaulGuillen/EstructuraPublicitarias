@@ -243,3 +243,28 @@ fun isValidForm(email: String, password: String): Boolean {
     }
     return true
 }
+
+fun isValidFormCodeVerification(
+    numberOne: String,
+    numberTwo: String,
+    numberThree: String,
+    numberFour: String,
+    fullNumber: String
+): Boolean {
+    if (numberOne.isBlank()) {
+        return false
+    }
+    if (numberTwo.isBlank()) {
+        return false
+    }
+    if (numberThree.isBlank()) {
+        return false
+    }
+    if (numberFour.isBlank()) {
+        return false
+    }
+    if (fullNumber.isBlank()) {
+        return false
+    }
+    return true
+}

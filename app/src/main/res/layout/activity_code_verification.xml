@@ -1,169 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
     tools:context=".view.ForgotPasswordActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintGeneral"
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.devpaul.estructurapublicitarias_roal.view.codeVerfication.CodeVerificationViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/ic_baseline_arrow_circle_left_24"
-            android:contentDescription="@string/todo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textMain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/codigo_recibido"
-            android:textAlignment="center"
-            android:textAppearance="@style/subtitulosGeneral"
-            app:layout_constraintStart_toStartOf="@+id/btnBack"
-            app:layout_constraintTop_toBottomOf="@+id/btnBack" />
-
-        <EditText
-            android:id="@+id/textNumberOne"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:autofillHints="emailAddress"
-            android:fontFamily="@font/mulish_regular"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textAppearance="@style/textNumbersVerification"
-            app:layout_constraintStart_toStartOf="@+id/textMain"
-            app:layout_constraintTop_toBottomOf="@+id/textMain"
-            tools:ignore="LabelFor"
-            tools:text="@string/number" />
-
-        <EditText
-            android:id="@+id/textNumberTwo"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:autofillHints="emailAddress"
-            android:fontFamily="@font/mulish_regular"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textAppearance="@style/textNumbersVerification"
-            app:layout_constraintBottom_toBottomOf="@+id/textNumberOne"
-            app:layout_constraintStart_toEndOf="@+id/textNumberOne"
-            app:layout_constraintTop_toTopOf="@+id/textNumberOne"
-            tools:ignore="LabelFor"
-            tools:text="@string/number" />
-
-        <EditText
-            android:id="@+id/textNumberThree"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:autofillHints="emailAddress"
-            android:fontFamily="@font/mulish_regular"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textAppearance="@style/textNumbersVerification"
-            app:layout_constraintBottom_toBottomOf="@+id/textNumberTwo"
-            app:layout_constraintStart_toEndOf="@+id/textNumberTwo"
-            app:layout_constraintTop_toTopOf="@+id/textNumberTwo"
-            tools:ignore="LabelFor"
-            tools:text="@string/number" />
-
-        <EditText
-            android:id="@+id/textNumberFour"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:autofillHints="emailAddress"
-            android:fontFamily="@font/mulish_regular"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textAppearance="@style/textNumbersVerification"
-            app:layout_constraintBottom_toBottomOf="@+id/textNumberThree"
-            app:layout_constraintStart_toEndOf="@+id/textNumberThree"
-            app:layout_constraintTop_toTopOf="@+id/textNumberThree"
-            tools:ignore="LabelFor"
-            tools:text="@string/number" />
-
-        <EditText
-            android:id="@+id/textNumberFive"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:autofillHints="emailAddress"
-            android:fontFamily="@font/mulish_regular"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textAppearance="@style/textNumbersVerification"
-            app:layout_constraintBottom_toBottomOf="@+id/textNumberFour"
-            app:layout_constraintStart_toEndOf="@+id/textNumberFour"
-            app:layout_constraintTop_toTopOf="@+id/textNumberFour"
-            tools:ignore="LabelFor"
-            tools:text="@string/number" />
-
-        <TextView
-            android:id="@+id/textTimer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/mulish_bold"
-            android:textColor="@color/color_blue_light"
-            app:layout_constraintEnd_toEndOf="@+id/textNumberFive"
-            app:layout_constraintTop_toBottomOf="@+id/textNumberOne"
-            tools:text="Tiempo restante : 0:60" />
-
-        <Button
-            android:id="@+id/btnRecuperarContrasena"
-            style="@style/botonesGeneral"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintGeneral"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="40dp"
-            android:text="@string/siguiente"
-            app:layout_constraintBottom_toTopOf="@+id/tvName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btnReenviarCorreo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/botonesGeneral"
-            android:visibility="gone"
-            android:layout_margin="40dp"
-            android:text="@string/reenviar_nuevamente"
-            app:layout_constraintBottom_toTopOf="@+id/tvName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ic_baseline_arrow_circle_left_24"
+                android:contentDescription="@string/todo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#424242"
-            android:fontFamily="@font/mulish_regular"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/llamanos"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="RtlSymmetry" />
+            <TextView
+                android:id="@+id/textMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/codigo_recibido"
+                android:textAlignment="center"
+                android:textAppearance="@style/subtitulosGeneral"
+                app:layout_constraintStart_toStartOf="@+id/btnBack"
+                app:layout_constraintTop_toBottomOf="@+id/btnBack" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/textNumberOne"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/mulish_regular"
+                android:inputType="number"
+                android:maxLength="1"
+                android:text="@={viewModel.firstInput}"
+                android:textAppearance="@style/textNumbersVerification"
+                app:layout_constraintStart_toStartOf="@+id/textMain"
+                app:layout_constraintTop_toBottomOf="@+id/textMain"
+                tools:ignore="LabelFor"
+                tools:text="@string/number" />
 
-</androidx.core.widget.NestedScrollView>
+            <EditText
+                android:id="@+id/textNumberTwo"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/mulish_regular"
+                android:text="@={viewModel.secondInput}"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textAppearance="@style/textNumbersVerification"
+                app:layout_constraintBottom_toBottomOf="@+id/textNumberOne"
+                app:layout_constraintStart_toEndOf="@+id/textNumberOne"
+                app:layout_constraintTop_toTopOf="@+id/textNumberOne"
+                tools:ignore="LabelFor"
+                tools:text="@string/number" />
+
+            <EditText
+                android:id="@+id/textNumberThree"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.thirdInput}"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/mulish_regular"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textAppearance="@style/textNumbersVerification"
+                app:layout_constraintBottom_toBottomOf="@+id/textNumberTwo"
+                app:layout_constraintStart_toEndOf="@+id/textNumberTwo"
+                app:layout_constraintTop_toTopOf="@+id/textNumberTwo"
+                tools:ignore="LabelFor"
+                tools:text="@string/number" />
+
+            <EditText
+                android:id="@+id/textNumberFour"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.fourthInput}"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/mulish_regular"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textAppearance="@style/textNumbersVerification"
+                app:layout_constraintBottom_toBottomOf="@+id/textNumberThree"
+                app:layout_constraintStart_toEndOf="@+id/textNumberThree"
+                app:layout_constraintTop_toTopOf="@+id/textNumberThree"
+                tools:ignore="LabelFor"
+                tools:text="@string/number" />
+
+            <EditText
+                android:id="@+id/textNumberFive"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.fiveInput}"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/mulish_regular"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textAppearance="@style/textNumbersVerification"
+                app:layout_constraintBottom_toBottomOf="@+id/textNumberFour"
+                app:layout_constraintStart_toEndOf="@+id/textNumberFour"
+                app:layout_constraintTop_toTopOf="@+id/textNumberFour"
+                tools:ignore="LabelFor"
+                tools:text="@string/number" />
+
+            <TextView
+                android:id="@+id/textTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/mulish_bold"
+                android:text="@={viewModel.textTimer}"
+                android:textColor="@color/color_blue_light"
+                app:layout_constraintEnd_toEndOf="@+id/textNumberFive"
+                app:layout_constraintTop_toBottomOf="@+id/textNumberOne"
+                tools:text="Tiempo restante : 0:60" />
+
+            <Button
+                android:id="@+id/btnRecuperarContrasena"
+                style="@style/botonesGeneral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="40dp"
+                android:text="@string/siguiente"
+                app:layout_constraintBottom_toTopOf="@+id/tvName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/btnReenviarCorreo"
+                style="@style/botonesGeneral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="40dp"
+                android:text="@string/reenviar_nuevamente"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/tvName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#424242"
+                android:fontFamily="@font/mulish_regular"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/llamanos"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="RtlSymmetry" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

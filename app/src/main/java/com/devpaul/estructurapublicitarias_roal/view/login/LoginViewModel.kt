@@ -74,7 +74,7 @@ class LoginViewModel(context: Context) : ViewModel() {
                 }
             }
         } catch (error: Exception) {
-            _loginResult.value = LoginResult.Error(SingletonError.code, SingletonError.title, SingletonError.subTitle)
+            _loginResult.value = LoginResult.ValidationError
         } finally {
             _showLoadingDialog.value = false
         }

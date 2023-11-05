@@ -7,11 +7,13 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.LoginUseCase
 import com.devpaul.estructurapublicitarias_roal.data.repository.LoginRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityForgotPasswordBinding
+import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
+import com.devpaul.estructurapublicitarias_roal.view.codeVerfication.CodeVerificationActivity
 import com.devpaul.estructurapublicitarias_roal.view.login.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +22,6 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class ForgotPasswordActivity : BaseActivity() {
-
     lateinit var binding: ActivityForgotPasswordBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,10 +86,14 @@ class ForgotPasswordActivity : BaseActivity() {
     }
 
     private fun goToCodeVerification() {
-        val extras = Bundle()
+        val prefs = SharedPref(this)
         val email = binding.textEmail.text.toString()
-        extras.putString("email", email)
-        startNewActivityWithAnimation(this@ForgotPasswordActivity, CodeVerificationActivity::class.java, extras)
+
+        if (!email.isNullOrBlank()) {
+            prefs.saveData("EmailForgotPassword", email)
+        }
+
+        startNewActivityWithAnimation(this@ForgotPasswordActivity, CodeVerificationActivity::class.java)
     }
 
     private fun backView() {
