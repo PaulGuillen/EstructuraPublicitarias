@@ -7,6 +7,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.LoginResul
 import com.devpaul.estructurapublicitarias_roal.domain.utils.ViewModelFactory
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
+import com.devpaul.estructurapublicitarias_roal.view.ForgotPasswordActivity
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import timber.log.Timber
@@ -40,6 +41,9 @@ class LoginActivity : BaseActivity() {
             }
         }
 
+        binding.textForgotPassword.setOnClickListener {
+            gotToForgotPasswordView()
+        }
     }
 
     private fun handleLoginResult(result: LoginResult) {
@@ -61,6 +65,10 @@ class LoginActivity : BaseActivity() {
                 Timber.d("ValidationError")
             }
         }
+    }
+
+    private fun gotToForgotPasswordView() {
+        startNewActivityWithAnimation(this@LoginActivity, ForgotPasswordActivity::class.java,null)
     }
 
 }

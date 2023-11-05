@@ -7,4 +7,5 @@ sealed class ForgotPasswordResult {
     data class Error(val code: Int?, val title: String?, val subTitle: String?) : ForgotPasswordResult()
     data object ValidationError : ForgotPasswordResult()
     data object ReSendEmailSuccess : ForgotPasswordResult()
+    data object NotValidForm : ForgotPasswordResult()
 }

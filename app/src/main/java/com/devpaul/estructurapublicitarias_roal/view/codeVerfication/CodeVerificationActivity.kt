@@ -2,13 +2,12 @@ package com.devpaul.estructurapublicitarias_roal.view.codeVerfication
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityCodeVerificationBinding
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordResult
-import com.devpaul.estructurapublicitarias_roal.domain.utils.ViewModelFactory
-import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
-import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
-import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
+import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import com.devpaul.estructurapublicitarias_roal.view.ForgotPasswordActivity
 import com.devpaul.estructurapublicitarias_roal.view.NewPasswordActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
@@ -50,6 +49,15 @@ class CodeVerificationActivity : BaseActivity() {
                 hideLoading()
             }
         }
+
+        viewModel.showReSendButton.observe(this) { showReSend ->
+            binding.btnReenviarCorreo.visibility = if (showReSend) View.VISIBLE else View.GONE
+        }
+
+        viewModel.showRecoverPasswordButton.observe(this) { showRecoverPassword ->
+            binding.btnRecuperarContrasena.visibility = if (showRecoverPassword) View.VISIBLE else View.GONE
+        }
+
     }
 
     private fun handleForgotPasswordResult(result: ForgotPasswordResult) {
@@ -60,15 +68,19 @@ class CodeVerificationActivity : BaseActivity() {
 
             is ForgotPasswordResult.Error -> {
                 showCustomDialogError(result)
-                setButtonVisibility(showReSend = true, showRecoverPassword = false)
+                setButtonVisibility(showReSendEmail = true, showRecoverPassword = false)
             }
 
             is ForgotPasswordResult.ReSendEmailSuccess -> {
-                setButtonVisibility(showReSend = false, showRecoverPassword = true)
+                setButtonVisibility(showReSendEmail = false, showRecoverPassword = true)
+            }
+
+            is ForgotPasswordResult.NotValidForm -> {
+                Toast.makeText(this, MESSAGE_DATA_NOT_VALID, Toast.LENGTH_SHORT).show()
             }
 
             ForgotPasswordResult.ValidationError -> {
-                setButtonVisibility(showReSend = true, showRecoverPassword = false)
+                setButtonVisibility(showReSendEmail = true, showRecoverPassword = false)
             }
         }
     }
@@ -79,13 +91,13 @@ class CodeVerificationActivity : BaseActivity() {
             result.title,
             result.subTitle,
             result.code,
-            "Aceptar",
+            getString(R.string.dialog_singleton_text_button_accept),
             onClickListener = {}
         )
     }
 
-    private fun setButtonVisibility(showReSend: Boolean, showRecoverPassword: Boolean) {
-        binding.btnReenviarCorreo.visibility = if (showReSend) View.VISIBLE else View.GONE
+    private fun setButtonVisibility(showReSendEmail: Boolean, showRecoverPassword: Boolean) {
+        binding.btnReenviarCorreo.visibility = if (showReSendEmail) View.VISIBLE else View.GONE
         binding.btnRecuperarContrasena.visibility = if (showRecoverPassword) View.VISIBLE else View.GONE
     }
 

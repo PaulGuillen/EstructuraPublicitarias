@@ -13,6 +13,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.F
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
+import com.devpaul.estructurapublicitarias_roal.domain.utils.TIME_LEFT_FORGOT_PASSWORD
 import com.devpaul.estructurapublicitarias_roal.domain.utils.isValidFormCodeVerification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,7 +33,7 @@ class CodeVerificationViewModel(context: Context) : ViewModel() {
     val textTimer = MutableLiveData<String>()
 
     private var countDownTimer: CountDownTimer? = null
-    private var millisUntilFinished: Long = 60000
+    private var millisUntilFinished: Long = 0
 
     private val _codeVerificationResult = MutableLiveData<ForgotPasswordResult>()
 
@@ -41,6 +42,13 @@ class CodeVerificationViewModel(context: Context) : ViewModel() {
     private val _showLoadingDialog = MutableLiveData<Boolean>()
     val showLoadingDialog: LiveData<Boolean>
         get() = _showLoadingDialog
+
+
+    private val _showReSendButton = MutableLiveData<Boolean>()
+    val showReSendButton: LiveData<Boolean> = _showReSendButton
+
+    private val _showRecoverPasswordButton = MutableLiveData<Boolean>()
+    val showRecoverPasswordButton: LiveData<Boolean> = _showRecoverPasswordButton
 
 
     init {
@@ -71,8 +79,8 @@ class CodeVerificationViewModel(context: Context) : ViewModel() {
         val fullNumber = "$numberOne$numberTwo$numberThree$numberFour$numberFive"
         val action = "code_verification"
 
-        if (isValidFormCodeVerification(numberOne, numberTwo, numberThree, numberFour, numberFive)) {
-            _codeVerificationResult.value = ForgotPasswordResult.ValidationError
+        if (!isValidFormCodeVerification(numberOne, numberTwo, numberThree, numberFour, numberFive)) {
+            _codeVerificationResult.value = ForgotPasswordResult.NotValidForm
             _showLoadingDialog.value = false
             return
         }
@@ -108,14 +116,13 @@ class CodeVerificationViewModel(context: Context) : ViewModel() {
             }
 
         } catch (e: Exception) {
-            Timber.d("Response $e")
+            _codeVerificationResult.value = ForgotPasswordResult.ValidationError
         } finally {
             _showLoadingDialog.value = false
         }
     }
 
     private suspend fun callServiceSendEmailAgain() {
-
         val email = prefs.getData("EmailForgotPassword")
         val action = "recuperar_contraseña"
 
@@ -131,7 +138,9 @@ class CodeVerificationViewModel(context: Context) : ViewModel() {
             when (val serviceSendEmailAgain = loginUseCase.forgotPassword(mainUser)) {
                 is CustomResult.OnSuccess -> {
                     val data = serviceSendEmailAgain.data
-                    startTimer()
+                    withContext(Dispatchers.Main) {
+                        startTimer()
+                    }
                     _codeVerificationResult.value = ForgotPasswordResult.ReSendEmailSuccess
                 }
 
@@ -149,17 +158,21 @@ class CodeVerificationViewModel(context: Context) : ViewModel() {
         } finally {
             _showLoadingDialog.value = false
         }
-
     }
 
+
     private fun startTimer() {
+        millisUntilFinished = TIME_LEFT_FORGOT_PASSWORD.toLong()
         textTimer.value = formatTime(millisUntilFinished)
+        updateButtonVisibility()
         countDownTimer = object : CountDownTimer(millisUntilFinished, 1000) {
             override fun onTick(time: Long) {
                 textTimer.value = formatTime(time)
             }
 
             override fun onFinish() {
+                millisUntilFinished = 0
+                updateButtonVisibility()
             }
         }
         countDownTimer?.start()
@@ -172,6 +185,15 @@ class CodeVerificationViewModel(context: Context) : ViewModel() {
     override fun onCleared() {
         countDownTimer?.cancel()
         super.onCleared()
+    }
+
+    fun updateButtonVisibility() {
+        val currentTime = millisUntilFinished
+        val showReSend = currentTime <= 0
+        val showRecoverPassword = currentTime > 0
+
+        _showReSendButton.value = showReSend
+        _showRecoverPasswordButton.value = showRecoverPassword
     }
 
 }
