@@ -1,5 +1,6 @@
 package com.devpaul.estructurapublicitarias_roal.view.login
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,10 +11,12 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.LoginResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.LoginUseCase2
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
+import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(context: Context) : ViewModel() {
+    private val prefs = SharedPref(context)
     val userEmail = MutableLiveData("")
     val userPassword = MutableLiveData("")
     private val _loginResult = MutableLiveData<LoginResult>()
@@ -22,9 +25,10 @@ class LoginViewModel : ViewModel() {
     val showLoadingDialog: LiveData<Boolean>
         get() = _showLoadingDialog
 
+    val isUserSaved = MutableLiveData(false)
 
     init {
-        Timber.d("Inicio del boton")
+        Timber.d("Inicio del LoginViewModel")
     }
 
     fun validateUserData() {
@@ -57,6 +61,7 @@ class LoginViewModel : ViewModel() {
             when (val requestLoginService = loginUseCase.getMainUser(mainUser)) {
                 is CustomResult.OnSuccess -> {
                     val data = requestLoginService.data
+                    setIsUserSaved(isUserSaved.value)
                     _loginResult.value = LoginResult.Success(data)
                 }
 
@@ -73,6 +78,14 @@ class LoginViewModel : ViewModel() {
             _loginResult.value = LoginResult.Error(SingletonError.code, SingletonError.title, SingletonError.subTitle)
         } finally {
             _showLoadingDialog.value = false
+        }
+    }
+
+    private fun setIsUserSaved(checked: Boolean?) {
+        if (checked == true) {
+            prefs.saveData(SaveUserInSession, ACTIVE)
+        } else {
+            prefs.saveData(SaveUserInSession, INACTIVE)
         }
     }
 

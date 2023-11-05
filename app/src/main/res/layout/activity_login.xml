@@ -84,9 +84,9 @@
                             android:drawableEnd="@drawable/icon_email_selector"
                             android:fontFamily="@font/mulish_regular"
                             android:hint="@string/correo"
-                            android:text="@={viewModel.userEmail}"
                             android:inputType="textEmailAddress"
                             android:padding="14dp"
+                            android:text="@={viewModel.userEmail}"
                             android:textSize="19sp" />
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -105,10 +105,10 @@
                                 android:autofillHints="password"
                                 android:background="@drawable/edittext_background_selector"
                                 android:fontFamily="@font/mulish_regular"
-                                android:text="@={viewModel.userPassword}"
                                 android:hint="@string/contrasena"
                                 android:inputType="textPassword"
                                 android:padding="14dp"
+                                android:text="@={viewModel.userPassword}"
                                 android:textSize="19sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -120,6 +120,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
+                        android:checked="@={viewModel.isUserSaved}"
                         android:text="@string/recordar_usuario" />
 
                     <Button
