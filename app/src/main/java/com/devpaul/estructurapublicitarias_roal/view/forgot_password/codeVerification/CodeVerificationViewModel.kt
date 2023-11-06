@@ -11,10 +11,7 @@ import com.devpaul.estructurapublicitarias_roal.data.repository.LoginRepository
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordUseCase
-import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
-import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
-import com.devpaul.estructurapublicitarias_roal.domain.utils.TIME_LEFT_FORGOT_PASSWORD
-import com.devpaul.estructurapublicitarias_roal.domain.utils.isValidFormCodeVerification
+import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -122,8 +119,8 @@ class CodeVerificationViewModel(context: Context) : ViewModel() {
     }
 
     private suspend fun callServiceSendEmailAgain() {
-        val email = prefs.getData("EmailForgotPassword")
-        val action = "recuperar_contraseña"
+        val email = prefs.getData(KEY_PASSWORD_PREF)
+        val action = ACTION_RECOVER_PASSWORD
 
         val mainUser = MainUser(
             email = email,

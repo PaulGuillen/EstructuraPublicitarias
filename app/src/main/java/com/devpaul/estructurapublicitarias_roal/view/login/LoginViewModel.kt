@@ -9,7 +9,7 @@ import com.devpaul.estructurapublicitarias_roal.data.models.response.MainUser
 import com.devpaul.estructurapublicitarias_roal.data.repository.LoginRepository
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.LoginResult
-import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.LoginUseCase2
+import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.LoginUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -56,7 +56,7 @@ class LoginViewModel(context: Context) : ViewModel() {
 
         try {
             val loginRepository = LoginRepository()
-            val loginUseCase = LoginUseCase2(loginRepository)
+            val loginUseCase = LoginUseCase(loginRepository)
             when (val requestLoginService = loginUseCase.getMainUser(mainUser)) {
                 is CustomResult.OnSuccess -> {
                     val data = requestLoginService.data

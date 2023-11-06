@@ -7,7 +7,7 @@ import com.devpaul.estructurapublicitarias_roal.data.models.response.MainUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class LoginUseCase2(private val loginRepositoryNetwork: LoginRepositoryNetwork) {
+class LoginUseCase(private val loginRepositoryNetwork: LoginRepositoryNetwork) {
 
     suspend fun getMainUser(mainUser: MainUser): CustomResult<PrincipalUser> = withContext(Dispatchers.IO) {
         val login = loginRepositoryNetwork.getMainUser(mainUser)

@@ -12,4 +12,7 @@ const val WAIT_TIME = 4000
 const val GENERIC_ERROR_MESSAGE_LOGIN = "Clave y/o usuarios incorrectos"
 const val MESSAGE_DATA_NOT_VALID = "Porfavor, valide los campos"
 const val SUCCESS_MESSAGE_CHANGE_PASSWORD = "Contraseña actualizada exitosamente"
+const val GENERIC_SERVICE_ERROR = "Contraseña actualizada exitosamente"
+const val KEY_PASSWORD_PREF = "EmailForgotPassword"
+const val ACTION_RECOVER_PASSWORD = "recuperar_contraseña"
 const val TIME_LEFT_FORGOT_PASSWORD = 60000

@@ -10,9 +10,7 @@ import com.devpaul.estructurapublicitarias_roal.data.repository.LoginRepository
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordUseCase
-import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
-import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
-import com.devpaul.estructurapublicitarias_roal.domain.utils.isValidFormNewPassword
+import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -42,8 +40,8 @@ class NewPasswordViewModel(context: Context) : ViewModel() {
 
         val newPassword = newPassword.value.toString()
         val confirmNewPassword = confirmNewPassword.value.toString()
-        val action = "change_password"
-        val email = prefs.getData("EmailForgotPassword")
+        val action = ACTION_RECOVER_PASSWORD
+        val email = prefs.getData(KEY_PASSWORD_PREF)
 
         if (!isValidFormNewPassword(newPassword, confirmNewPassword)) {
             _newPasswordResult.value = ForgotPasswordResult.NotValidForm
