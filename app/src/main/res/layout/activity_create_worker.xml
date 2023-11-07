@@ -311,19 +311,19 @@
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <ImageButton
                     android:id="@+id/btnCalendarJoin"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.3"
-                    android:background="@drawable/button_background"
+                    android:background="@color/orange_light"
                     android:clickable="true"
-                    android:elevation="12dp"
+                    android:contentDescription="@string/todo"
                     android:focusable="true"
                     android:fontFamily="@font/mulish_regular"
-                    android:gravity="center|start"
-                    android:text="@string/text_ingreso"
-                    android:textColor="@android:color/black"
+                    android:gravity="center"
+                    android:src="@drawable/baseline_calendar_month_24"
                     android:textSize="16sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -332,7 +332,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:background="@drawable/edittext_background_selector"
-                    android:hint="@string/hint_fecha"
+                    android:hint="@string/fecha_de_ingreso"
                     android:inputType="date"
                     android:maxLength="10"
                     android:padding="14dp"
@@ -346,19 +346,19 @@
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <ImageButton
                     android:id="@+id/btnCalendar"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.3"
-                    android:background="@drawable/button_background"
+                    android:background="@color/orange_light"
                     android:clickable="true"
-                    android:elevation="4dp"
+                    android:contentDescription="@string/todo"
                     android:focusable="true"
                     android:fontFamily="@font/mulish_regular"
-                    android:gravity="center|start"
-                    android:text="@string/text_nacimiento"
-                    android:textColor="@android:color/black"
+                    android:gravity="center"
+                    android:src="@drawable/baseline_calendar_month_24"
                     android:textSize="16sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -367,7 +367,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:background="@drawable/edittext_background_selector"
-                    android:hint="@string/hint_fecha"
+                    android:hint="@string/fecha_de_nacimiento"
                     android:inputType="date"
                     android:maxLength="10"
                     android:padding="14dp"

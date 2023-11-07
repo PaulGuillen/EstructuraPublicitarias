@@ -41,7 +41,7 @@
     <string name="inforamcion_error_de_servicio">Ups....parece que el servidor esta fallando, comuniquese con soporte</string>
     <string name="DNI_empleado">Escribe el DNI de empleado...</string>
     <string name="Dni">DNI : </string>
-    <string name="fecha_de_nacimiento">Fecha de Nacimiento : </string>
+    <string name="fecha_de_nacimiento">Fecha de Nacimiento</string>
     <string name="fecha_de_ingreso">Fecha de Ingreso</string>
     <string name="celular">Celular : </string>
     <string name="nombres">Nombres</string>
