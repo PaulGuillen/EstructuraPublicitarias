@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
+import androidx.lifecycle.ViewModelProvider
 import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -26,17 +27,29 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.R
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.BY_DNI
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.BY_PHOTO
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.BY_QR
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.SearchMode
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityEmergencyBinding
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.WorkerUseCase
+import com.devpaul.estructurapublicitarias_roal.domain.usecases.emergency.EmergencyResult
+import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordResult
+import com.devpaul.estructurapublicitarias_roal.domain.utils.MESSAGE_DATA_NOT_VALID
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
+import com.devpaul.estructurapublicitarias_roal.domain.utils.ViewModelFactory
 import com.devpaul.estructurapublicitarias_roal.domain.utils.applyCustomTextStyleToTextView
 import com.devpaul.estructurapublicitarias_roal.domain.utils.deleteCache
+import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
+import com.devpaul.estructurapublicitarias_roal.view.forgot_password.forgotPassword.ForgotPasswordViewModel
+import com.devpaul.estructurapublicitarias_roal.view.forgot_password.newPassword.NewPasswordActivity
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -48,6 +61,7 @@ class EmergencyActivity : BaseActivity() {
     lateinit var binding: ActivityEmergencyBinding
     private var workersProvider = WorkersProvider()
     private var imageFile: File? = null
+    private lateinit var viewModel: EmergencyViewModel
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,9 +70,24 @@ class EmergencyActivity : BaseActivity() {
         binding = ActivityEmergencyBinding.inflate(layoutInflater)
         setContentView(binding.root)
         toolbarStyle(this@EmergencyActivity, binding.include.toolbar, "Busquedad por DNI", true, HomeActivity::class.java)
-        binding.btnSearchByDNI.setOnClickListener { searchingByDNI() }
-        binding.btnSearchByPhoto.setOnClickListener { searchingByPhoto() }
-        binding.btnSearchByQR.setOnClickListener { searchingByQR() }
+
+        viewModel =
+            ViewModelProvider(this, ViewModelFactory(this, EmergencyViewModel::class.java))[EmergencyViewModel::class.java]
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
+        binding.btnSearchByDNI.setOnClickListener {
+            switchSearchMode(BY_DNI)
+        }
+
+        binding.btnSearchByPhoto.setOnClickListener {
+            switchSearchMode(BY_PHOTO)
+        }
+
+        binding.btnSearchByQR.setOnClickListener {
+            switchSearchMode(BY_QR)
+        }
+
 
         binding.textPrincipal.setOnClickListener { goToCall("phonePrincipal") }
         binding.textSecondary.setOnClickListener { goToCall("phoneSecondary") }
@@ -66,6 +95,38 @@ class EmergencyActivity : BaseActivity() {
         binding.imagePhoto.setOnClickListener { selectImage() }
         binding.imageQR.setOnClickListener { initScanner() }
 
+        viewModel.emergencyResult.observe(this) { result ->
+            handleForgotPasswordResult(result)
+        }
+
+        viewModel.showLoadingDialog.observe(this) { showLoading ->
+            if (showLoading) {
+                showLoading()
+            } else {
+                hideLoading()
+            }
+        }
+    }
+
+    private fun handleForgotPasswordResult(result: EmergencyResult) {
+        when (result) {
+            is EmergencyResult.SuccessWorker -> {
+                binding.linearLayoutNoDataFound.visibility = View.GONE
+                binding.linearLayoutData.visibility = View.VISIBLE
+                applyCustomTextStyleToTextView(binding.textPrincipal, result.data.phone)
+                applyCustomTextStyleToTextView(binding.textSecondary, result.data.phoneEmergency)
+            }
+
+            is EmergencyResult.Error -> {
+                binding.linearLayoutNoDataFound.visibility = View.VISIBLE
+                binding.linearLayoutData.visibility = View.GONE
+                clearForm()
+            }
+
+            is EmergencyResult.ValidationError -> {
+                Toast.makeText(this, MESSAGE_DATA_NOT_VALID, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun initScanner() {
@@ -83,8 +144,7 @@ class EmergencyActivity : BaseActivity() {
             if (result.contents == null) {
                 Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show()
             } else {
-                showLoading()
-                getWorkers(result.contents.toString())
+                viewModel.validateWorkerByDNI(result.contents.toString())
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)
@@ -113,163 +173,45 @@ class EmergencyActivity : BaseActivity() {
         }
     }
 
-    private fun searchingByDNI() {
-        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, "Busquedad por DNI", true, HomeActivity::class.java)
-        binding.linearLayoutData.visibility = View.GONE
-        binding.searchBox.visibility = View.VISIBLE
-        binding.linearLayoutNoDataFound.visibility = View.GONE
-        binding.imagePhoto.visibility = View.GONE
-        binding.imageQR.visibility = View.GONE
-        searchWorkers()
-    }
+    private fun switchSearchMode(searchMode: SearchMode) {
+        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, searchMode.title, true, HomeActivity::class.java)
 
-    private fun searchingByPhoto() {
-        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, "Busquedad por FOTO", true, HomeActivity::class.java)
-        binding.searchBox.visibility = View.GONE
-        binding.imagePhoto.visibility = View.VISIBLE
-        binding.linearLayoutNoDataFound.visibility = View.GONE
-        binding.imageQR.visibility = View.GONE
-        binding.linearLayoutData.visibility = View.GONE
-    }
+        when (searchMode) {
+            BY_DNI -> {
+                binding.searchBox.visibility = View.VISIBLE
+                binding.imagePhoto.visibility = View.GONE
+                binding.imageQR.visibility = View.GONE
+            }
 
-    private fun searchingByQR() {
-        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, "Busquedad por QR", true, HomeActivity::class.java)
-        binding.searchBox.visibility = View.GONE
-        binding.imagePhoto.visibility = View.GONE
-        binding.linearLayoutNoDataFound.visibility = View.GONE
-        binding.imageQR.visibility = View.VISIBLE
+            BY_PHOTO -> {
+                binding.searchBox.visibility = View.GONE
+                binding.imagePhoto.visibility = View.VISIBLE
+                binding.imageQR.visibility = View.GONE
+            }
+
+            BY_QR -> {
+                binding.searchBox.visibility = View.GONE
+                binding.imagePhoto.visibility = View.GONE
+                binding.imageQR.visibility = View.VISIBLE
+            }
+        }
+
         binding.linearLayoutData.visibility = View.GONE
+        binding.linearLayoutNoDataFound.visibility = View.GONE
+
+        if (searchMode == BY_DNI) {
+            searchWorkers()
+        }
     }
 
     private fun searchWorkers() {
         binding.searchBox.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val dni = binding.searchBox.text.toString()
-                getWorkers(dni)
+                viewModel.validateWorkerByDNI(dni)
                 performSearch()
             }
             false
-        }
-    }
-
-    private fun getWorkers(dni: String) {
-        showLoading()
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val workersRepository = WorkersRepository()
-                val workerUseCase = WorkerUseCase(this@EmergencyActivity, workersRepository)
-                val serviceWorker = workerUseCase.getWorkers(dni)
-                withContext(Dispatchers.Main) {
-                    hideLoading()
-                    when (serviceWorker) {
-                        is CustomResult.OnSuccess -> {
-                            val data = serviceWorker.data
-                            showData(data)
-                        }
-
-                        is CustomResult.OnError -> {
-                            val codeState = SingletonError.code
-                            dismissData(codeState ?: 408)
-                        }
-                    }
-                }
-
-            } catch (e: Exception) {
-                Timber.d("Response $e")
-            }
-
-        }
-    }
-
-    private fun showData(worker: Worker?) {
-        hideLoading()
-        binding.linearLayoutNoDataFound.visibility = View.GONE
-        binding.linearLayoutData.visibility = View.VISIBLE
-        /**Data base*/
-        val textIdentification = worker?.dni
-        val textName = worker?.name
-        val textLastName = worker?.lastname
-        val textFullName = "$textName $textLastName"
-
-        /**Celulares*/
-        val textPrincipalPhone = worker?.phone
-        val textSecondaryPhone = worker?.phoneEmergency
-
-        val textArea = worker?.area
-        val textDateBirth = worker?.dateBirth
-        val textJoinDate = worker?.dateJoin
-        val textBloodType = worker?.bloodType
-        val textDiseases = worker?.diseases
-        val textAllergies = worker?.allergies
-
-        if (textAllergies.isNullOrEmpty()) {
-            binding.textAllergies.text = "No alergías"
-        } else {
-            binding.textAllergies.text = textAllergies
-        }
-        if (textDiseases.isNullOrEmpty()) {
-            binding.textDiseases.text = "No enfermedades"
-        } else {
-            binding.textDiseases.text = textDiseases
-        }
-        if (textBloodType.isNullOrEmpty()) {
-            binding.textBloodType.text = "No grupo"
-        } else {
-            binding.textBloodType.text = textBloodType
-        }
-
-        binding.textDNI.text = textIdentification
-        binding.textFullName.text = textFullName
-        binding.textArea.text = textArea
-        binding.textBornDate.text = textDateBirth
-        binding.textJoinDate.text = textJoinDate
-        binding.textPrincipal.text = textPrincipalPhone
-        binding.textSecondary.text = textSecondaryPhone
-
-        applyCustomTextStyleToTextView(binding.textPrincipal, binding.textPrincipal.text.toString())
-        applyCustomTextStyleToTextView(binding.textSecondary, binding.textSecondary.text.toString())
-
-    }
-
-    private fun dismissData(codState: Int) {
-        hideLoading()
-        binding.linearLayoutNoDataFound.visibility = View.VISIBLE
-        binding.linearLayoutData.visibility = View.GONE
-        clearForm()
-    }
-
-    private fun sendImageToBE() {
-        CoroutineScope(Dispatchers.Default).launch {
-            startImageForResult.let {
-                imageFile?.let {
-                    val imageInBase64 = getBase64ForUriAndPossiblyCrash(it.toUri())
-                    val newFileName = String.format("%s.jpg", imageFile?.nameWithoutExtension)
-                    val user = WorkersResponse(
-                        photo = imageInBase64,
-                        photoFormat = newFileName
-                    )
-                    workersProvider.consultByPhoto(user)?.enqueue(object : Callback<WorkersResponse> {
-                        override fun onResponse(call: Call<WorkersResponse>, response: Response<WorkersResponse>) {
-                            if (response.code() == 200) {
-                                hideLoading()
-                                val dni = response.body()?.dni.toString()
-                                getWorkers(dni)
-                            } else {
-                                hideLoading()
-                                binding.linearLayoutNoDataFound.visibility = View.VISIBLE
-                                binding.linearLayoutData.visibility = View.GONE
-                                clearForm()
-                            }
-                            deleteCache(this@EmergencyActivity)
-                        }
-
-                        override fun onFailure(call: Call<WorkersResponse>, t: Throwable) {
-                            hideLoading()
-                            Toast.makeText(this@EmergencyActivity, "No se pudo guardar el dato", Toast.LENGTH_LONG).show()
-                        }
-                    })
-                }
-            }
         }
     }
 
@@ -298,8 +240,8 @@ class EmergencyActivity : BaseActivity() {
                 val fileUri = data?.data
                 imageFile = fileUri?.path?.let { File(it) }
                 binding.imagePhoto.setImageURI(fileUri)
-                showLoading()
-                sendImageToBE()
+                val imageInBase64 = imageFile?.toUri()?.let { getBase64ForUriAndPossiblyCrash(it) }
+                viewModel.validateImageByPhoto(imageFile, imageInBase64)
             }
 
             ImagePicker.RESULT_ERROR -> {

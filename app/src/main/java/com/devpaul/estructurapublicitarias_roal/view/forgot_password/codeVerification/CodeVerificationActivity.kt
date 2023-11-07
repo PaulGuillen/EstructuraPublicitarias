@@ -86,17 +86,6 @@ class CodeVerificationActivity : BaseActivity() {
         }
     }
 
-    private fun showCustomDialogError(result: ForgotPasswordResult.Error) {
-        showCustomDialogErrorSingleton(
-            this,
-            result.title,
-            result.subTitle,
-            result.code,
-            getString(R.string.dialog_singleton_text_button_accept),
-            onClickListener = {}
-        )
-    }
-
     private fun setButtonVisibility(showReSendEmail: Boolean, showRecoverPassword: Boolean) {
         binding.btnReenviarCorreo.visibility = if (showReSendEmail) View.VISIBLE else View.GONE
         binding.btnRecuperarContrasena.visibility = if (showRecoverPassword) View.VISIBLE else View.GONE

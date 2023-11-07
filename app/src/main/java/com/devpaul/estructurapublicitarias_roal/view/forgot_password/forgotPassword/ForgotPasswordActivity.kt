@@ -68,17 +68,6 @@ class ForgotPasswordActivity : BaseActivity() {
         }
     }
 
-    private fun showCustomDialogError(result: ForgotPasswordResult.Error) {
-        showCustomDialogErrorSingleton(
-            this,
-            result.title,
-            result.subTitle,
-            result.code,
-            getString(R.string.dialog_singleton_text_button_accept),
-            onClickListener = {}
-        )
-    }
-
     private fun backView() {
         startNewActivityWithBackAnimation(this@ForgotPasswordActivity, LoginActivity::class.java)
     }

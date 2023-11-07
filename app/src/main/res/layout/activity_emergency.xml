@@ -1,464 +1,477 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
     tools:context=".view.emergency.EmergencyActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.devpaul.estructurapublicitarias_roal.view.emergency.EmergencyViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/action_bar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="@color/gray"
-            app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/include" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.30" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include">
-
-            <Button
-                android:id="@+id/btnSearchByDNI"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/todo"
-                android:text="@string/dni"
-                android:textAllCaps="false"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/btnSearchByPhoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/todo"
-                android:text="@string/foto"
-                android:textAllCaps="false"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/btnSearchByQR"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/todo"
-                android:text="@string/qr"
-                android:textAllCaps="false"
-                tools:ignore="ButtonStyle" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayoutNoDataFound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/view2"
-            app:layout_constraintTop_toBottomOf="@+id/include">
-
-            <TextView
-                android:id="@+id/textNoData"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:text="@string/informacion_respuesta_no_encontrada"
-                android:textAlignment="center"
-                android:textAppearance="@style/subtitulosGeneral"
-                app:drawableTopCompat="@drawable/data_not_found" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearSpecialImageQREDT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/view2"
-            app:layout_constraintTop_toBottomOf="@+id/include">
-
-            <EditText
-                android:id="@+id/searchBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:autofillHints="no"
-                android:background="@drawable/search_gb"
-                android:drawableEnd="@drawable/ic_baseline_search_24"
-                android:elevation="5dp"
-                android:fontFamily="@font/mulish_regular"
-                android:hint="@string/DNI_empleado"
-                android:imeOptions="actionSearch"
-                android:inputType="number"
-                android:maxLength="9"
-                android:maxLines="1"
-                android:padding="12dp"
-                android:textSize="14sp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/include"
-                tools:ignore="RtlSymmetry" />
-
-            <ImageView
-                android:id="@+id/imagePhoto"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="12dp"
-                android:background="@color/gray_light"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/ic_baseline_image_24"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/include" />
-
-            <ImageView
-                android:id="@+id/imageQR"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="12dp"
-                android:background="@color/gray_light"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/ic_baseline_camera_alt_24"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/include" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/view2"
-            app:layout_constraintTop_toBottomOf="@+id/linearSpecialImageQREDT">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="15dp">
-
-                <LinearLayout
-                    android:id="@+id/linearLayoutData"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="10dp"
-                        android:fontFamily="@font/mulish_bold"
-                        android:text="@string/datos_generales"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/subtitulosGeneral"
-                        android:textSize="18sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/gray" />
-
-                    <TextView
-                        android:id="@+id/textArea"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="8dp"
-                        android:text="@string/area_form"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/gray" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="2dp"
-                        android:text="@string/dni"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <TextView
-                        android:id="@+id/textDNI"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="8dp"
-                        android:text="@string/dni"
-                        android:textAlignment="center"
-                        android:textSize="16sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/gray" />
-
-                    <TextView
-                        android:id="@+id/textFullName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="8dp"
-                        android:text="@string/nombre_completo"
-                        android:textAlignment="center"
-                        android:textSize="16sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/gray" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="2dp"
-                        android:text="@string/text_title_number_one"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <TextView
-                        android:id="@+id/textPrincipal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="8dp"
-                        android:text="@string/celular_principal"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/gray" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="2dp"
-                        android:text="@string/text_title_number_two"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <TextView
-                        android:id="@+id/textSecondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="8dp"
-                        android:text="@string/celular_secundario"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/gray" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="2dp"
-                        android:text="@string/text_title_born_date"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <TextView
-                        android:id="@+id/textBornDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="8dp"
-                        android:text="@string/_12_10_1998"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/gray" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="2dp"
-                        android:text="@string/fecha_de_ingreso"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <TextView
-                        android:id="@+id/textJoinDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="8dp"
-                        android:text="@string/_12_10_1998"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/gray" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="2dp"
-                        android:text="@string/alergias_form"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <TextView
-                        android:id="@+id/textAllergies"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="8dp"
-                        android:text="@string/alergias_form"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/gray" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="2dp"
-                        android:text="@string/text_enfermedades"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <TextView
-                        android:id="@+id/textDiseases"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="8dp"
-                        android:text="@string/posible_lista_de_enf"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/gray" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="2dp"
-                        android:text="@string/grupo_sangu_neo_form"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                    <TextView
-                        android:id="@+id/textBloodType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/mulish_bold"
-                        android:padding="8dp"
-                        android:text="@string/A"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        tools:ignore="RtlSymmetry" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvBottomFilter"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#424242"
-            android:fontFamily="@font/mulish_regular"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/ROAL"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                android:id="@+id/include"
+                layout="@layout/action_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.core.widget.NestedScrollView>
+            <View
+                android:id="@+id/view2"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray"
+                app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/include" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.30" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include">
+
+                <Button
+                    android:id="@+id/btnSearchByDNI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/todo"
+                    android:text="@string/dni"
+                    android:textAllCaps="false"
+                    tools:ignore="ButtonStyle" />
+
+                <Button
+                    android:id="@+id/btnSearchByPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/todo"
+                    android:text="@string/foto"
+                    android:textAllCaps="false"
+                    tools:ignore="ButtonStyle" />
+
+                <Button
+                    android:id="@+id/btnSearchByQR"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/todo"
+                    android:text="@string/qr"
+                    android:textAllCaps="false"
+                    tools:ignore="ButtonStyle" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutNoDataFound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/view2"
+                app:layout_constraintTop_toBottomOf="@+id/include">
+
+                <TextView
+                    android:id="@+id/textNoData"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/informacion_respuesta_no_encontrada"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/subtitulosGeneral"
+                    app:drawableTopCompat="@drawable/data_not_found" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearSpecialImageQREDT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/view2"
+                app:layout_constraintTop_toBottomOf="@+id/include">
+
+                <EditText
+                    android:id="@+id/searchBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:autofillHints="no"
+                    android:background="@drawable/search_gb"
+                    android:drawableEnd="@drawable/ic_baseline_search_24"
+                    android:elevation="5dp"
+                    android:fontFamily="@font/mulish_regular"
+                    android:hint="@string/DNI_empleado"
+                    android:imeOptions="actionSearch"
+                    android:inputType="number"
+                    android:maxLength="9"
+                    android:maxLines="1"
+                    android:padding="12dp"
+                    android:text="@={viewModel.searchBoxText}"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/include"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:id="@+id/imagePhoto"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/gray_light"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_baseline_image_24"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/include" />
+
+                <ImageView
+                    android:id="@+id/imageQR"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/gray_light"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_baseline_camera_alt_24"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/include" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/view2"
+                app:layout_constraintTop_toBottomOf="@+id/linearSpecialImageQREDT">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="15dp">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutData"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:fontFamily="@font/mulish_bold"
+                            android:text="@string/datos_generales"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/subtitulosGeneral"
+                            android:textSize="18sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:id="@+id/textArea"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="8dp"
+                            android:text="@={viewModel.textArea}"
+                            android:textAlignment="center"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="2dp"
+                            android:text="@string/dni"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <TextView
+                            android:id="@+id/textDNI"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="8dp"
+                            android:text="@={viewModel.textDNI}"
+                            android:textAlignment="center"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:id="@+id/textFullName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="8dp"
+                            android:text="@={viewModel.textFullName}"
+                            android:textAlignment="center"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="2dp"
+                            android:text="@string/text_title_number_one"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <TextView
+                            android:id="@+id/textPrincipal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="8dp"
+                            android:text="@={viewModel.principalPhone}"
+                            android:textAlignment="center"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="2dp"
+                            android:text="@string/text_title_number_two"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <TextView
+                            android:id="@+id/textSecondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="8dp"
+                            android:text="@={viewModel.secondaryPhone}"
+                            android:textAlignment="center"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="2dp"
+                            android:text="@string/text_title_born_date"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <TextView
+                            android:id="@+id/textBornDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="8dp"
+                            android:text="@={viewModel.textBornDate}"
+                            android:textAlignment="center"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="2dp"
+                            android:text="@string/fecha_de_ingreso"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <TextView
+                            android:id="@+id/textJoinDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="8dp"
+                            android:text="@={viewModel.textJoinDate}"
+                            android:textAlignment="center"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="2dp"
+                            android:text="@string/alergias_form"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <TextView
+                            android:id="@+id/textAllergies"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="8dp"
+                            android:text="@={viewModel.textAllergies}"
+                            android:textAlignment="center"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="2dp"
+                            android:text="@string/text_enfermedades"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <TextView
+                            android:id="@+id/textDiseases"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="8dp"
+                            android:text="@={viewModel.textDiseases}"
+                            android:textAlignment="center"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="2dp"
+                            android:text="@string/grupo_sangu_neo_form"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <TextView
+                            android:id="@+id/textBloodType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="8dp"
+                            android:text="@={viewModel.textBloodType}"
+                            android:textAlignment="center"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvBottomFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#424242"
+                android:fontFamily="@font/mulish_regular"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/ROAL"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</layout>
