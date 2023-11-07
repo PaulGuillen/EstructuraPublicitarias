@@ -223,9 +223,8 @@ private fun formatDetailsText(details: String?): String {
 
 fun applyCustomTextStyleToTextView(textView: TextView, titleText: String?) {
     textView.text = titleText
-    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16F)
+    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18F)
     textView.typeface = ResourcesCompat.getFont(textView.context, R.font.mulish_bold)
-    textView.setPadding(0, 0, 0, 0)
     textView.setTextColor(ContextCompat.getColor(textView.context, android.R.color.holo_blue_light))
     textView.setTypeface(textView.typeface, Typeface.BOLD)
     textView.paintFlags = textView.paintFlags or Paint.UNDERLINE_TEXT_FLAG

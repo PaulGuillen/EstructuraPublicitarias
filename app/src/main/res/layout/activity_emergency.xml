@@ -23,7 +23,7 @@
 
         <View
             android:id="@+id/view2"
-            android:layout_width="5dp"
+            android:layout_width="2dp"
             android:layout_height="match_parent"
             android:background="@color/gray"
             app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
@@ -76,7 +76,6 @@
 
         </LinearLayout>
 
-
         <LinearLayout
             android:id="@+id/linearLayoutNoDataFound"
             android:layout_width="wrap_content"
@@ -99,8 +98,8 @@
 
         </LinearLayout>
 
-
         <LinearLayout
+            android:id="@+id/linearSpecialImageQREDT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -166,7 +165,7 @@
             app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view2"
-            app:layout_constraintTop_toBottomOf="@+id/include">
+            app:layout_constraintTop_toBottomOf="@+id/linearSpecialImageQREDT">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -202,9 +201,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mulish_bold"
+                        android:padding="8dp"
                         android:text="@string/area_form"
                         android:textAlignment="center"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        tools:ignore="RtlSymmetry" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mulish_bold"
+                        android:padding="2dp"
+                        android:text="@string/dni"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
                         tools:ignore="RtlSymmetry" />
 
                     <TextView
@@ -212,28 +228,67 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mulish_bold"
+                        android:padding="8dp"
                         android:text="@string/dni"
                         android:textAlignment="center"
                         android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@color/gray" />
 
                     <TextView
                         android:id="@+id/textFullName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mulish_bold"
+                        android:padding="8dp"
                         android:text="@string/nombre_completo"
                         android:textAlignment="center"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mulish_bold"
+                        android:padding="2dp"
+                        android:text="@string/text_title_number_one"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        tools:ignore="RtlSymmetry" />
 
                     <TextView
                         android:id="@+id/textPrincipal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mulish_bold"
-                        android:paddingStart="10dp"
+                        android:padding="8dp"
                         android:text="@string/celular_principal"
                         android:textAlignment="center"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        tools:ignore="RtlSymmetry" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mulish_bold"
+                        android:padding="2dp"
+                        android:text="@string/text_title_number_two"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
                         tools:ignore="RtlSymmetry" />
 
                     <TextView
@@ -241,10 +296,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mulish_bold"
-                        android:paddingStart="10dp"
+                        android:padding="8dp"
                         android:text="@string/celular_secundario"
                         android:textAlignment="center"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        tools:ignore="RtlSymmetry" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mulish_bold"
+                        android:padding="2dp"
+                        android:text="@string/text_title_born_date"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
                         tools:ignore="RtlSymmetry" />
 
                     <TextView
@@ -252,9 +323,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mulish_bold"
+                        android:padding="8dp"
                         android:text="@string/_12_10_1998"
                         android:textAlignment="center"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        tools:ignore="RtlSymmetry" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mulish_bold"
+                        android:padding="2dp"
+                        android:text="@string/fecha_de_ingreso"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
                         tools:ignore="RtlSymmetry" />
 
                     <TextView
@@ -262,20 +350,53 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mulish_bold"
+                        android:padding="8dp"
                         android:text="@string/_12_10_1998"
                         android:textAlignment="center"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         tools:ignore="RtlSymmetry" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mulish_bold"
+                        android:padding="2dp"
+                        android:text="@string/alergias_form"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        tools:ignore="RtlSymmetry" />
 
                     <TextView
                         android:id="@+id/textAllergies"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mulish_bold"
+                        android:padding="8dp"
                         android:text="@string/alergias_form"
                         android:textAlignment="center"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        tools:ignore="RtlSymmetry" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mulish_bold"
+                        android:padding="2dp"
+                        android:text="@string/text_enfermedades"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
                         tools:ignore="RtlSymmetry" />
 
                     <TextView
@@ -283,9 +404,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mulish_bold"
+                        android:padding="8dp"
                         android:text="@string/posible_lista_de_enf"
                         android:textAlignment="center"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        tools:ignore="RtlSymmetry" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mulish_bold"
+                        android:padding="2dp"
+                        android:text="@string/grupo_sangu_neo_form"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
                         tools:ignore="RtlSymmetry" />
 
                     <TextView
@@ -293,9 +431,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/mulish_bold"
+                        android:padding="8dp"
                         android:text="@string/A"
                         android:textAlignment="center"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         tools:ignore="RtlSymmetry" />
 
                 </LinearLayout>

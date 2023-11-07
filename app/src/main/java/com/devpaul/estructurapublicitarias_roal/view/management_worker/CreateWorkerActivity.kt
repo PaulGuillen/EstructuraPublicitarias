@@ -318,7 +318,6 @@ class CreateWorkerActivity : BaseActivity() {
             binding.includedCheckbox.checkBoxLabelCO.setTextColor(grayIconsColor)
 
             documentType = "1"
-            Timber.d("DocumentType -> $documentType")
         }
     }
 
@@ -366,7 +365,6 @@ class CreateWorkerActivity : BaseActivity() {
             binding.includedCheckbox.checkBoxLabelCO.setTextColor(grayIconsColor)
 
             documentType = "2"
-            Timber.d("DocumentType -> $documentType")
         }
     }
 
@@ -414,7 +412,6 @@ class CreateWorkerActivity : BaseActivity() {
             binding.includedCheckbox.checkBoxLabelTI.setTextColor(grayIconsColor)
 
             documentType = "3"
-            Timber.d("DocumentType -> $documentType")
         }
     }
 
@@ -425,15 +422,31 @@ class CreateWorkerActivity : BaseActivity() {
             myCalendar[Calendar.YEAR] = year
             myCalendar[Calendar.MONTH] = month
             myCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
+
             val dateType = if (text == "textBornDate") 0 else 1
-            updateLabel(myCalendar, dateType)
+            if (dateType == 0 && myCalendar[Calendar.YEAR] > 2008) {
+                Toast.makeText(this@CreateWorkerActivity, "El año debe ser máximo 2008", Toast.LENGTH_SHORT).show()
+            } else {
+                updateLabel(myCalendar, dateType)
+            }
         }
 
         val initialYear = myCalendar[Calendar.YEAR]
         val initialMonth = myCalendar[Calendar.MONTH]
         val initialDayOfMonth = myCalendar[Calendar.DAY_OF_MONTH]
 
-        DatePickerDialog(this@CreateWorkerActivity, datePicker, initialYear, initialMonth, initialDayOfMonth).show()
+        val datePickerDialog = DatePickerDialog(this@CreateWorkerActivity, datePicker, initialYear, initialMonth, initialDayOfMonth)
+        if (text == "textBornDate") {
+            datePickerDialog.datePicker.maxDate = getMaximumDateInMillis()
+        }
+
+        datePickerDialog.show()
+    }
+
+    private fun getMaximumDateInMillis(): Long {
+        val calendar = Calendar.getInstance()
+        calendar.set(2008, 11, 31, 23, 59, 59)
+        return calendar.timeInMillis
     }
 
     private fun updateLabel(myCalendar: Calendar, direction: Int) {

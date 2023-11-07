@@ -164,4 +164,10 @@
 
     <!--ACTIVITY CODE VERIFICATION -->
     <string name="dialog_singleton_text_button_accept">Aceptar</string>
+
+    <!--ACTIVITY EMERGENCY -->
+    <string name="text_title_number_one">Número uno</string>
+    <string name="text_title_number_two">Número dos</string>
+    <string name="text_title_born_date">Fecha nacimiento</string>
+
 </resources>
