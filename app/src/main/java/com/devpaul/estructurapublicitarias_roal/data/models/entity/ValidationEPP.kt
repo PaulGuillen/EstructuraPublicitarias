@@ -1,4 +1,4 @@
-package com.devpaul.estructurapublicitarias_roal.data.models
+package com.devpaul.estructurapublicitarias_roal.data.models.entity
 
 data class ValidationEPP(
     var code: Int? = null,

@@ -1,8 +1,10 @@
 package com.devpaul.estructurapublicitarias_roal.data.routes
 
+import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidateImageByPhotoRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidationEPPRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.response.OptionsResponse
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
+import com.devpaul.estructurapublicitarias_roal.data.models.response.ValidateImageByPhotoResponse
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ValidationEPPResponse
 import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 import retrofit2.Call
@@ -38,6 +40,11 @@ interface ApiConfig {
     fun consultByPhoto(
         @Body workerUser: WorkersResponse
     ): Call<WorkersResponse>
+
+    @POST("getDataFromPhoto")
+    fun validateImageByPhoto(
+        @Body validateImageByPhotoRequest: ValidateImageByPhotoRequest
+    ): Call<ValidateImageByPhotoResponse>
 
     @POST("https://run.mocky.io/v3/d52e5f8e-e09c-45c6-85ad-32749b9dd68b")
     // @POST("https://run.mocky.io/v3/98ccd3e7-0dfe-4dca-90e0-2be122cea9f5")

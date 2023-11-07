@@ -1,7 +1,7 @@
 package com.devpaul.estructurapublicitarias_roal.data.repository
 
 import com.devpaul.estructurapublicitarias_roal.data.api.ApiRoutes
-import com.devpaul.estructurapublicitarias_roal.data.models.PrincipalUser
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.PrincipalUser
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomNotFoundError
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.HttpError

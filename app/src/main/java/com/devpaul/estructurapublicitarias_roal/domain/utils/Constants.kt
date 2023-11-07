@@ -16,3 +16,7 @@ const val GENERIC_SERVICE_ERROR = "Contraseña actualizada exitosamente"
 const val KEY_PASSWORD_PREF = "EmailForgotPassword"
 const val ACTION_RECOVER_PASSWORD = "recuperar_contraseña"
 const val TIME_LEFT_FORGOT_PASSWORD = 60000
+const val SUBTITLE_MESSAGE_TIMEOUT_SERVICE = "En este momento el servicio no está disponible"
+const val TITLE_ERROR_MS_GET_WORKERS = "Error en el MS getWorkers"
+const val TITLE_ERROR_MS_GET_OPTIONS = "Error en el MS getOptions"
+const val TITLE_ERROR_MS_VALIDATE_IMAGE_PHOTO = "Error en el MS validateImageByPhoto"

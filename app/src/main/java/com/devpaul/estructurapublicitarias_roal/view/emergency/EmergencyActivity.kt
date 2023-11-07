@@ -2,7 +2,6 @@ package com.devpaul.estructurapublicitarias_roal.view.emergency
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -27,7 +26,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.R
-import com.devpaul.estructurapublicitarias_roal.data.models.Worker
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityEmergencyBinding
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult

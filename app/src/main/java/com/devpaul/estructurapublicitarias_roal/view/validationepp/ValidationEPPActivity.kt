@@ -13,7 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.devpaul.estructurapublicitarias_roal.R
-import com.devpaul.estructurapublicitarias_roal.data.models.ValidationEPP
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidationEPP
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidationEPPRequest
 import com.devpaul.estructurapublicitarias_roal.data.repository.ValidationEPPRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityValidationEppactivityBinding

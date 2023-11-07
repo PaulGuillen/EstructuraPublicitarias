@@ -1,4 +1,4 @@
-package com.devpaul.estructurapublicitarias_roal.data.models
+package com.devpaul.estructurapublicitarias_roal.data.models.entity
 
 import com.google.gson.JsonObject
 

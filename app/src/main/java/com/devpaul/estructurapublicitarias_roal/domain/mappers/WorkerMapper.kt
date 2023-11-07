@@ -1,6 +1,6 @@
 package com.devpaul.estructurapublicitarias_roal.domain.mappers
 
-import com.devpaul.estructurapublicitarias_roal.data.models.Worker
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
 import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 
 class WorkerMapper {

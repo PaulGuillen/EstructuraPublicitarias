@@ -1,6 +1,6 @@
 package com.devpaul.estructurapublicitarias_roal.domain.mappers
 
-import com.devpaul.estructurapublicitarias_roal.data.models.Options
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.Options
 import com.devpaul.estructurapublicitarias_roal.data.models.response.OptionsResponse
 import java.util.ArrayList
 

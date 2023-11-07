@@ -2,7 +2,7 @@ package com.devpaul.estructurapublicitarias_roal.domain.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.devpaul.estructurapublicitarias_roal.data.models.Options
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.Options
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

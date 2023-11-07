@@ -1,7 +1,7 @@
 package com.devpaul.estructurapublicitarias_roal.data.repository
 
 import com.devpaul.estructurapublicitarias_roal.data.api.ApiRoutes
-import com.devpaul.estructurapublicitarias_roal.data.models.ValidationEPP
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidationEPP
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidationEPPRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ValidationEPPResponse
 import com.devpaul.estructurapublicitarias_roal.data.routes.ApiConfig

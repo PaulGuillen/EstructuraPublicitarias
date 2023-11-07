@@ -1,8 +1,8 @@
 package com.devpaul.estructurapublicitarias_roal.domain.usecases
 
 import android.content.Context
-import com.devpaul.estructurapublicitarias_roal.data.models.Options
-import com.devpaul.estructurapublicitarias_roal.data.models.Worker
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.Options
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository.WorkersRepositoryNetwork
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref

@@ -1,9 +1,12 @@
 package com.devpaul.estructurapublicitarias_roal.data.repository
 
 import com.devpaul.estructurapublicitarias_roal.data.api.ApiRoutes
-import com.devpaul.estructurapublicitarias_roal.data.models.Options
-import com.devpaul.estructurapublicitarias_roal.data.models.Worker
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.Options
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidateImageByPhoto
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
+import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidateImageByPhotoRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.response.OptionsResponse
+import com.devpaul.estructurapublicitarias_roal.data.models.response.ValidateImageByPhotoResponse
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomNotFoundError
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.HttpError
@@ -12,7 +15,8 @@ import com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository.Wor
 import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 import com.devpaul.estructurapublicitarias_roal.data.routes.ApiConfig
 import com.devpaul.estructurapublicitarias_roal.domain.mappers.OptionsMapper
-
+import com.devpaul.estructurapublicitarias_roal.domain.mappers.ValidateImageByPhotoMapper
+import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 class WorkersRepository : WorkersRepositoryNetwork {
 
     private var apiConfig: ApiConfig? = null
@@ -23,6 +27,9 @@ class WorkersRepository : WorkersRepositoryNetwork {
     }
 
     override fun getWorkers(dni: String): CustomResult<Worker> {
+
+        val serviceTitle = TITLE_ERROR_MS_GET_WORKERS
+
         try {
             val callApi = apiConfig?.getWorkers(dni)?.execute()
 
@@ -41,7 +48,7 @@ class WorkersRepository : WorkersRepositoryNetwork {
                     CustomResult.OnError(
                         HttpError(
                             code = callApi.code(),
-                            title = "Error en el MS getWorkers",
+                            title = serviceTitle,
                             subtitle = callApi.message()
                         )
                     )
@@ -51,7 +58,7 @@ class WorkersRepository : WorkersRepositoryNetwork {
                     CustomResult.OnError(
                         HttpError(
                             code = callApi?.code(),
-                            title = "Error en el MS getWorkers",
+                            title = serviceTitle,
                             subtitle = callApi?.message()
                         )
                     )
@@ -62,14 +69,17 @@ class WorkersRepository : WorkersRepositoryNetwork {
             return CustomResult.OnError(
                 HttpError(
                     code = 408,
-                    title = "Error en el MS getWorkers",
-                    subtitle = "En este momento el servicio no está disponible"
+                    title = serviceTitle,
+                    subtitle = SUBTITLE_MESSAGE_TIMEOUT_SERVICE
                 )
             )
         }
     }
 
     override fun getOptionList(): CustomResult<List<Options>> {
+
+        val serviceTitle = TITLE_ERROR_MS_GET_OPTIONS
+
         try {
             val callApi = apiConfig?.getOptions()?.execute()
 
@@ -88,7 +98,7 @@ class WorkersRepository : WorkersRepositoryNetwork {
                     CustomResult.OnError(
                         HttpError(
                             code = callApi.code(),
-                            title = "Error en el MS getOptions"
+                            title = serviceTitle
                         )
                     )
                 }
@@ -97,7 +107,7 @@ class WorkersRepository : WorkersRepositoryNetwork {
                     CustomResult.OnError(
                         HttpError(
                             code = callApi?.code(),
-                            title = "Error en el MS getOptions"
+                            title = serviceTitle
                         )
                     )
                 }
@@ -107,9 +117,57 @@ class WorkersRepository : WorkersRepositoryNetwork {
             return CustomResult.OnError(
                 HttpError(
                     code = 408,
-                    title = "En este momento el servicio no está disponible"
+                    title = SUBTITLE_MESSAGE_TIMEOUT_SERVICE
                 )
             )
         }
     }
+
+    override fun validateImageByPhoto(validateImageByPhotoRequest: ValidateImageByPhotoRequest): CustomResult<ValidateImageByPhoto> {
+
+        val serviceTitle = TITLE_ERROR_MS_VALIDATE_IMAGE_PHOTO
+
+        try {
+            val callApi = apiConfig?.validateImageByPhoto(validateImageByPhotoRequest)?.execute()
+
+            return when (callApi?.isSuccessful) {
+                true -> {
+                    val response: ValidateImageByPhotoResponse? = callApi.body()
+
+                    if (response != null)
+                        CustomResult.OnSuccess(ValidateImageByPhotoMapper().map(response))
+                    else {
+                        CustomResult.OnError(CustomNotFoundError())
+                    }
+                }
+
+                false -> {
+                    CustomResult.OnError(
+                        HttpError(
+                            code = callApi.code(),
+                            title = serviceTitle
+                        )
+                    )
+                }
+
+                else -> {
+                    CustomResult.OnError(
+                        HttpError(
+                            code = callApi?.code(),
+                            title = serviceTitle
+                        )
+                    )
+                }
+            }
+
+        } catch (ex: Exception) {
+            return CustomResult.OnError(
+                HttpError(
+                    code = 408,
+                    title = SUBTITLE_MESSAGE_TIMEOUT_SERVICE
+                )
+            )
+        }
+    }
+
 }

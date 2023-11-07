@@ -1,8 +1,8 @@
 package com.devpaul.estructurapublicitarias_roal.domain.mappers
 
-import com.devpaul.estructurapublicitarias_roal.data.models.AllEquipment
-import com.devpaul.estructurapublicitarias_roal.data.models.EquipmentItem
-import com.devpaul.estructurapublicitarias_roal.data.models.ValidationEPP
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.AllEquipment
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.EquipmentItem
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidationEPP
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ValidationEPPResponse
 
 class ValidationEPPMapper {

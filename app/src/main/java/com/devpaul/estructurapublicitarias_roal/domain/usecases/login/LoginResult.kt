@@ -1,6 +1,6 @@
 package com.devpaul.estructurapublicitarias_roal.domain.usecases.login
 
-import com.devpaul.estructurapublicitarias_roal.data.models.PrincipalUser
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.PrincipalUser
 
 sealed class LoginResult {
     data class Success(val data: PrincipalUser) : LoginResult()

@@ -1,6 +1,6 @@
 package com.devpaul.estructurapublicitarias_roal.domain.mappers
 
-import com.devpaul.estructurapublicitarias_roal.data.models.PrincipalUser
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.PrincipalUser
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
 
 class MainUserMapper {

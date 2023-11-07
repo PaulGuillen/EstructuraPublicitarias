@@ -1,7 +1,7 @@
 package com.devpaul.estructurapublicitarias_roal.domain.usecases
 
 import android.content.Context
-import com.devpaul.estructurapublicitarias_roal.data.models.ValidationEPP
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidationEPP
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidationEPPRequest
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository.ValidationEPPRepositoryNetwork
