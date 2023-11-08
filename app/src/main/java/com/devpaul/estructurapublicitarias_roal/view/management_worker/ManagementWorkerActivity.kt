@@ -10,44 +10,41 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions.centerCropTransform
 import com.devpaul.estructurapublicitarias_roal.R
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
-import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityManagementWorkerBinding
-import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
-import com.devpaul.estructurapublicitarias_roal.domain.usecases.WorkerUseCase
-import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
+import com.devpaul.estructurapublicitarias_roal.domain.usecases.mangementWorker.ManagementWorkerResult
+import com.devpaul.estructurapublicitarias_roal.domain.utils.MESSAGE_DATA_NOT_VALID
+import com.devpaul.estructurapublicitarias_roal.domain.utils.ViewModelFactory
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.devpaul.estructurapublicitarias_roal.view.login.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import timber.log.Timber
 
 @SuppressLint("SourceLockedOrientationActivity")
 class ManagementWorkerActivity : BaseActivity() {
 
     lateinit var binding: ActivityManagementWorkerBinding
     private var workersProvider = WorkersProvider()
+    private lateinit var viewModel: ManagementWorkerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityManagementWorkerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         toolbarStyle(
             this@ManagementWorkerActivity,
             binding.include.toolbar,
@@ -55,10 +52,74 @@ class ManagementWorkerActivity : BaseActivity() {
             true,
             HomeActivity::class.java
         )
-        binding.fabWorkerCreate.setOnClickListener { goToWorkerCreate() }
-        binding.cardViewWorker.btnDeleteWorker.setOnClickListener { deleteWorker() }
-        binding.cardViewWorker.btnUpdateWorker.setOnClickListener { goToUpdateWorkers() }
+
+        viewModel =
+            ViewModelProvider(this, ViewModelFactory(this, ManagementWorkerViewModel::class.java))[ManagementWorkerViewModel::class.java]
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
+        viewModel.managementWorkerResult.observe(this) { result ->
+            handleManagementWorkerResult(result)
+        }
+
+        viewModel.showLoadingDialog.observe(this) { showLoading ->
+            if (showLoading) {
+                showLoading()
+            } else {
+                hideLoading()
+            }
+        }
+
         searchWorkers()
+    }
+
+
+    private fun handleManagementWorkerResult(result: ManagementWorkerResult) {
+        when (result) {
+            is ManagementWorkerResult.Success -> {
+
+                result.data.photo.let {
+                    Glide.with(this@ManagementWorkerActivity)
+                        .load(result.data.photo)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .apply(
+                            centerCropTransform()
+                                .placeholder(R.drawable.ic_baseline_supervised_user_circle_24)
+                                .error(R.drawable.ic_baseline_supervised_user_circle_24)
+                                .priority(Priority.HIGH)
+                        )
+                        .into(binding.cardViewWorker.imageWorker)
+                }
+
+                binding.textDataNeed.visibility = View.GONE
+                binding.linearLayoutNoDataFound.visibility = View.GONE
+                binding.cardViewWorker.cardViewPrincipal.visibility = View.VISIBLE
+            }
+
+            is ManagementWorkerResult.CreateWorker -> {
+                startNewActivityWithAnimation(this@ManagementWorkerActivity, CreateWorkerActivity::class.java)
+            }
+
+            is ManagementWorkerResult.UpdateWorker -> {
+                val extras = Bundle()
+                val dni = result.dni
+                extras.putString("dni", dni)
+                startNewActivityWithAnimation(this@ManagementWorkerActivity, UpdateWorkerActivity::class.java, extras, true)
+            }
+
+            is ManagementWorkerResult.DeleteWorker -> {
+                deleteWorker()
+            }
+
+            is ManagementWorkerResult.Error -> {
+                dismissData(result.code)
+            }
+
+            is ManagementWorkerResult.ValidationError -> {
+                Toast.makeText(this, MESSAGE_DATA_NOT_VALID, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun searchWorkers() {
@@ -85,7 +146,8 @@ class ManagementWorkerActivity : BaseActivity() {
         binding.searchBox.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 if (binding.searchBox.error == null) {
-                    getWorkerService()
+                    viewModel.validateWorkerByDNI()
+                    //   getWorkerService()
                     performSearch()
                 }
                 true
@@ -125,41 +187,9 @@ class ManagementWorkerActivity : BaseActivity() {
             }
 
         })
-
     }
 
-    private fun getWorkerService() {
-        showLoading()
-        CoroutineScope(Dispatchers.IO).launch {
-            val dni = binding.searchBox.text.toString()
-            try {
-                val workersRepository = WorkersRepository()
-                val workerUseCase = WorkerUseCase(this@ManagementWorkerActivity, workersRepository)
-                val serviceWorker = workerUseCase.getWorkers(dni)
-                withContext(Dispatchers.Main) {
-                    hideLoading()
-                    when (serviceWorker) {
-                        is CustomResult.OnSuccess -> {
-                            val data = serviceWorker.data
-                            showData(data)
-                        }
-
-                        is CustomResult.OnError -> {
-                            val codeState = SingletonError.code
-                            dismissData(codeState ?: 408)
-                        }
-                    }
-                }
-
-            } catch (e: Exception) {
-                0
-                Timber.d("Response $e")
-            }
-
-        }
-    }
-
-    private fun dismissData(codState: Int) {
+    private fun dismissData(codState: Int?) {
         if (codState == 500 || codState == 408) {
             binding.cardViewWorker.cardViewPrincipal.visibility = View.GONE
             binding.textDataNeed.visibility = View.GONE
@@ -173,51 +203,6 @@ class ManagementWorkerActivity : BaseActivity() {
             binding.textDataNeed.visibility = View.GONE
             binding.linearLayoutNoDataFound.visibility = View.VISIBLE
         }
-    }
-
-    private fun showData(worker: Worker) {
-
-        binding.textDataNeed.visibility = View.GONE
-        binding.linearLayoutNoDataFound.visibility = View.GONE
-        binding.cardViewWorker.cardViewPrincipal.visibility = View.VISIBLE
-
-        worker.photo.let {
-            Glide.with(this@ManagementWorkerActivity)
-                .load(worker.photo)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .apply(
-                    centerCropTransform()
-                        .placeholder(R.drawable.ic_baseline_supervised_user_circle_24)
-                        .error(R.drawable.ic_baseline_supervised_user_circle_24)
-                        .priority(Priority.HIGH)
-                )
-                .into(binding.cardViewWorker.imageWorker)
-
-        }
-        binding.cardViewWorker.textViewDNI.text = worker.dni
-        val fullName = getString(R.string.full_name, worker.name, worker.lastname)
-        binding.cardViewWorker.textViewNomCompleto.text = fullName
-        binding.cardViewWorker.textArea.text = worker.area
-        binding.cardViewWorker.textPhonePrincipal.text = worker.phone
-        binding.cardViewWorker.textdateJoin.text = worker.dateJoin
-
-        resetStatus()
-    }
-
-    private fun goToWorkerCreate() {
-        startNewActivityWithAnimation(this@ManagementWorkerActivity, CreateWorkerActivity::class.java)
-    }
-
-    private fun goToUpdateWorkers() {
-        val actualIdentification = binding.cardViewWorker.textViewDNI.text.toString()
-        val i = Intent(this, UpdateWorkerActivity::class.java)
-        i.putExtra("dni", actualIdentification)
-        startActivity(i)
-    }
-
-    private fun resetStatus() {
-        binding.searchBox.setText("")
     }
 
     private fun performSearch() {

@@ -1,127 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
     tools:context=".view.management_worker.ManagementWorkerActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintGeneral"
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.devpaul.estructurapublicitarias_roal.view.management_worker.ManagementWorkerViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/action_bar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/searchBox"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintGeneral"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:autofillHints="no"
-            android:background="@drawable/search_gb"
-            android:drawableEnd="@drawable/ic_baseline_search_24"
-            android:elevation="5dp"
-            android:fontFamily="@font/mulish_regular"
-            android:hint="@string/DNI_empleado"
-            android:imeOptions="actionSearch"
-            android:inputType="number"
-            android:maxLines="1"
-            android:padding="12dp"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include"
-            tools:ignore="RtlSymmetry" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/fabWorkerCreate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchBox"
-            tools:layout_editor_absoluteX="10dp">
+            android:layout_height="match_parent">
 
             <include
-                android:id="@+id/cardViewWorker"
-                layout="@layout/cardview_worker" />
+                android:id="@+id/include"
+                layout="@layout/action_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textDataNeed"
+            <EditText
+                android:id="@+id/searchBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/informacion_mensaje_busca"
-                android:textAlignment="center"
-                android:textAppearance="@style/subtitulosGeneral"
-                app:drawableTopCompat="@drawable/image_no_data" />
+                android:layout_margin="25dp"
+                android:autofillHints="no"
+                android:background="@drawable/search_gb"
+                android:drawableEnd="@drawable/ic_baseline_search_24"
+                android:elevation="5dp"
+                android:fontFamily="@font/mulish_regular"
+                android:hint="@string/DNI_empleado"
+                android:imeOptions="actionSearch"
+                android:inputType="number"
+                android:maxLines="1"
+                android:padding="12dp"
+                android:text="@={viewModel.documentNumber}"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include"
+                tools:ignore="RtlSymmetry" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayoutNoDataFound"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="40dp"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/fabWorkerCreate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchBox">
-
-            <TextView
-                android:id="@+id/textDataManagementErrors"
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/informacion_respuesta_no_encontrada"
-                android:textAlignment="center"
-                android:textAppearance="@style/subtitulosGeneral"
-                app:drawableTopCompat="@drawable/data_not_found" />
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/fabWorkerCreate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/searchBox"
+                tools:layout_editor_absoluteX="10dp">
 
-        </LinearLayout>
+                <include
+                    android:id="@+id/cardViewWorker"
+                    layout="@layout/cardview_worker" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabWorkerCreate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/ic_baseline_add_24"
-            app:backgroundTint="@color/orange_principal"
-            app:layout_constraintBottom_toTopOf="@+id/tvName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:tint="@android:color/white" />
+                <TextView
+                    android:id="@+id/textDataNeed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/informacion_mensaje_busca"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/subtitulosGeneral"
+                    app:drawableTopCompat="@drawable/image_no_data" />
 
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="#424242"
-            android:fontFamily="@font/mulish_regular"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/ROAL"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="RtlSymmetry" />
+            </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/linearLayoutNoDataFound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="40dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/fabWorkerCreate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/searchBox">
 
-</androidx.core.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/textDataManagementErrors"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/informacion_respuesta_no_encontrada"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/subtitulosGeneral"
+                    app:drawableTopCompat="@drawable/data_not_found" />
+
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabWorkerCreate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:contentDescription="@string/todo"
+                android:onClick="@{()->viewModel.createWorker()}"
+                android:src="@drawable/ic_baseline_add_24"
+                app:backgroundTint="@color/orange_principal"
+                app:layout_constraintBottom_toTopOf="@+id/tvName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="#424242"
+                android:fontFamily="@font/mulish_regular"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/ROAL"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="RtlSymmetry" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</layout>
