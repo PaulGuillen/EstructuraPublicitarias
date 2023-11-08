@@ -19,7 +19,6 @@ import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityManagementWorkerBinding
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.mangementWorker.ManagementWorkerResult
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
-import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 
@@ -27,7 +26,6 @@ import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 class ManagementWorkerActivity : BaseActivity() {
 
     lateinit var binding: ActivityManagementWorkerBinding
-    private var workersProvider = WorkersProvider()
     private lateinit var viewModel: ManagementWorkerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +36,7 @@ class ManagementWorkerActivity : BaseActivity() {
         toolbarStyle(
             this@ManagementWorkerActivity,
             binding.include.toolbar,
-            "Mantenimiento de Trabajadores",
+            MAINTENANCE_WORKER,
             true,
             HomeActivity::class.java
         )
@@ -129,7 +127,7 @@ class ManagementWorkerActivity : BaseActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val inputLength = s?.length ?: 0
                 if (inputLength != 0 && (inputLength < 8 || inputLength > 20)) {
-                    binding.searchBox.error = "DNI o CEX no permitido"
+                    binding.searchBox.error = getString(R.string.text_dni_or_cex_not_allowed)
                 } else {
                     binding.searchBox.error = null
                 }

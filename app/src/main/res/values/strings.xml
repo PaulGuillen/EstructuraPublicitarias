@@ -150,6 +150,9 @@
     <string name="text_details_card">Detalles del equipo que lleva puesto</string>
     <string name="text_view_details_card">Ver detalles</string>
 
+    <!--ACTIVITY MANAGEMENT WORKER -->
+    <string name="text_dni_or_cex_not_allowed">DNI o CEX no permitido</string>
+
     <!--ACTIVITY CREATE WORKER -->
     <string name="subtitle_missing_gender">Seleccione el género</string>
     <string name="subtitle_missing_nationality">Seleccione una nacionalidad</string>
