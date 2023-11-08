@@ -3,6 +3,7 @@ package com.devpaul.estructurapublicitarias_roal.view.base
 import android.app.Dialog
 import android.content.res.Configuration
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import com.devpaul.estructurapublicitarias_roal.R
@@ -56,6 +57,10 @@ abstract class BaseActivity : InitialActivity() {
             getString(R.string.dialog_singleton_text_button_accept),
             onClickListener = {}
         )
+    }
+
+    fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
 }

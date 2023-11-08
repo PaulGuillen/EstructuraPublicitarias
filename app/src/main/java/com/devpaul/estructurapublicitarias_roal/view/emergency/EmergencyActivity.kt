@@ -39,6 +39,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.usecases.WorkerUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.emergency.EmergencyResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordResult
 import com.devpaul.estructurapublicitarias_roal.domain.utils.MESSAGE_DATA_NOT_VALID
+import com.devpaul.estructurapublicitarias_roal.domain.utils.SEARCH_TITLE_DNI
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 import com.devpaul.estructurapublicitarias_roal.domain.utils.ViewModelFactory
 import com.devpaul.estructurapublicitarias_roal.domain.utils.applyCustomTextStyleToTextView
@@ -59,7 +60,6 @@ import java.io.IOException
 class EmergencyActivity : BaseActivity() {
 
     lateinit var binding: ActivityEmergencyBinding
-    private var workersProvider = WorkersProvider()
     private var imageFile: File? = null
     private lateinit var viewModel: EmergencyViewModel
 
@@ -69,7 +69,7 @@ class EmergencyActivity : BaseActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = ActivityEmergencyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, "Busquedad por DNI", true, HomeActivity::class.java)
+        toolbarStyle(this@EmergencyActivity, binding.include.toolbar, SEARCH_TITLE_DNI, true, HomeActivity::class.java)
 
         viewModel =
             ViewModelProvider(this, ViewModelFactory(this, EmergencyViewModel::class.java))[EmergencyViewModel::class.java]
@@ -132,8 +132,7 @@ class EmergencyActivity : BaseActivity() {
     private fun initScanner() {
         val integrator = IntentIntegrator(this)
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-        integrator.setPrompt("Porfavor verifica que el QR solo sea el DNI")
-        //integrator.setTorchEnabled(true)
+        integrator.setPrompt(getString(R.string.text_need_dni_qr))
         integrator.setBeepEnabled(true)
         integrator.initiateScan()
     }
@@ -142,7 +141,7 @@ class EmergencyActivity : BaseActivity() {
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
             if (result.contents == null) {
-                Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show()
+                showToast(getString(R.string.action_cancelled_qr))
             } else {
                 viewModel.validateWorkerByDNI(result.contents.toString())
             }
@@ -268,8 +267,8 @@ class EmergencyActivity : BaseActivity() {
             val bytes = contentResolver.openInputStream(uri)?.readBytes()
             Base64.encodeToString(bytes, Base64.DEFAULT)
         } catch (error: IOException) {
-            error.printStackTrace() // This exception always occurs
-            "Ha ocurrido un error"
+            error.printStackTrace()
+            getString(R.string.error_base64_uri)
         }
     }
 

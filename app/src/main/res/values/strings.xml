@@ -169,5 +169,8 @@
     <string name="text_title_number_one">Número uno</string>
     <string name="text_title_number_two">Número dos</string>
     <string name="text_title_born_date">Fecha nacimiento</string>
+    <string name="text_need_dni_qr">Porfavor verifica que el QR solo sea el DNI</string>
+    <string name="action_cancelled_qr">Cancelado</string>
+    <string name="error_base64_uri">Ha ocurrido un error</string>
 
 </resources>

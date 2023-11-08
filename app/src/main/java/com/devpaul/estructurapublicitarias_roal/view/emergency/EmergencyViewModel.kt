@@ -1,10 +1,14 @@
 package com.devpaul.estructurapublicitarias_roal.view.emergency
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidateImageByPhotoRequest
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
@@ -45,7 +49,7 @@ class EmergencyViewModel(context: Context) : ViewModel() {
         }
     }
 
-    fun validateWorkerByDNI(dni : String){
+    fun validateWorkerByDNI(dni: String) {
         viewModelScope.launch {
             getWorkerByDNI(dni)
         }
@@ -125,11 +129,11 @@ class EmergencyViewModel(context: Context) : ViewModel() {
             principalPhone.value = phone
             secondaryPhone.value = phoneEmergency
 
-            textAllergies.value = allergies?.takeIf { it.isNotEmpty() } ?: "No alergías"
-            textDiseases.value = diseases?.takeIf { it.isNotEmpty() } ?: "No enfermedades"
-            textBloodType.value = bloodType?.takeIf { it.isNotEmpty() } ?: "No grupo"
+            textAllergies.value = allergies?.takeIf { it.isNotEmpty() } ?: VALIDATE_NOT_ALLERGIES
+            textDiseases.value = diseases?.takeIf { it.isNotEmpty() } ?: VALIDATE_NOT_DISEASES
+            textBloodType.value = bloodType?.takeIf { it.isNotEmpty() } ?: VALIDATE_NOT_BLOOD_TYPE
+
         }
     }
-
 
 }
