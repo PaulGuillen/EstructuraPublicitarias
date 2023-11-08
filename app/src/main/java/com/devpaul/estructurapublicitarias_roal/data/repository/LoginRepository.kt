@@ -1,11 +1,11 @@
 package com.devpaul.estructurapublicitarias_roal.data.repository
 
 import com.devpaul.estructurapublicitarias_roal.data.api.ApiRoutes
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.PrincipalUser
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.GeneralHTTP
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomNotFoundError
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.HttpError
-import com.devpaul.estructurapublicitarias_roal.domain.mappers.MainUserMapper
+import com.devpaul.estructurapublicitarias_roal.domain.mappers.GeneralHTTPMapper
 import com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository.LoginRepositoryNetwork
 import com.devpaul.estructurapublicitarias_roal.data.models.response.MainUser
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
@@ -20,7 +20,7 @@ class LoginRepository : LoginRepositoryNetwork {
         val api = ApiRoutes()
         apiConfig = api.getMainUserRoutes()
     }
-    override fun getMainUser(mainUser: MainUser): CustomResult<PrincipalUser> {
+    override fun getMainUser(mainUser: MainUser): CustomResult<GeneralHTTP> {
         val serviceTitle = "Error en el MS getMainUser"
         try {
             val callApi = apiConfig?.mainUserEndPoints(mainUser)?.execute()
@@ -30,7 +30,7 @@ class LoginRepository : LoginRepositoryNetwork {
                     val response: ResponseHttp? = callApi.body()
 
                     if (response != null)
-                        CustomResult.OnSuccess(MainUserMapper().map(response))
+                        CustomResult.OnSuccess(GeneralHTTPMapper().map(response))
                     else {
                         CustomResult.OnError(CustomNotFoundError())
                     }
@@ -69,7 +69,7 @@ class LoginRepository : LoginRepositoryNetwork {
     }
 
 
-    override fun forgotPassword(mainUser: MainUser): CustomResult<PrincipalUser> {
+    override fun forgotPassword(mainUser: MainUser): CustomResult<GeneralHTTP> {
         val serviceTitle = "Error en el MS recoveryPassword"
         try {
             val callApi = apiConfig?.mainUserEndPoints(mainUser)?.execute()
@@ -78,7 +78,7 @@ class LoginRepository : LoginRepositoryNetwork {
                     val response: ResponseHttp? = callApi.body()
 
                     if (response != null)
-                        CustomResult.OnSuccess(MainUserMapper().map(response))
+                        CustomResult.OnSuccess(GeneralHTTPMapper().map(response))
                     else {
                         CustomResult.OnError(CustomNotFoundError())
                     }
@@ -117,7 +117,7 @@ class LoginRepository : LoginRepositoryNetwork {
         }
     }
 
-    override fun codeVerification(mainUser: MainUser): CustomResult<PrincipalUser> {
+    override fun codeVerification(mainUser: MainUser): CustomResult<GeneralHTTP> {
         val serviceTitle = "Error en el MS codeVerification"
         try {
             val callApi = apiConfig?.mainUserEndPoints(mainUser)?.execute()
@@ -126,7 +126,7 @@ class LoginRepository : LoginRepositoryNetwork {
                     val response: ResponseHttp? = callApi.body()
 
                     if (response != null)
-                        CustomResult.OnSuccess(MainUserMapper().map(response))
+                        CustomResult.OnSuccess(GeneralHTTPMapper().map(response))
                     else {
                         CustomResult.OnError(CustomNotFoundError())
                     }
@@ -165,7 +165,7 @@ class LoginRepository : LoginRepositoryNetwork {
         }
     }
 
-    override fun changePassword(mainUser: MainUser): CustomResult<PrincipalUser> {
+    override fun changePassword(mainUser: MainUser): CustomResult<GeneralHTTP> {
         val serviceTitle = "Error en el MS changePassword"
         try {
             val callApi = apiConfig?.mainUserEndPoints(mainUser)?.execute()
@@ -174,7 +174,7 @@ class LoginRepository : LoginRepositoryNetwork {
                     val response: ResponseHttp? = callApi.body()
 
                     if (response != null)
-                        CustomResult.OnSuccess(MainUserMapper().map(response))
+                        CustomResult.OnSuccess(GeneralHTTPMapper().map(response))
                     else {
                         CustomResult.OnError(CustomNotFoundError())
                     }

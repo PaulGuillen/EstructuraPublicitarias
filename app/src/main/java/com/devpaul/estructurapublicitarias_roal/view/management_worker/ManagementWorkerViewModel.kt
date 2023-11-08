@@ -37,6 +37,12 @@ class ManagementWorkerViewModel(context: Context) : ViewModel() {
         }
     }
 
+    fun validateDeleteWorker() {
+        viewModelScope.launch {
+            callServiceDeleteWorker()
+        }
+    }
+
     private suspend fun callServiceGetWorkerByDNI() {
 
         _showLoadingDialog.value = true
@@ -52,6 +58,34 @@ class ManagementWorkerViewModel(context: Context) : ViewModel() {
 
                 is CustomResult.OnError -> {
                     val error = getWorker.error
+                    _managementWorkerResult.value = ManagementWorkerResult.Error(
+                        error.code ?: SingletonError.code,
+                        error.title ?: SingletonError.title,
+                        error.subtitle
+                    )
+                }
+            }
+        } catch (e: Exception) {
+            _managementWorkerResult.value = ManagementWorkerResult.ValidationError
+        } finally {
+            _showLoadingDialog.value = false
+        }
+
+    }
+
+    private suspend fun callServiceDeleteWorker() {
+
+        _showLoadingDialog.value = true
+        try {
+            val workerRepository = WorkersRepository()
+            val managementWorkerUseCase = ManagementWorkerUseCase(workerRepository)
+            when (val deleteWorker = managementWorkerUseCase.deleteWorker(documentNumber.value.toString())) {
+                is CustomResult.OnSuccess -> {
+                    _managementWorkerResult.value = ManagementWorkerResult.SuccessWorkerDeleted
+                }
+
+                is CustomResult.OnError -> {
+                    val error = deleteWorker.error
                     _managementWorkerResult.value = ManagementWorkerResult.Error(
                         error.code ?: SingletonError.code,
                         error.title ?: SingletonError.title,

@@ -20,6 +20,7 @@ const val SUBTITLE_MESSAGE_TIMEOUT_SERVICE = "En este momento el servicio no est
 const val TITLE_ERROR_MS_GET_WORKERS = "Error en el MS getWorkers"
 const val TITLE_ERROR_MS_GET_OPTIONS = "Error en el MS getOptions"
 const val TITLE_ERROR_MS_VALIDATE_IMAGE_PHOTO = "Error en el MS validateImageByPhoto"
+const val TITLE_ERROR_MS_DELETE_WORKER = "Error en el MS deleteWorker"
 const val VALIDATE_NOT_ALLERGIES = "Sin alergías"
 const val VALIDATE_NOT_DISEASES = "Sin enfermedades"
 const val VALIDATE_NOT_BLOOD_TYPE = "Sin grupo"

@@ -2,7 +2,6 @@ package com.devpaul.estructurapublicitarias_roal.view.management_worker
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,21 +16,12 @@ import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions.centerCropTransform
 import com.devpaul.estructurapublicitarias_roal.R
-import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityManagementWorkerBinding
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.mangementWorker.ManagementWorkerResult
-import com.devpaul.estructurapublicitarias_roal.domain.utils.MESSAGE_DATA_NOT_VALID
-import com.devpaul.estructurapublicitarias_roal.domain.utils.ViewModelFactory
-import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
-import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
-import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
+import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
-import com.devpaul.estructurapublicitarias_roal.view.login.LoginActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 @SuppressLint("SourceLockedOrientationActivity")
 class ManagementWorkerActivity : BaseActivity() {
@@ -112,6 +102,13 @@ class ManagementWorkerActivity : BaseActivity() {
                 deleteWorker()
             }
 
+            is ManagementWorkerResult.SuccessWorkerDeleted -> {
+                SweetAlertDialog(this@ManagementWorkerActivity, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText(getString(R.string.successful_delete_data)).show()
+                binding.textDataNeed.visibility = View.VISIBLE
+                binding.cardViewWorker.cardViewPrincipal.visibility = View.GONE
+            }
+
             is ManagementWorkerResult.Error -> {
                 dismissData(result.code)
             }
@@ -147,7 +144,6 @@ class ManagementWorkerActivity : BaseActivity() {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 if (binding.searchBox.error == null) {
                     viewModel.validateWorkerByDNI()
-                    //   getWorkerService()
                     performSearch()
                 }
                 true
@@ -163,31 +159,11 @@ class ManagementWorkerActivity : BaseActivity() {
             .setCancelText("No").setCancelClickListener { obj: SweetAlertDialog -> obj.dismiss() }
             .setConfirmText("Si")
             .setConfirmClickListener {
-                deleteWorkers()
+                viewModel.validateDeleteWorker()
                 it.dismiss()
             }.show()
     }
 
-    private fun deleteWorkers() {
-        val actualIdentification = binding.cardViewWorker.textViewDNI.text.toString()
-        showLoading()
-        workersProvider.deleteWorker(actualIdentification)?.enqueue(object : Callback<ResponseHttp> {
-            override fun onResponse(call: Call<ResponseHttp>, response: Response<ResponseHttp>) {
-                SweetAlertDialog(this@ManagementWorkerActivity, SweetAlertDialog.SUCCESS_TYPE)
-                    .setTitleText(getString(R.string.successful_delete_data)).show()
-                hideLoading()
-                binding.textDataNeed.visibility = View.VISIBLE
-                binding.cardViewWorker.cardViewPrincipal.visibility = View.GONE
-
-            }
-
-            override fun onFailure(call: Call<ResponseHttp>, t: Throwable) {
-                hideLoading()
-                Toast.makeText(this@ManagementWorkerActivity, "Error : $t", Toast.LENGTH_LONG).show()
-            }
-
-        })
-    }
 
     private fun dismissData(codState: Int?) {
         if (codState == 500 || codState == 408) {

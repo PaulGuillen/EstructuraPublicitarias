@@ -1,6 +1,6 @@
 package com.devpaul.estructurapublicitarias_roal.domain.usecases.login
 
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.PrincipalUser
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.GeneralHTTP
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository.LoginRepositoryNetwork
 import com.devpaul.estructurapublicitarias_roal.data.models.response.MainUser
@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 
 class LoginUseCase(private val loginRepositoryNetwork: LoginRepositoryNetwork) {
 
-    suspend fun getMainUser(mainUser: MainUser): CustomResult<PrincipalUser> = withContext(Dispatchers.IO) {
+    suspend fun getMainUser(mainUser: MainUser): CustomResult<GeneralHTTP> = withContext(Dispatchers.IO) {
         val login = loginRepositoryNetwork.getMainUser(mainUser)
         when (login) {
             is CustomResult.OnSuccess -> {
@@ -17,7 +17,7 @@ class LoginUseCase(private val loginRepositoryNetwork: LoginRepositoryNetwork) {
             }
 
             else -> {
-                PrincipalUser()
+                GeneralHTTP()
             }
         }
         return@withContext login
