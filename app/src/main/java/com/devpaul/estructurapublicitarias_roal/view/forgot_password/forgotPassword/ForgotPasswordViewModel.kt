@@ -64,7 +64,7 @@ class ForgotPasswordViewModel(context: Context) : ViewModel() {
                     _forgotPasswordResult.value = ForgotPasswordResult.Error(
                         error.code ?: SingletonError.code,
                         error.title ?: SingletonError.title,
-                        error.subtitle
+                        error.subtitle ?: MESSAGE_SERVICE_NOT_AVAILABLE
                     )
                 }
             }

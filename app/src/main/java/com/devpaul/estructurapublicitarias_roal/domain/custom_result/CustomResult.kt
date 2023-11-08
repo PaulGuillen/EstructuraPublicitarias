@@ -1,5 +1,6 @@
 package com.devpaul.estructurapublicitarias_roal.domain.custom_result
 
+import com.devpaul.estructurapublicitarias_roal.domain.utils.MESSAGE_SERVICE_NOT_AVAILABLE
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 
 sealed class CustomResult<out T> {
@@ -13,7 +14,7 @@ open class CustomError(
     val subtitle: String? = null,
 ) {
 
-    private val generalMessage: String = "En este momento el servicio no está disponible"
+    private val generalMessage: String = MESSAGE_SERVICE_NOT_AVAILABLE
 
     init {
         if (code == 400 || code == 401 || code == 404 || code == 503 || code == 504

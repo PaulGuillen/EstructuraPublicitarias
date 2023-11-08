@@ -105,7 +105,7 @@ class CodeVerificationViewModel(context: Context) : ViewModel() {
                         _codeVerificationResult.value = ForgotPasswordResult.Error(
                             error.code ?: SingletonError.code,
                             error.title ?: SingletonError.title,
-                            error.subtitle
+                            error.subtitle ?: MESSAGE_SERVICE_NOT_AVAILABLE
                         )
                     }
                 }
