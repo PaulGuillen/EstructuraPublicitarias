@@ -7,11 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import com.devpaul.estructurapublicitarias_roal.R
-import com.devpaul.estructurapublicitarias_roal.domain.usecases.emergency.EmergencyResult
-import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordResult
 import com.devpaul.estructurapublicitarias_roal.domain.utils.ChargeDialog
-import com.devpaul.estructurapublicitarias_roal.domain.utils.SharedPref
-import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
 
 abstract class BaseActivity : InitialActivity() {
 
@@ -46,17 +42,6 @@ abstract class BaseActivity : InitialActivity() {
 
     fun showLoading() {
         progressDialog = ChargeDialog.showLoadingDialog(this)
-    }
-
-    fun showCustomDialogError(result: ForgotPasswordResult.Error) {
-        showCustomDialogErrorSingleton(
-            this,
-            result.title,
-            result.subTitle,
-            result.code,
-            getString(R.string.dialog_singleton_text_button_accept),
-            onClickListener = {}
-        )
     }
 
     fun showToast(message: String) {

@@ -5,5 +5,6 @@ import com.devpaul.estructurapublicitarias_roal.data.models.entity.GeneralHTTP
 sealed class LoginResult {
     data class Success(val data: GeneralHTTP) : LoginResult()
     data class Error(val code: Int?, val title: String?, val subTitle: String?) : LoginResult()
+    data object ForgotPassword : LoginResult()
     data object ValidationError : LoginResult()
 }

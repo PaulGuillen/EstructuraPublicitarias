@@ -1,16 +1,17 @@
 package com.devpaul.estructurapublicitarias_roal.view.login
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityLoginBinding
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.LoginResult
+import com.devpaul.estructurapublicitarias_roal.domain.utils.MESSAGE_DATA_NOT_VALID
 import com.devpaul.estructurapublicitarias_roal.domain.utils.ViewModelFactory
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.view.forgot_password.forgotPassword.ForgotPasswordActivity
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
-import timber.log.Timber
 
 class LoginActivity : BaseActivity() {
 
@@ -40,16 +41,16 @@ class LoginActivity : BaseActivity() {
                 hideLoading()
             }
         }
-
-        binding.textForgotPassword.setOnClickListener {
-            gotToForgotPasswordView()
-        }
     }
 
     private fun handleLoginResult(result: LoginResult) {
         when (result) {
             is LoginResult.Success -> {
                 startNewActivityWithAnimation(this, HomeActivity::class.java, null, true)
+            }
+
+            is LoginResult.ForgotPassword -> {
+                startNewActivityWithAnimation(this@LoginActivity, ForgotPasswordActivity::class.java,null)
             }
 
             is LoginResult.Error -> {
@@ -61,14 +62,12 @@ class LoginActivity : BaseActivity() {
                     onClickListener = {})
             }
 
-            LoginResult.ValidationError -> {
-                Timber.d("ValidationError")
+            is LoginResult.ValidationError -> {
+                Toast.makeText(this, MESSAGE_DATA_NOT_VALID, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun gotToForgotPasswordView() {
-        startNewActivityWithAnimation(this@LoginActivity, ForgotPasswordActivity::class.java,null)
-    }
+
 
 }

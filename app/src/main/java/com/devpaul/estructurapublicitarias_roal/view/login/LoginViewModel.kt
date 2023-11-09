@@ -87,4 +87,8 @@ class LoginViewModel(context: Context) : BaseViewModel() {
         }
     }
 
+    fun forgotPassword(){
+        _loginResult.value = LoginResult.ForgotPassword
+    }
+
 }
