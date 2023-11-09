@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devpaul.estructurapublicitarias_roal.data.models.response.MainUser
 import com.devpaul.estructurapublicitarias_roal.data.repository.LoginRepository
@@ -12,11 +11,12 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
+import com.devpaul.estructurapublicitarias_roal.view.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CodeVerificationViewModel(context: Context) : ViewModel() {
+class CodeVerificationViewModel(context: Context) : BaseViewModel() {
 
     private val prefs = SharedPref(context)
 
@@ -34,11 +34,6 @@ class CodeVerificationViewModel(context: Context) : ViewModel() {
     private val _codeVerificationResult = MutableLiveData<ForgotPasswordResult>()
 
     val codeVerificationResult: LiveData<ForgotPasswordResult> = _codeVerificationResult
-
-    private val _showLoadingDialog = MutableLiveData<Boolean>()
-    val showLoadingDialog: LiveData<Boolean>
-        get() = _showLoadingDialog
-
 
     private val _showReSendButton = MutableLiveData<Boolean>()
     val showReSendButton: LiveData<Boolean> = _showReSendButton

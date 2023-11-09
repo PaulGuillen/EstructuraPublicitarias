@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.management_worker.ManagementWorkerActivity">
+    tools:context=".view.management_worker.managementWorker.ManagementWorkerActivity">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.devpaul.estructurapublicitarias_roal.view.management_worker.ManagementWorkerViewModel" />
+            type="com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker.ManagementWorkerViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView

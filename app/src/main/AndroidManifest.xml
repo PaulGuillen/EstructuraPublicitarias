@@ -28,9 +28,9 @@
             android:exported="false"
             android:parentActivityName=".view.HomeActivity" />
         <activity
-            android:name=".view.management_worker.UpdateWorkerActivity"
+            android:name=".view.management_worker.updateWorker.UpdateWorkerActivity"
             android:exported="false"
-            android:parentActivityName=".view.management_worker.ManagementWorkerActivity">
+            android:parentActivityName=".view.management_worker.managementWorker.ManagementWorkerActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -64,15 +64,15 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.management_worker.CreateWorkerActivity"
+            android:name=".view.management_worker.createWorker.CreateWorkerActivity"
             android:exported="false"
-            android:parentActivityName=".view.management_worker.ManagementWorkerActivity">
+            android:parentActivityName=".view.management_worker.managementWorker.ManagementWorkerActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.management_worker.ManagementWorkerActivity"
+            android:name=".view.management_worker.managementWorker.ManagementWorkerActivity"
             android:exported="false"
             android:parentActivityName=".view.HomeActivity">
             <meta-data

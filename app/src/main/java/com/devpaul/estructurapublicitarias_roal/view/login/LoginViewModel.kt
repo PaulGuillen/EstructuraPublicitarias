@@ -3,7 +3,6 @@ package com.devpaul.estructurapublicitarias_roal.view.login
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devpaul.estructurapublicitarias_roal.data.models.response.MainUser
 import com.devpaul.estructurapublicitarias_roal.data.repository.LoginRepository
@@ -11,18 +10,18 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.LoginResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.login.LoginUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
+import com.devpaul.estructurapublicitarias_roal.view.base.BaseViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class LoginViewModel(context: Context) : ViewModel() {
+class LoginViewModel(context: Context) : BaseViewModel() {
     private val prefs = SharedPref(context)
     val userEmail = MutableLiveData("")
     val userPassword = MutableLiveData("")
+
     private val _loginResult = MutableLiveData<LoginResult>()
+
     val loginResult: LiveData<LoginResult> = _loginResult
-    private val _showLoadingDialog = MutableLiveData<Boolean>()
-    val showLoadingDialog: LiveData<Boolean>
-        get() = _showLoadingDialog
 
     val isUserSaved = MutableLiveData(false)
 

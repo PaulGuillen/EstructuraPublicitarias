@@ -1,9 +1,8 @@
-package com.devpaul.estructurapublicitarias_roal.view.management_worker
+package com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
@@ -11,9 +10,10 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.mangementWorker.ManagementWorkerResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.mangementWorker.ManagementWorkerUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
+import com.devpaul.estructurapublicitarias_roal.view.base.BaseViewModel
 import kotlinx.coroutines.launch
 
-class ManagementWorkerViewModel(context: Context) : ViewModel() {
+class ManagementWorkerViewModel(context: Context) : BaseViewModel() {
 
     var documentNumber = MutableLiveData("")
     var textFullName = MutableLiveData("")
@@ -25,11 +25,6 @@ class ManagementWorkerViewModel(context: Context) : ViewModel() {
     private val _managementWorkerResult = MutableLiveData<ManagementWorkerResult>()
 
     val managementWorkerResult: LiveData<ManagementWorkerResult> = _managementWorkerResult
-
-    private val _showLoadingDialog = MutableLiveData<Boolean>()
-    val showLoadingDialog: LiveData<Boolean>
-        get() = _showLoadingDialog
-
 
     fun validateWorkerByDNI() {
         viewModelScope.launch {

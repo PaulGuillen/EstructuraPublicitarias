@@ -12,7 +12,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Options
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
-import com.devpaul.estructurapublicitarias_roal.view.management_worker.ManagementWorkerActivity
+import com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker.ManagementWorkerActivity
 import com.devpaul.estructurapublicitarias_roal.view.validationepp.ValidationEPPActivity
 
 class OptionsAdapter(val context: Activity, private val categories: List<Options>) :

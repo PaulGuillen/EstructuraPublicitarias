@@ -3,7 +3,6 @@ package com.devpaul.estructurapublicitarias_roal.view.forgot_password.forgotPass
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devpaul.estructurapublicitarias_roal.data.models.response.MainUser
 import com.devpaul.estructurapublicitarias_roal.data.repository.LoginRepository
@@ -11,9 +10,10 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
+import com.devpaul.estructurapublicitarias_roal.view.base.BaseViewModel
 import kotlinx.coroutines.launch
 
-class ForgotPasswordViewModel(context: Context) : ViewModel() {
+class ForgotPasswordViewModel(context: Context) : BaseViewModel() {
 
     private val prefs = SharedPref(context)
 
@@ -22,10 +22,6 @@ class ForgotPasswordViewModel(context: Context) : ViewModel() {
     private val _forgotPasswordResult = MutableLiveData<ForgotPasswordResult>()
 
     val forgotPasswordResult: LiveData<ForgotPasswordResult> = _forgotPasswordResult
-
-    private val _showLoadingDialog = MutableLiveData<Boolean>()
-    val showLoadingDialog: LiveData<Boolean>
-        get() = _showLoadingDialog
 
     fun sendEmailAgain() {
         viewModelScope.launch {

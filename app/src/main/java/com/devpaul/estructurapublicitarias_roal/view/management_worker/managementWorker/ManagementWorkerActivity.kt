@@ -1,4 +1,4 @@
-package com.devpaul.estructurapublicitarias_roal.view.management_worker
+package com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -21,6 +21,8 @@ import com.devpaul.estructurapublicitarias_roal.domain.usecases.mangementWorker.
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
+import com.devpaul.estructurapublicitarias_roal.view.management_worker.createWorker.CreateWorkerActivity
+import com.devpaul.estructurapublicitarias_roal.view.management_worker.updateWorker.UpdateWorkerActivity
 
 @SuppressLint("SourceLockedOrientationActivity")
 class ManagementWorkerActivity : BaseActivity() {

@@ -1,4 +1,4 @@
-package com.devpaul.estructurapublicitarias_roal.view.management_worker
+package com.devpaul.estructurapublicitarias_roal.view.management_worker.updateWorker
 
 import android.app.Activity
 import android.net.Uri
@@ -22,6 +22,7 @@ import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityUpdateWorkerBinding
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
+import com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker.ManagementWorkerActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
@@ -44,7 +45,7 @@ class UpdateWorkerActivity : BaseActivity() {
         binding = ActivityUpdateWorkerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        toolbarStyle(this@UpdateWorkerActivity, binding.include.toolbar, "Actualización de datos",true,ManagementWorkerActivity::class.java)
+        toolbarStyle(this@UpdateWorkerActivity, binding.include.toolbar, "Actualización de datos",true, ManagementWorkerActivity::class.java)
         gettingDataPerUser()
         binding.imageViewUser.setOnClickListener { selectImage() }
         binding.btnActualizarData.setOnClickListener {

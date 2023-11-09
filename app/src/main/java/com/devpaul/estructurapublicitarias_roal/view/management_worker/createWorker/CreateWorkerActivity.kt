@@ -1,4 +1,4 @@
-package com.devpaul.estructurapublicitarias_roal.view.management_worker
+package com.devpaul.estructurapublicitarias_roal.view.management_worker.createWorker
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -35,6 +35,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWit
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
+import com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker.ManagementWorkerActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.*
