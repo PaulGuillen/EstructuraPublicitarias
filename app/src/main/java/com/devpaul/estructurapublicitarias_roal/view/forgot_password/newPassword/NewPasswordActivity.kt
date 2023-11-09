@@ -52,7 +52,12 @@ class NewPasswordActivity : BaseActivity() {
             }
 
             is ForgotPasswordResult.Error -> {
-                showCustomDialogError(result)
+                showCustomDialogErrorSingleton(this,
+                    result.title,
+                    result.subTitle,
+                    result.code,
+                    "Aceptar",
+                    onClickListener = {})
             }
 
             is ForgotPasswordResult.NotValidForm -> {

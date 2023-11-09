@@ -12,5 +12,4 @@ interface WorkersRepositoryNetwork {
     fun getWorkers(dni: String): CustomResult<Worker>
     fun validateImageByPhoto(validateImageByPhotoRequest: ValidateImageByPhotoRequest): CustomResult<ValidateImageByPhoto>
     fun deleteWorker(dni: String): CustomResult<GeneralHTTP>
-
 }

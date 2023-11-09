@@ -4,11 +4,13 @@ import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.lifecycle.ViewModelProvider
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
@@ -20,9 +22,19 @@ import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityUpdateWorkerBinding
+import com.devpaul.estructurapublicitarias_roal.domain.usecases.mangementWorker.ManagementWorkerResult
+import com.devpaul.estructurapublicitarias_roal.domain.usecases.updateWorker.UpdateWorkerResult
+import com.devpaul.estructurapublicitarias_roal.domain.utils.MESSAGE_DATA_NOT_VALID
+import com.devpaul.estructurapublicitarias_roal.domain.utils.ViewModelFactory
+import com.devpaul.estructurapublicitarias_roal.domain.utils.isValidFormUpdateWorker
+import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
+import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
+import com.devpaul.estructurapublicitarias_roal.domain.utils.toggleTextInputLayoutError
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
+import com.devpaul.estructurapublicitarias_roal.view.management_worker.createWorker.CreateWorkerActivity
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker.ManagementWorkerActivity
+import com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker.ManagementWorkerViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
@@ -39,75 +51,81 @@ class UpdateWorkerActivity : BaseActivity() {
     private var workersProvider = WorkersProvider()
     lateinit var binding: ActivityUpdateWorkerBinding
     private var imageFile: File? = null
+    private lateinit var viewModel: UpdateWorkerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateWorkerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        toolbarStyle(this@UpdateWorkerActivity, binding.include.toolbar, "Actualización de datos",true, ManagementWorkerActivity::class.java)
-        gettingDataPerUser()
-        binding.imageViewUser.setOnClickListener { selectImage() }
+        toolbarStyle(
+            this@UpdateWorkerActivity,
+            binding.include.toolbar,
+            "Actualización de datos",
+            true,
+            ManagementWorkerActivity::class.java
+        )
+
+        viewModel =
+            ViewModelProvider(this, ViewModelFactory(this, UpdateWorkerViewModel::class.java))[UpdateWorkerViewModel::class.java]
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
+        val document = intent.getStringExtra("dni").toString()
+        viewModel.validateWorker(document)
+
+        binding.imageViewUser.setOnClickListener {
+            selectImage()
+        }
         binding.btnActualizarData.setOnClickListener {
             updateWorkers()
         }
+
+        viewModel.updateWorkerResult.observe(this) { result ->
+            handleUpdateWorkerResult(result)
+        }
+
+        viewModel.showLoadingDialog.observe(this) { showLoading ->
+            if (showLoading) {
+                showLoading()
+            } else {
+                hideLoading()
+            }
+        }
     }
 
-    private fun gettingDataPerUser() {
-        showLoading()
-        val typeDNI = intent.getStringExtra("dni").toString()
-        workersProvider.getWorkers(typeDNI)?.enqueue(object : Callback<WorkersResponse> {
-            override fun onResponse(call: Call<WorkersResponse>, response: Response<WorkersResponse>) {
-                if (response.body() != null) {
-                    hideLoading()
-                    val textIdentification = response.body()?.dni
-                    val textName = response.body()?.name
-                    val textFirstName = response.body()?.name
-                    val textLastName = response.body()?.lastname
-                    val textFullName = textName + "\n" + textLastName
-                    val textDateBirth = response.body()?.dateBirth
-                    val textDateJoin = response.body()?.dateJoin
-                    val textArea = response.body()?.area
-                    val textAllergies = response.body()?.allergies
-                    val textPhone = response.body()?.phone
-                    val textPhoto = response.body()?.photo
-                    val textSecondaryPhone = response.body()?.phoneEmergency
-                    val textDiseases = response.body()?.diseases
-                    textPhoto.let {
-                        Glide.with(this@UpdateWorkerActivity)
-                            .load(textPhoto)
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .skipMemoryCache(true)
-                            .apply(
-                                RequestOptions.centerCropTransform()
-                                    .placeholder(R.drawable.ic_baseline_supervised_user_circle_24)
-                                    .error(R.drawable.ic_baseline_supervised_user_circle_24)
-                                    .priority(Priority.HIGH)
-                            )
-                            .into(binding.imageViewUser)
-                    }
-                    binding.textFirstName.text = textFirstName
-                    binding.textLastName.text = textLastName
-                    binding.textFullName.text = textFullName
-                    binding.textDNI.text = textIdentification
-                    binding.textAllergies.setText(textAllergies)
-                    binding.textPhone.setText(textPhone)
-                    binding.textPhoneEmergency.setText(textSecondaryPhone)
-                    binding.textAllergies.setText(textAllergies)
-                    binding.textArea.setText(textArea)
-                    binding.textIllness.setText(textDiseases)
-                    binding.textdateJoin.text = textDateJoin
-                    binding.textdateBirth.text = textDateBirth
-                } else {
-                    hideLoading()
+    private fun handleUpdateWorkerResult(result: UpdateWorkerResult) {
+        when (result) {
+            is UpdateWorkerResult.WorkerDataReceived -> {
+                result.worker.photo.let {
+                    Glide.with(this@UpdateWorkerActivity)
+                        .load(result.worker.photo)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .apply(
+                            RequestOptions.centerCropTransform()
+                                .placeholder(R.drawable.ic_baseline_supervised_user_circle_24)
+                                .error(R.drawable.ic_baseline_supervised_user_circle_24)
+                                .priority(Priority.HIGH)
+                        )
+                        .into(binding.imageViewUser)
                 }
+
             }
 
-            override fun onFailure(call: Call<WorkersResponse>, t: Throwable) {
-                hideLoading()
-                Toast.makeText(this@UpdateWorkerActivity, "Error: ${t.message}", Toast.LENGTH_LONG).show()
+            is UpdateWorkerResult.Error -> {
+                showCustomDialogErrorSingleton(this,
+                    result.title,
+                    result.subTitle,
+                    result.code,
+                    "Aceptar",
+                    onClickListener = {})
             }
-        })
+
+            is UpdateWorkerResult.ValidationError -> {
+                Toast.makeText(this, MESSAGE_DATA_NOT_VALID, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun updateWorkers() {
@@ -125,7 +143,7 @@ class UpdateWorkerActivity : BaseActivity() {
         val phoneEmergency = binding.textPhoneEmergency.text.toString()
         val photo = binding.imageViewUser
 
-        isValidForm(area, phone, phoneEmergency).let {
+        isValidFormUpdateWorker(area, phone, phoneEmergency).let {
             showLoading()
             if (photo.drawable.constantState != ContextCompat.getDrawable(
                     this@UpdateWorkerActivity,
@@ -221,41 +239,6 @@ class UpdateWorkerActivity : BaseActivity() {
         }
     }
 
-    private fun isValidForm(
-        area: String,
-        phone: String,
-        phoneEmergency: String
-    ): Boolean {
-
-        if (area.isBlank()) {
-            val messageError = getString(R.string.mandatory)
-            toggleTextInputLayoutError(binding.textArea, messageError)
-            return false
-        }
-
-        if (phone.isBlank() || phone.length < 9) {
-            val messageError = getString(R.string.mandatory)
-            toggleTextInputLayoutError(binding.textPhone, messageError)
-            return false
-        }
-
-        if (phoneEmergency.isBlank() || phoneEmergency.length < 9) {
-            val messageError = getString(R.string.mandatory)
-            toggleTextInputLayoutError(binding.textPhoneEmergency, messageError)
-            return false
-        }
-
-        return true
-    }
-
-    private fun toggleTextInputLayoutError(
-        textInputEditText: TextInputEditText,
-        msg: String?
-    ) {
-        textInputEditText.error = msg
-        textInputEditText.isTextInputLayoutFocusedRectEnabled = msg != null
-    }
-
     private val startImageForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             dataResult(result)
@@ -298,6 +281,7 @@ class UpdateWorkerActivity : BaseActivity() {
             "Ha ocurrido un error"
         }
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         startNewActivityWithBackAnimation(this@UpdateWorkerActivity, ManagementWorkerActivity::class.java)

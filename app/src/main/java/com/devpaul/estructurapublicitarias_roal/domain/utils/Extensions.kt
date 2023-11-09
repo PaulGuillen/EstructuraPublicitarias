@@ -24,6 +24,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.devpaul.estructurapublicitarias_roal.R
+import com.google.android.material.textfield.TextInputEditText
 import java.io.File
 
 fun toolbarStyle(context: Context, toolbar: Toolbar, title: String, activeToolbar: Boolean? = null, targetActivity: Class<*>? = null) {
@@ -294,4 +295,33 @@ fun isValidFormNewPassword(password: String, confirmPassword: String): Boolean {
 
 fun Context.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()
+}
+
+fun isValidFormUpdateWorker(
+    area: String,
+    phone: String,
+    phoneEmergency: String
+): Boolean {
+
+    if (area.isBlank()) {
+        return false
+    }
+
+    if (phone.isBlank() || phone.length < 9) {
+        return false
+    }
+
+    if (phoneEmergency.isBlank() || phoneEmergency.length < 9) {
+        return false
+    }
+
+    return true
+}
+
+fun toggleTextInputLayoutError(
+    textInputEditText: TextInputEditText,
+    msg: String?
+) {
+    textInputEditText.error = msg
+    textInputEditText.isTextInputLayoutFocusedRectEnabled = msg != null
 }

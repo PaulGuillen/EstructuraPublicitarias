@@ -40,5 +40,19 @@ class ManagementWorkerUseCase(private val workersRepositoryNetwork: WorkersRepos
             return@withContext deleteWorker
         }
 
+//    suspend fun updateWorker(worker: Worker): CustomResult<Worker> =
+//        withContext(Dispatchers.IO) {
+//            val updateWorker = workersRepositoryNetwork.updateWorker(worker)
+//            when (updateWorker) {
+//                is CustomResult.OnSuccess -> {
+//                    updateWorker.data
+//                }
+//
+//                else -> {
+//                    Worker()
+//                }
+//            }
+//            return@withContext updateWorker
+//        }
 
 }
