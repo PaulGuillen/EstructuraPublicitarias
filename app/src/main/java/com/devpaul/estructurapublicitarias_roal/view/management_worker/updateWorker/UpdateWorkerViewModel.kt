@@ -1,10 +1,10 @@
 package com.devpaul.estructurapublicitarias_roal.view.management_worker.updateWorker
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.GetWorker
-import com.devpaul.estructurapublicitarias_roal.data.models.request.WorkerRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
@@ -14,7 +14,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseViewModel
 import kotlinx.coroutines.launch
 
-class UpdateWorkerViewModel : BaseViewModel() {
+class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
 
     val textFullName = MutableLiveData("")
     val textDNI = MutableLiveData("")

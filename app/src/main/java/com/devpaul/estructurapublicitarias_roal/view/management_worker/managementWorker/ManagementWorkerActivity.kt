@@ -30,6 +30,7 @@ class ManagementWorkerActivity : BaseActivity() {
 
     lateinit var binding: ActivityManagementWorkerBinding
     private lateinit var viewModel: ManagementWorkerViewModel
+    val singletonData = SingletonData.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,13 +80,9 @@ class ManagementWorkerActivity : BaseActivity() {
             }
 
             is ManagementWorkerResult.UpdateWorker -> {
-                Timber.d("DNI value in UpdateWorker: ${result.dni.value}")
-                val extras = Bundle()
                 val dni = result.dni.value
-                extras.putString("dni", dni)
-                startNewActivityWithAnimation(this@ManagementWorkerActivity, UpdateWorkerActivity::class.java, extras, true)
-
-                Timber.d("DNI-sent $dni")
+                singletonData.setData("valueDNI", dni.toString())
+                startNewActivityWithAnimation(this@ManagementWorkerActivity, UpdateWorkerActivity::class.java, null, false)
             }
 
             is ManagementWorkerResult.DeleteWorker -> {

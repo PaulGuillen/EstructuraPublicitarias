@@ -23,6 +23,7 @@ import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityUpdateWorkerBinding
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.updateWorker.UpdateWorkerResult
 import com.devpaul.estructurapublicitarias_roal.domain.utils.MESSAGE_DATA_NOT_VALID
+import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonData
 import com.devpaul.estructurapublicitarias_roal.domain.utils.ViewModelFactory
 import com.devpaul.estructurapublicitarias_roal.domain.utils.isValidFormUpdateWorker
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
@@ -36,7 +37,6 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import timber.log.Timber
 import java.io.File
 import java.io.IOException
 
@@ -46,12 +46,13 @@ class UpdateWorkerActivity : BaseActivity() {
     lateinit var binding: ActivityUpdateWorkerBinding
     private var imageFile: File? = null
     private lateinit var viewModel: UpdateWorkerViewModel
-    private val document = intent?.getStringExtra("dni")
+    private val singletonData = SingletonData.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateWorkerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         toolbarStyle(
             this@UpdateWorkerActivity,
@@ -61,14 +62,13 @@ class UpdateWorkerActivity : BaseActivity() {
             ManagementWorkerActivity::class.java
         )
 
-        Timber.d("DNI-received $document")
-
         viewModel =
             ViewModelProvider(this, ViewModelFactory(this, UpdateWorkerViewModel::class.java))[UpdateWorkerViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        document?.let { viewModel.validateWorker(it) }
+        val dni = singletonData.getData("valueDNI")
+        viewModel.validateWorker(dni.toString())
 
         binding.imageViewUser.setOnClickListener {
             selectImage()
