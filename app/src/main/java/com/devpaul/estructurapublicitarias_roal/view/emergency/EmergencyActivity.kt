@@ -113,8 +113,8 @@ class EmergencyActivity : BaseActivity() {
             is EmergencyResult.SuccessWorker -> {
                 binding.linearLayoutNoDataFound.visibility = View.GONE
                 binding.linearLayoutData.visibility = View.VISIBLE
-                applyCustomTextStyleToTextView(binding.textPrincipal, result.data.phone)
-                applyCustomTextStyleToTextView(binding.textSecondary, result.data.phoneEmergency)
+                applyCustomTextStyleToTextView(binding.textPrincipal, result.data.message?.phone)
+                applyCustomTextStyleToTextView(binding.textSecondary, result.data.message?.phoneEmergency)
             }
 
             is EmergencyResult.Error -> {

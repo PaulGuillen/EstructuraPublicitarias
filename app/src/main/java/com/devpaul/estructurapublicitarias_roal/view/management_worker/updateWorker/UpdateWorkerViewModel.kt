@@ -3,7 +3,7 @@ package com.devpaul.estructurapublicitarias_roal.view.management_worker.updateWo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.GetWorker
 import com.devpaul.estructurapublicitarias_roal.data.models.request.WorkerRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
@@ -73,8 +73,8 @@ class UpdateWorkerViewModel : BaseViewModel() {
 
     }
 
-    private fun showData(worker: Worker?) {
-        worker?.run {
+    private fun showData(worker: GetWorker?) {
+        worker?.message?.run {
             responseName.value = name
             val responseLastName = lastname
             val responseFullName = "$responseName $responseLastName"
@@ -85,7 +85,7 @@ class UpdateWorkerViewModel : BaseViewModel() {
             textPhone.value = phone
             textPhoneEmergency.value = phoneEmergency
             textBlood.value = bloodType
-            textIllness.value = diseases
+            textIllness.value = ""
             textAllergies.value = allergies
         }
     }

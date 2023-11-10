@@ -1,6 +1,7 @@
 package com.devpaul.estructurapublicitarias_roal.domain.usecases
 
 import android.content.Context
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.GetWorker
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Options
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
@@ -12,15 +13,15 @@ class WorkerUseCase(
     private val workersRepositoryNetwork: WorkersRepositoryNetwork,
 ) {
     private val prefs = SharedPref(context)
-    fun getWorkers(dni: String): CustomResult<Worker> {
+    fun getWorkers(dni: String): CustomResult<GetWorker> {
         val worker = workersRepositoryNetwork.getWorkers(dni)
         when (worker) {
             is CustomResult.OnSuccess -> {
-                saveDataWorker(worker.data)
+                worker.data
             }
 
             else -> {
-                saveDataWorker(Worker())
+                GetWorker()
             }
         }
         return worker
@@ -46,10 +47,5 @@ class WorkerUseCase(
         }
     }
 
-    private fun saveDataWorker(worker: Worker) {
-        if (!worker.dni.isNullOrEmpty()) {
-            prefs.saveJsonObject("Worker", worker)
-        }
-    }
 
 }

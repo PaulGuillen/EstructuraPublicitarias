@@ -1,7 +1,9 @@
 package com.devpaul.estructurapublicitarias_roal.data.repository
 
+import com.devpaul.estructurapublicitarias_roal.data.models.response.GetWorkerResponse
 import com.devpaul.estructurapublicitarias_roal.data.api.ApiRoutes
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.GeneralHTTP
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.GetWorker
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Options
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidateImageByPhoto
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
@@ -15,7 +17,6 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.HttpError
 import com.devpaul.estructurapublicitarias_roal.domain.mappers.WorkerMapper
 import com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository.WorkersRepositoryNetwork
-import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 import com.devpaul.estructurapublicitarias_roal.data.routes.ApiConfig
 import com.devpaul.estructurapublicitarias_roal.domain.mappers.GeneralHTTPMapper
 import com.devpaul.estructurapublicitarias_roal.domain.mappers.OptionsMapper
@@ -32,7 +33,7 @@ class WorkersRepository : WorkersRepositoryNetwork {
     }
 
 
-    override fun getWorkers(dni: String): CustomResult<Worker> {
+    override fun getWorkers(dni: String): CustomResult<GetWorker> {
 
         val serviceTitle = TITLE_ERROR_MS_GET_WORKERS
 
@@ -41,7 +42,7 @@ class WorkersRepository : WorkersRepositoryNetwork {
 
             return when (callApi?.isSuccessful) {
                 true -> {
-                    val response: WorkersResponse? = callApi.body()
+                    val response: GetWorkerResponse? = callApi.body()
 
                     if (response != null)
                         CustomResult.OnSuccess(WorkerMapper().map(response))

@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.mangementWorker.ManagementWorkerResult
@@ -16,11 +15,7 @@ import kotlinx.coroutines.launch
 class ManagementWorkerViewModel(context: Context) : BaseViewModel() {
 
     var documentNumber = MutableLiveData("")
-    var textFullName = MutableLiveData("")
-    var textArea = MutableLiveData("")
     var textDNI = MutableLiveData("")
-    var textDateJoin = MutableLiveData("")
-    var textPhonePrincipal = MutableLiveData("")
 
     private val _managementWorkerResult = MutableLiveData<ManagementWorkerResult>()
 
@@ -47,7 +42,7 @@ class ManagementWorkerViewModel(context: Context) : BaseViewModel() {
             when (val getWorker = managementWorkerUseCase.getWorker(documentNumber.value.toString())) {
                 is CustomResult.OnSuccess -> {
                     val data = getWorker.data
-                    showData(data)
+                    textDNI.postValue(data.message?.dni.toString())
                     _managementWorkerResult.value = ManagementWorkerResult.Success(data)
                 }
 
@@ -96,31 +91,12 @@ class ManagementWorkerViewModel(context: Context) : BaseViewModel() {
 
     }
 
-    private fun showData(worker: Worker?) {
-        worker?.run {
-            val responseName = name
-            val responseLastName = lastname
-            val responseFullName = "$responseName $responseLastName"
-
-            textDNI.value = dni
-            textFullName.value = responseFullName
-            textArea.value = area
-            textDateJoin.value = dateJoin
-            textPhonePrincipal.value = phone
-        }
-        resetStatus()
-    }
-
-    private fun resetStatus() {
-        documentNumber.postValue("")
-    }
-
     fun deleteWorker() {
         _managementWorkerResult.value = ManagementWorkerResult.DeleteWorker
     }
 
     fun updateWorker() {
-        _managementWorkerResult.value = ManagementWorkerResult.UpdateWorker(textDNI.toString())
+        _managementWorkerResult.value = ManagementWorkerResult.UpdateWorker(textDNI)
     }
 
     fun createWorker() {

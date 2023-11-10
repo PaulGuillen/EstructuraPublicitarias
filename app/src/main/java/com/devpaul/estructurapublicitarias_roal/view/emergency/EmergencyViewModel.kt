@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devpaul.estructurapublicitarias_roal.R
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.GetWorker
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidateImageByPhotoRequest
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
@@ -115,8 +116,8 @@ class EmergencyViewModel(context: Context) : ViewModel() {
 
     }
 
-    private fun showData(worker: Worker?) {
-        worker?.run {
+    private fun showData(worker: GetWorker?) {
+        worker?.message?.run {
             val responseName = name
             val responseLastName = lastname
             val responseFullName = "$responseName $responseLastName"
@@ -130,7 +131,7 @@ class EmergencyViewModel(context: Context) : ViewModel() {
             secondaryPhone.value = phoneEmergency
 
             textAllergies.value = allergies?.takeIf { it.isNotEmpty() } ?: VALIDATE_NOT_ALLERGIES
-            textDiseases.value = diseases?.takeIf { it.isNotEmpty() } ?: VALIDATE_NOT_DISEASES
+            textDiseases.value = VALIDATE_NOT_DISEASES
             textBloodType.value = bloodType?.takeIf { it.isNotEmpty() } ?: VALIDATE_NOT_BLOOD_TYPE
 
         }

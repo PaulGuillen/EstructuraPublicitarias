@@ -1,28 +1,39 @@
 package com.devpaul.estructurapublicitarias_roal.domain.mappers
 
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
-import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.GetWorker
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.MessageEntity
+import com.devpaul.estructurapublicitarias_roal.data.models.response.GetWorkerResponse
+import com.devpaul.estructurapublicitarias_roal.data.models.response.MessageResponse
 
 class WorkerMapper {
-
-    fun map(workerResponse: WorkersResponse): Worker {
-
-        val worker = Worker()
-        worker.dni = workerResponse.dni
-        worker.name = workerResponse.name
-        worker.lastname = workerResponse.lastname
-        worker.dateBirth = workerResponse.dateBirth
-        worker.dateJoin = workerResponse.dateJoin
-        worker.area = workerResponse.area
-        worker.bloodType = workerResponse.bloodType
-        worker.diseases = workerResponse.diseases
-        worker.allergies = workerResponse.allergies
-        worker.phone = workerResponse.phone
-        worker.phoneEmergency = workerResponse.phoneEmergency
-        worker.photo = workerResponse.photo
-        worker.photoFormat = workerResponse.photoFormat
-
-        return worker
+    fun map(getWorkerResponse: GetWorkerResponse): GetWorker {
+        return GetWorker(
+            isSuccess = getWorkerResponse.isSuccess,
+            code = getWorkerResponse.code,
+            message = mapMessage(getWorkerResponse.message)
+        )
     }
+
+    private fun mapMessage(message: MessageResponse?): MessageEntity? {
+        return message?.let {
+            MessageEntity(
+                dni = it.dni,
+                name = it.name,
+                lastname = it.lastname,
+                dateBirth = it.dateBirth,
+                dateJoin = it.dateJoin,
+                area = it.area,
+                bloodType = it.bloodType,
+                nationality = it.nationality,
+                allergies = it.allergies,
+                phone = it.phone,
+                phoneEmergency = it.phoneEmergency,
+                photo = it.photo,
+                gender = it.gender,
+                diseases = it.diseases
+            )
+        }
+    }
+
 
 }

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,27 +21,22 @@ import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityUpdateWorkerBinding
-import com.devpaul.estructurapublicitarias_roal.domain.usecases.mangementWorker.ManagementWorkerResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.updateWorker.UpdateWorkerResult
 import com.devpaul.estructurapublicitarias_roal.domain.utils.MESSAGE_DATA_NOT_VALID
 import com.devpaul.estructurapublicitarias_roal.domain.utils.ViewModelFactory
 import com.devpaul.estructurapublicitarias_roal.domain.utils.isValidFormUpdateWorker
 import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
-import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
-import com.devpaul.estructurapublicitarias_roal.domain.utils.toggleTextInputLayoutError
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
-import com.devpaul.estructurapublicitarias_roal.view.management_worker.createWorker.CreateWorkerActivity
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker.ManagementWorkerActivity
-import com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker.ManagementWorkerViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
 
@@ -52,6 +46,7 @@ class UpdateWorkerActivity : BaseActivity() {
     lateinit var binding: ActivityUpdateWorkerBinding
     private var imageFile: File? = null
     private lateinit var viewModel: UpdateWorkerViewModel
+    private val document = intent?.getStringExtra("dni")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,13 +61,14 @@ class UpdateWorkerActivity : BaseActivity() {
             ManagementWorkerActivity::class.java
         )
 
+        Timber.d("DNI-received $document")
+
         viewModel =
             ViewModelProvider(this, ViewModelFactory(this, UpdateWorkerViewModel::class.java))[UpdateWorkerViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        val document = intent.getStringExtra("dni").toString()
-        viewModel.validateWorker(document)
+        document?.let { viewModel.validateWorker(it) }
 
         binding.imageViewUser.setOnClickListener {
             selectImage()
@@ -97,9 +93,9 @@ class UpdateWorkerActivity : BaseActivity() {
     private fun handleUpdateWorkerResult(result: UpdateWorkerResult) {
         when (result) {
             is UpdateWorkerResult.WorkerDataReceived -> {
-                result.worker.photo.let {
+                result.worker.message?.photo.let {
                     Glide.with(this@UpdateWorkerActivity)
-                        .load(result.worker.photo)
+                        .load(result.worker.message?.photo)
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true)
                         .apply(

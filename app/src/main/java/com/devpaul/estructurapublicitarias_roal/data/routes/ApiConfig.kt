@@ -1,5 +1,6 @@
 package com.devpaul.estructurapublicitarias_roal.data.routes
 
+import com.devpaul.estructurapublicitarias_roal.data.models.response.GetWorkerResponse
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidateImageByPhotoRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidationEPPRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.request.WorkerRequest
@@ -14,7 +15,6 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface ApiConfig {
 
@@ -24,8 +24,8 @@ interface ApiConfig {
 
     @GET("get_worker/{dni}")
     fun getWorkers(
-        @Query("dni") dni: String
-    ): Call<WorkersResponse>
+        @Path("dni") dni: String
+    ): Call<GetWorkerResponse>
 
     @POST("register_worker")
     fun creatingWorkers(

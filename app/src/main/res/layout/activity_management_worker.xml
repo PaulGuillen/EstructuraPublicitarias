@@ -62,9 +62,192 @@
                 app:layout_constraintTop_toBottomOf="@+id/searchBox"
                 tools:layout_editor_absoluteX="10dp">
 
-                <include
-                    android:id="@+id/cardViewWorker"
-                    layout="@layout/cardview_worker" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewPrincipal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:visibility="gone"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/cardview_background_worker"
+                        android:orientation="vertical"
+                        android:padding="30dp">
+
+                        <ImageButton
+                            android:id="@+id/btnDeleteWorker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:background="@drawable/ic_baseline_delete_24"
+                            android:onClick="@{()->viewModel.deleteWorker()}" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imageWorker"
+                            android:layout_width="270dp"
+                            android:layout_height="200dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/todo"
+                            android:src="@drawable/ic_baseline_supervised_user_circle_24"
+                            app:civ_border_color="@color/gray" />
+
+                        <TextView
+                            android:id="@+id/textViewNomCompleto"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:fontFamily="@font/mulish_bold"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="22sp"
+                            tools:text="@string/nombre_completo" />
+
+                        <TextView
+                            android:id="@+id/textArea"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="6dp"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            tools:text="Área" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/mulish_bold"
+                                android:gravity="center_vertical"
+                                android:padding="4dp"
+                                android:text="DNI"
+                                android:textSize="16sp"
+                                tools:text="DNI" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/mulish_bold"
+                                android:gravity="center"
+                                android:padding="4dp"
+                                android:text=":"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/textViewDNI"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/mulish_bold"
+                                android:gravity="end"
+                                android:padding="4dp"
+                                android:text="@={viewModel.textDNI}"
+                                android:textSize="16sp"
+                                tools:text="DNI del trabajador" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/mulish_bold"
+                                android:gravity="center_vertical"
+                                android:padding="4dp"
+                                android:text="@string/fecha_de_ingreso"
+                                android:textSize="16sp"
+                                tools:text="Fecha Ingreso" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/mulish_bold"
+                                android:gravity="center"
+                                android:padding="4dp"
+                                android:text=":"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/textdateJoin"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/mulish_bold"
+                                android:gravity="end"
+                                android:padding="4dp"
+                                android:textSize="16sp"
+                                tools:text="Fecha de ingreso" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/mulish_bold"
+                                android:gravity="center_vertical"
+                                android:padding="4dp"
+                                android:text="Teléfono"
+                                android:textSize="16sp"
+                                tools:text="Telefono" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/mulish_bold"
+                                android:gravity="center"
+                                android:padding="4dp"
+                                android:text=":"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/textPhonePrincipal"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/mulish_bold"
+                                android:gravity="end"
+                                android:padding="4dp"
+                                android:textSize="16sp"
+                                tools:text="Telefono" />
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnUpdateWorker"
+                            style="@style/botonesGeneral"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{()->viewModel.updateWorker()}"
+                            android:text="Actualizar Información"
+                            app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/linear_formulario" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/textDataNeed"
@@ -95,10 +278,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="@string/informacion_respuesta_no_encontrada"
                     android:textAlignment="center"
                     android:textAppearance="@style/subtitulosGeneral"
-                    app:drawableTopCompat="@drawable/data_not_found" />
+                    app:drawableTopCompat="@drawable/data_not_found"
+                    tools:text="@string/informacion_respuesta_no_encontrada" />
 
             </LinearLayout>
 

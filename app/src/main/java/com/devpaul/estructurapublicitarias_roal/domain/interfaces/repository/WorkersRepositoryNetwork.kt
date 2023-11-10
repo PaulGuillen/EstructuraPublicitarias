@@ -1,6 +1,7 @@
 package com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository
 
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.GeneralHTTP
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.GetWorker
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Options
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidateImageByPhoto
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
@@ -11,7 +12,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 interface WorkersRepositoryNetwork {
     fun createWorker(workerRequest: WorkerRequest): CustomResult<GeneralHTTP>
     fun getOptionList(): CustomResult<List<Options>>
-    fun getWorkers(dni: String): CustomResult<Worker>
+    fun getWorkers(dni: String): CustomResult<GetWorker>
     fun validateImageByPhoto(validateImageByPhotoRequest: ValidateImageByPhotoRequest): CustomResult<ValidateImageByPhoto>
     fun deleteWorker(dni: String): CustomResult<GeneralHTTP>
 }

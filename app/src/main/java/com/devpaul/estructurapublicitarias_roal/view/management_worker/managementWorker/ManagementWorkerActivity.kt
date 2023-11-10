@@ -23,6 +23,7 @@ import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.createWorker.CreateWorkerActivity
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.updateWorker.UpdateWorkerActivity
+import timber.log.Timber
 
 @SuppressLint("SourceLockedOrientationActivity")
 class ManagementWorkerActivity : BaseActivity() {
@@ -67,24 +68,10 @@ class ManagementWorkerActivity : BaseActivity() {
     private fun handleManagementWorkerResult(result: ManagementWorkerResult) {
         when (result) {
             is ManagementWorkerResult.Success -> {
-
-                result.data.photo.let {
-                    Glide.with(this@ManagementWorkerActivity)
-                        .load(result.data.photo)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
-                        .apply(
-                            centerCropTransform()
-                                .placeholder(R.drawable.ic_baseline_supervised_user_circle_24)
-                                .error(R.drawable.ic_baseline_supervised_user_circle_24)
-                                .priority(Priority.HIGH)
-                        )
-                        .into(binding.cardViewWorker.imageWorker)
-                }
-
+                showDataUI(result)
                 binding.textDataNeed.visibility = View.GONE
                 binding.linearLayoutNoDataFound.visibility = View.GONE
-                binding.cardViewWorker.cardViewPrincipal.visibility = View.VISIBLE
+                binding.cardViewPrincipal.visibility = View.VISIBLE
             }
 
             is ManagementWorkerResult.CreateWorker -> {
@@ -92,10 +79,13 @@ class ManagementWorkerActivity : BaseActivity() {
             }
 
             is ManagementWorkerResult.UpdateWorker -> {
+                Timber.d("DNI value in UpdateWorker: ${result.dni.value}")
                 val extras = Bundle()
-                val dni = result.dni
+                val dni = result.dni.value
                 extras.putString("dni", dni)
                 startNewActivityWithAnimation(this@ManagementWorkerActivity, UpdateWorkerActivity::class.java, extras, true)
+
+                Timber.d("DNI-sent $dni")
             }
 
             is ManagementWorkerResult.DeleteWorker -> {
@@ -106,7 +96,7 @@ class ManagementWorkerActivity : BaseActivity() {
                 SweetAlertDialog(this@ManagementWorkerActivity, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText(getString(R.string.successful_delete_data)).show()
                 binding.textDataNeed.visibility = View.VISIBLE
-                binding.cardViewWorker.cardViewPrincipal.visibility = View.GONE
+                binding.cardViewPrincipal.visibility = View.GONE
             }
 
             is ManagementWorkerResult.Error -> {
@@ -117,6 +107,43 @@ class ManagementWorkerActivity : BaseActivity() {
                 Toast.makeText(this, MESSAGE_DATA_NOT_VALID, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun showDataUI(result: ManagementWorkerResult.Success) {
+
+        val dataWorker = result.data.message
+
+        val responseName = dataWorker?.name
+        val responseLastName = dataWorker?.lastname
+        val responseFullName = "$responseName $responseLastName"
+
+        val responseDNI = dataWorker?.dni
+        val responseArea = dataWorker?.area
+        val responseDateJoin = dataWorker?.dateJoin
+        val responsePhoto = dataWorker?.photo
+        val responsePhone = dataWorker?.phone
+
+
+        responsePhoto.let {
+            Glide.with(this@ManagementWorkerActivity)
+                .load(responsePhoto)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .apply(
+                    centerCropTransform()
+                        .placeholder(R.drawable.ic_baseline_supervised_user_circle_24)
+                        .error(R.drawable.ic_baseline_supervised_user_circle_24)
+                        .priority(Priority.HIGH)
+                )
+                .into(binding.imageWorker)
+        }
+
+        binding.textViewNomCompleto.text = responseFullName
+        binding.textViewDNI.text = responseDNI
+        binding.textArea.text = responseArea
+        binding.textdateJoin.text = responseDateJoin
+        binding.textPhonePrincipal.text = responsePhone
+
     }
 
     private fun searchWorkers() {
@@ -167,17 +194,22 @@ class ManagementWorkerActivity : BaseActivity() {
 
     private fun dismissData(codState: Int?) {
         if (codState == 500 || codState == 408) {
-            binding.cardViewWorker.cardViewPrincipal.visibility = View.GONE
+            binding.cardViewPrincipal.visibility = View.GONE
             binding.textDataNeed.visibility = View.GONE
             binding.linearLayoutNoDataFound.visibility = View.VISIBLE
             binding.textDataManagementErrors.text = getString(R.string.inforamcion_error_de_servicio)
+
             binding.textDataManagementErrors.setCompoundDrawablesWithIntrinsicBounds(
                 0, R.drawable.service_error, 0, 0
             )
         } else {
-            binding.cardViewWorker.cardViewPrincipal.visibility = View.GONE
+            binding.cardViewPrincipal.visibility = View.GONE
             binding.textDataNeed.visibility = View.GONE
+            binding.textDataManagementErrors.text = getString(R.string.informacion_respuesta_no_encontrada)
             binding.linearLayoutNoDataFound.visibility = View.VISIBLE
+            binding.textDataManagementErrors.setCompoundDrawablesWithIntrinsicBounds(
+                0, R.drawable.data_not_found, 0, 0
+            )
         }
     }
 

@@ -15,9 +15,6 @@ class WorkersProvider {
         workersRoutes = api.getWorkersRoutes()
     }
 
-    fun getWorkers(dni: String): Call<WorkersResponse>? {
-        return workersRoutes?.getWorkers(dni)
-    }
 
     fun postWorkers(workerUser: WorkersResponse): Call<ResponseHttp>? {
         return workersRoutes?.creatingWorkers(workerUser)
@@ -25,10 +22,6 @@ class WorkersProvider {
 
     fun deleteWorker(dni: String): Call<ResponseHttp>? {
         return workersRoutes?.deleteWorker(dni)
-    }
-
-    fun consultByPhoto(workerUser: WorkersResponse): Call<WorkersResponse>? {
-        return workersRoutes?.consultByPhoto(workerUser)
     }
 
 }
