@@ -3,6 +3,7 @@ package com.devpaul.estructurapublicitarias_roal.domain.usecases.mangementWorker
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.GeneralHTTP
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidateImageByPhoto
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
+import com.devpaul.estructurapublicitarias_roal.data.models.request.WorkerRequest
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository.WorkersRepositoryNetwork
 import kotlinx.coroutines.Dispatchers
@@ -40,19 +41,19 @@ class ManagementWorkerUseCase(private val workersRepositoryNetwork: WorkersRepos
             return@withContext deleteWorker
         }
 
-//    suspend fun updateWorker(worker: Worker): CustomResult<Worker> =
-//        withContext(Dispatchers.IO) {
-//            val updateWorker = workersRepositoryNetwork.updateWorker(worker)
-//            when (updateWorker) {
-//                is CustomResult.OnSuccess -> {
-//                    updateWorker.data
-//                }
-//
-//                else -> {
-//                    Worker()
-//                }
-//            }
-//            return@withContext updateWorker
-//        }
+    suspend fun updateWorker(workerRequest: WorkerRequest): CustomResult<GeneralHTTP> =
+        withContext(Dispatchers.IO) {
+            val createWorker = workersRepositoryNetwork.createWorker(workerRequest)
+            when (createWorker) {
+                is CustomResult.OnSuccess -> {
+                    createWorker.data
+                }
+
+                else -> {
+                    GeneralHTTP()
+                }
+            }
+            return@withContext createWorker
+        }
 
 }

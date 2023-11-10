@@ -8,7 +8,7 @@ import retrofit2.http.POST
 
 interface UsersRoutes {
 
-    @POST("roal_app_login/login")
+    @POST("/roal_app_login/login")
     fun mainUserEndPoints(@Body mainUser: MainUser): Call<ResponseHttp>
 
 }

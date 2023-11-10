@@ -242,6 +242,7 @@
                 android:layout_margin="30dp"
                 android:background="@drawable/rounded_button"
                 android:text="@string/actualizar"
+                android:onClick="@{()->viewModel.updateWorker()}"
                 android:textAllCaps="false"
                 android:textAppearance="@style/botonesGeneral"
                 app:layout_constraintBottom_toTopOf="@+id/tvBottomFilter" />

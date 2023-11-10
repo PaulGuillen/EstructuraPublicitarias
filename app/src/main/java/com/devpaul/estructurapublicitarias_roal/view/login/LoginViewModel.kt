@@ -73,6 +73,7 @@ class LoginViewModel(context: Context) : BaseViewModel() {
                 }
             }
         } catch (error: Exception) {
+            error.message
             _loginResult.value = LoginResult.ValidationError
         } finally {
             _showLoadingDialog.value = false

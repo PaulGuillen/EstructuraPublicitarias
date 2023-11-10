@@ -6,6 +6,7 @@ import com.devpaul.estructurapublicitarias_roal.data.models.entity.Options
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidateImageByPhoto
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidateImageByPhotoRequest
+import com.devpaul.estructurapublicitarias_roal.data.models.request.WorkerRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.response.OptionsResponse
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ValidateImageByPhotoResponse
@@ -30,6 +31,7 @@ class WorkersRepository : WorkersRepositoryNetwork {
         apiConfig = api.getWorkersRoutes()
     }
 
+
     override fun getWorkers(dni: String): CustomResult<Worker> {
 
         val serviceTitle = TITLE_ERROR_MS_GET_WORKERS
@@ -43,6 +45,56 @@ class WorkersRepository : WorkersRepositoryNetwork {
 
                     if (response != null)
                         CustomResult.OnSuccess(WorkerMapper().map(response))
+                    else {
+                        CustomResult.OnError(CustomNotFoundError())
+                    }
+                }
+
+                false -> {
+                    CustomResult.OnError(
+                        HttpError(
+                            code = callApi.code(),
+                            title = serviceTitle,
+                            subtitle = callApi.message()
+                        )
+                    )
+                }
+
+                else -> {
+                    CustomResult.OnError(
+                        HttpError(
+                            code = callApi?.code(),
+                            title = serviceTitle,
+                            subtitle = callApi?.message()
+                        )
+                    )
+                }
+            }
+
+        } catch (ex: Exception) {
+            return CustomResult.OnError(
+                HttpError(
+                    code = 408,
+                    title = serviceTitle,
+                    subtitle = SUBTITLE_MESSAGE_TIMEOUT_SERVICE
+                )
+            )
+        }
+    }
+
+    override fun createWorker(workerRequest: WorkerRequest): CustomResult<GeneralHTTP> {
+
+        val serviceTitle = TITLE_ERROR_MS_CREATE_WORKER
+
+        try {
+            val callApi = apiConfig?.createWorker(workerRequest)?.execute()
+
+            return when (callApi?.isSuccessful) {
+                true -> {
+                    val response: ResponseHttp? = callApi.body()
+
+                    if (response != null)
+                        CustomResult.OnSuccess(GeneralHTTPMapper().map(response))
                     else {
                         CustomResult.OnError(CustomNotFoundError())
                     }

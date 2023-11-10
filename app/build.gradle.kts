@@ -32,7 +32,7 @@ android {
         create("prod") {
             dimension = "environment"
             applicationId = "com.devpaul.estructurapublicitarias_roal.prod"
-            buildConfigField("String", "BASE_URL", "\"https://nbyz455qc9.execute-api.us-east-1.amazonaws.com/prod/\"")
+            buildConfigField("String", "BASE_URL", "\"https://yam7m0qth8.execute-api.us-east-2.amazonaws.com/prod/\"")
             versionCode = 1
             versionName = "1.0"
         }
@@ -40,7 +40,7 @@ android {
         create("cert") {
             dimension = "environment"
             applicationId = "com.devpaul.estructurapublicitarias_roal.cert"
-            buildConfigField("String", "BASE_URL", "\"https://nbyz455qc9.execute-api.us-east-1.amazonaws.com/cert/\"")
+            buildConfigField("String", "BASE_URL", "\"https://yam7m0qth8.execute-api.us-east-2.amazonaws.com/cert/\"")
             versionCode = 1000
             versionName = "1.1"
         }

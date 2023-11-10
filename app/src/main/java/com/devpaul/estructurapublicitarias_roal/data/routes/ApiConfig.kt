@@ -2,6 +2,7 @@ package com.devpaul.estructurapublicitarias_roal.data.routes
 
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidateImageByPhotoRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidationEPPRequest
+import com.devpaul.estructurapublicitarias_roal.data.models.request.WorkerRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.response.OptionsResponse
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ValidateImageByPhotoResponse
@@ -29,6 +30,11 @@ interface ApiConfig {
     @POST("register_worker")
     fun creatingWorkers(
         @Body workerUser: WorkersResponse
+    ): Call<ResponseHttp>
+
+    @POST("register_worker")
+    fun createWorker(
+        @Body workerUser: WorkerRequest
     ): Call<ResponseHttp>
 
     @DELETE("delete_worker/{dni}")

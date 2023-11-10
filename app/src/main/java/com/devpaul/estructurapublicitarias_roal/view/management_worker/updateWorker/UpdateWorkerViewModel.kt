@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
+import com.devpaul.estructurapublicitarias_roal.data.models.request.WorkerRequest
+import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.mangementWorker.ManagementWorkerUseCase
@@ -23,6 +25,8 @@ class UpdateWorkerViewModel : BaseViewModel() {
     val textIllness = MutableLiveData("")
     val textAllergies = MutableLiveData("")
 
+    var responseName = MutableLiveData("")
+
     private val _updateWorkerResult = MutableLiveData<UpdateWorkerResult>()
 
     val updateWorkerResult: LiveData<UpdateWorkerResult> = _updateWorkerResult
@@ -30,6 +34,12 @@ class UpdateWorkerViewModel : BaseViewModel() {
     fun validateWorker(document: String) {
         viewModelScope.launch {
             callServiceGetWorker(document)
+        }
+    }
+
+    fun updateWorker() {
+        viewModelScope.launch {
+            callServiceUpdateWorker()
         }
     }
 
@@ -65,7 +75,7 @@ class UpdateWorkerViewModel : BaseViewModel() {
 
     private fun showData(worker: Worker?) {
         worker?.run {
-            val responseName = name
+            responseName.value = name
             val responseLastName = lastname
             val responseFullName = "$responseName $responseLastName"
 
@@ -80,4 +90,62 @@ class UpdateWorkerViewModel : BaseViewModel() {
         }
     }
 
+    private suspend fun callServiceUpdateWorker() {
+
+//        val name = binding.textFirstName.text.toString()
+//        val lastname = binding.textLastName.text.toString()
+//        val dateBirth = binding.textdateBirth.text.toString()
+//        val dateJoin = binding.textdateJoin.text.toString()
+//        val area = binding.textArea.text.toString()
+//        val bloodType = binding.textBlood.text.toString()
+//        val diseases = binding.textIllness.text.toString()
+//        val allergies = binding.textAllergies.text.toString()
+//        val phone = binding.textPhone.text.toString()
+//        val phoneEmergency = binding.textPhoneEmergency.text.toString()
+//
+//        val workerRequest = WorkerRequest(
+//            dni = textDNI.value,
+//            name = responseName.value,
+//            lastname = lastname,
+//            dateBirth = dateBirth,
+//            dateJoin = dateJoin,
+//            area = area,
+//            bloodType = bloodType,
+//            diseases = diseases,
+//            allergies = allergies,
+//            phone = phone,
+//            phoneEmergency = phoneEmergency,
+//            photo = imageBase,
+//            photoFormat = imageFile?.name
+//        )
+
+//        _showLoadingDialog.value = true
+//        try {
+//            val workerRepository = WorkersRepository()
+//            val managementWorkerUseCase = ManagementWorkerUseCase(workerRepository)
+//            when (val getWorker = managementWorkerUseCase.updateWorker()) {
+//                is CustomResult.OnSuccess -> {
+//                    val data = getWorker.data
+//                   // showData(data)
+//                    _updateWorkerResult.value = UpdateWorkerResult.WorkerDataReceived(data)
+//                }
+//
+//                is CustomResult.OnError -> {
+//                    val error = getWorker.error
+//                    _updateWorkerResult.value = UpdateWorkerResult.Error(
+//                        error.code ?: SingletonError.code,
+//                        error.title ?: SingletonError.title,
+//                        error.subtitle
+//                    )
+//                }
+//            }
+//        } catch (e: Exception) {
+//            _updateWorkerResult.value = UpdateWorkerResult.ValidationError
+//        } finally {
+//            _showLoadingDialog.value = false
+//        }
+//
+//    }
+
+    }
 }
