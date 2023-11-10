@@ -41,7 +41,6 @@ class LoginViewModel(context: Context) : BaseViewModel() {
         val action = "login"
 
         if (!isValidForm(email = email, password = password)) {
-            _loginResult.value = LoginResult.ValidationError
             _showLoadingDialog.value = false
             return
         }
@@ -73,8 +72,7 @@ class LoginViewModel(context: Context) : BaseViewModel() {
                 }
             }
         } catch (error: Exception) {
-            error.message
-            _loginResult.value = LoginResult.ValidationError
+            _loginResult.value = LoginResult.ValidationError(error.message)
         } finally {
             _showLoadingDialog.value = false
         }

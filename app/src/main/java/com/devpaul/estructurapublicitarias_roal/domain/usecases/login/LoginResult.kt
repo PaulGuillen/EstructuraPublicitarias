@@ -6,5 +6,5 @@ sealed class LoginResult {
     data class Success(val data: GeneralHTTP) : LoginResult()
     data class Error(val code: Int?, val title: String?, val subTitle: String?) : LoginResult()
     data object ForgotPassword : LoginResult()
-    data object ValidationError : LoginResult()
+    data class ValidationError(val errorMessage: String?) : LoginResult()
 }

@@ -50,7 +50,7 @@ class LoginActivity : BaseActivity() {
             }
 
             is LoginResult.ForgotPassword -> {
-                startNewActivityWithAnimation(this@LoginActivity, ForgotPasswordActivity::class.java,null)
+                startNewActivityWithAnimation(this@LoginActivity, ForgotPasswordActivity::class.java, null)
             }
 
             is LoginResult.Error -> {
@@ -63,11 +63,10 @@ class LoginActivity : BaseActivity() {
             }
 
             is LoginResult.ValidationError -> {
-                Toast.makeText(this, MESSAGE_DATA_NOT_VALID, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, result.errorMessage ?: MESSAGE_DATA_NOT_VALID, Toast.LENGTH_SHORT).show()
             }
         }
     }
-
 
 
 }
