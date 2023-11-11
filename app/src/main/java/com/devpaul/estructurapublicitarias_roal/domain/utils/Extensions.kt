@@ -311,7 +311,7 @@ fun isValidFormUpdateWorker(
         return false
     }
 
-    if (phoneEmergency.isBlank() || phoneEmergency.length < 9) {
+    if (phoneEmergency.isBlank()) {
         return false
     }
 

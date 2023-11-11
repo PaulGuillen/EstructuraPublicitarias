@@ -40,9 +40,10 @@ class HttpError(
 ) : CustomError(code, title) {
     init {
         when (code) {
-            400, 401, 502, 404, 503, 500, 408 -> {
+            400, 401, 502, 403, 404
+                , 503, 500, 408 -> {
                 SingletonError.title = title
-                SingletonError.subTitle = subtitle
+                SingletonError.subTitle = subtitle ?: MESSAGE_SERVICE_NOT_AVAILABLE
                 SingletonError.code = code
             }
 

@@ -20,8 +20,4 @@ class WorkersProvider {
         return workersRoutes?.creatingWorkers(workerUser)
     }
 
-    fun deleteWorker(dni: String): Call<ResponseHttp>? {
-        return workersRoutes?.deleteWorker(dni)
-    }
-
 }
