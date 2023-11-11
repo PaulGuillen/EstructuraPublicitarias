@@ -6,7 +6,6 @@ import com.devpaul.estructurapublicitarias_roal.data.models.entity.GeneralHTTP
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.GetWorker
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Options
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidateImageByPhoto
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidateImageByPhotoRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.request.WorkerRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.response.OptionsResponse

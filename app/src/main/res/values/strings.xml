@@ -39,7 +39,7 @@
     <string name="informacion_mensaje_busca">Ingrese un documento de identidad para poder visualizar información de su trabajdor</string>
     <string name="informacion_respuesta_no_encontrada">No se encontró información con el método consultado</string>
     <string name="inforamcion_error_de_servicio">Ups....parece que el servidor esta fallando, comuniquese con soporte</string>
-    <string name="DNI_empleado">Escribe el DNI de empleado...</string>
+    <string name="DNI_empleado">Documento de empleado...</string>
     <string name="Dni">DNI : </string>
     <string name="fecha_de_nacimiento">Fecha de Nacimiento</string>
     <string name="fecha_de_ingreso">Fecha de Ingreso</string>
@@ -175,5 +175,7 @@
     <string name="text_need_dni_qr">Porfavor verifica que el QR solo sea el DNI</string>
     <string name="action_cancelled_qr">Cancelado</string>
     <string name="error_base64_uri">Ha ocurrido un error</string>
+    <string name="text_title_area">Área</string>
+    <string name="text_title_country">País</string>
 
 </resources>

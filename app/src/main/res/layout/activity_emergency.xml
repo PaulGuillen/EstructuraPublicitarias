@@ -207,6 +207,44 @@
                             android:background="@color/gray" />
 
                         <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="2dp"
+                            android:text="@string/nombre_completo"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+
+                        <TextView
+                            android:id="@+id/textFullName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="8dp"
+                            android:text="@={viewModel.textFullName}"
+                            android:textAlignment="center"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="2dp"
+                            android:text="@string/text_title_area"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <TextView
                             android:id="@+id/textArea"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -249,12 +287,23 @@
                             android:background="@color/gray" />
 
                         <TextView
-                            android:id="@+id/textFullName"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="2dp"
+                            android:text="@string/text_title_country"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            tools:ignore="RtlSymmetry" />
+
+                        <TextView
+                            android:id="@+id/textNationality"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/mulish_bold"
                             android:padding="8dp"
-                            android:text="@={viewModel.textFullName}"
+                            android:text="@={viewModel.textNationality}"
                             android:textAlignment="center"
                             android:textSize="16sp" />
 

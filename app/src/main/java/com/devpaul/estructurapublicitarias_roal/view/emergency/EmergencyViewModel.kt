@@ -1,16 +1,11 @@
 package com.devpaul.estructurapublicitarias_roal.view.emergency
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.GetWorker
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidateImageByPhotoRequest
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
@@ -35,6 +30,7 @@ class EmergencyViewModel(context: Context) : ViewModel() {
     val textAllergies = MutableLiveData("")
     val textDiseases = MutableLiveData("")
     val textBloodType = MutableLiveData("")
+    val textNationality = MutableLiveData("")
 
     private val _emergencyResult = MutableLiveData<EmergencyResult>()
 
@@ -129,9 +125,10 @@ class EmergencyViewModel(context: Context) : ViewModel() {
             textJoinDate.value = dateJoin
             principalPhone.value = phone
             secondaryPhone.value = phoneEmergency
+            textNationality.value = nationality
 
             textAllergies.value = allergies?.takeIf { it.isNotEmpty() } ?: VALIDATE_NOT_ALLERGIES
-            textDiseases.value = VALIDATE_NOT_DISEASES
+            textDiseases.value = diseases?.takeIf { it.isNotEmpty() } ?: VALIDATE_NOT_DISEASES
             textBloodType.value = bloodType?.takeIf { it.isNotEmpty() } ?: VALIDATE_NOT_BLOOD_TYPE
 
         }
