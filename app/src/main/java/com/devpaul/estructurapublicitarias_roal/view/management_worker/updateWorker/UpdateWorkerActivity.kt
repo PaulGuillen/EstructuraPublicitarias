@@ -42,7 +42,7 @@ class UpdateWorkerActivity : BaseActivity() {
         toolbarStyle(
             this@UpdateWorkerActivity,
             binding.include.toolbar,
-            "Actualización de datos",
+            TITLE_BAR_LAYOUT,
             true,
             ManagementWorkerActivity::class.java
         )
@@ -96,7 +96,8 @@ class UpdateWorkerActivity : BaseActivity() {
                     viewModel.updateWorkerNoImage()
                 } else {
                     val imageInBase64 = imageFile?.toUri()?.let { getBase64ForUriAndPossiblyCrash(it) }
-                    viewModel.updateWorkerImage(imageFile, imageInBase64)}
+                    viewModel.updateWorkerImage(imageFile, imageInBase64)
+                }
             }
 
             is UpdateWorkerResult.UpdateWorkerSuccess -> {

@@ -17,7 +17,7 @@ open class CustomError(
     private val generalMessage: String = MESSAGE_SERVICE_NOT_AVAILABLE
 
     init {
-        if (code == 400 || code == 401 || code == 404 || code == 503 || code == 504
+        if (code == 400 || code == 401 || code == 404 || code == 403 ||code == 503 || code == 504
             || code == 502 || code == 408 || code == 500
         ) {
             SingletonError.subTitle = subtitle?.let {
