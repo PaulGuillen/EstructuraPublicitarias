@@ -31,7 +31,6 @@ class UpdateWorkerActivity : BaseActivity() {
     lateinit var binding: ActivityUpdateWorkerBinding
     private var imageFile: File? = null
     private lateinit var viewModel: UpdateWorkerViewModel
-    private val singletonData = SingletonData.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +51,9 @@ class UpdateWorkerActivity : BaseActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        val dni = singletonData.getData("valueDNI")
-        viewModel.validateWorker(dni.toString())
+        val extras = intent.extras
+        val document = extras?.getString("dni")
+        viewModel.validateWorker(document.toString())
 
         binding.imageViewUser.setOnClickListener {
             selectImage()
