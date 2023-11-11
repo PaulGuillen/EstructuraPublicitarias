@@ -23,14 +23,13 @@ import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.createWorker.CreateWorkerActivity
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.updateWorker.UpdateWorkerActivity
-import timber.log.Timber
 
 @SuppressLint("SourceLockedOrientationActivity")
 class ManagementWorkerActivity : BaseActivity() {
 
     lateinit var binding: ActivityManagementWorkerBinding
     private lateinit var viewModel: ManagementWorkerViewModel
-    val singletonData = SingletonData.getInstance()
+    private val singletonData = SingletonData.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,9 +69,6 @@ class ManagementWorkerActivity : BaseActivity() {
         when (result) {
             is ManagementWorkerResult.Success -> {
                 showDataUI(result)
-                binding.textDataNeed.visibility = View.GONE
-                binding.linearLayoutNoDataFound.visibility = View.GONE
-                binding.cardViewPrincipal.visibility = View.VISIBLE
             }
 
             is ManagementWorkerResult.CreateWorker -> {
@@ -141,6 +137,10 @@ class ManagementWorkerActivity : BaseActivity() {
         binding.textdateJoin.text = responseDateJoin
         binding.textPhonePrincipal.text = responsePhone
 
+        binding.textDataNeed.visibility = View.GONE
+        binding.linearLayoutNoDataFound.visibility = View.GONE
+        binding.cardViewPrincipal.visibility = View.VISIBLE
+
     }
 
     private fun searchWorkers() {
@@ -187,7 +187,6 @@ class ManagementWorkerActivity : BaseActivity() {
                 it.dismiss()
             }.show()
     }
-
 
     private fun dismissData(codState: Int?) {
         if (codState == 500 || codState == 408) {
