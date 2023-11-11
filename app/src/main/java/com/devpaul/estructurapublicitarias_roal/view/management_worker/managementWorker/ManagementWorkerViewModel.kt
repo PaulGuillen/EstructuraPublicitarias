@@ -16,6 +16,7 @@ class ManagementWorkerViewModel(context: Context) : BaseViewModel() {
 
     var documentNumber = MutableLiveData("")
     var textDNI = MutableLiveData("")
+    var textArea = MutableLiveData("")
 
     private val _managementWorkerResult = MutableLiveData<ManagementWorkerResult>()
 
@@ -43,6 +44,7 @@ class ManagementWorkerViewModel(context: Context) : BaseViewModel() {
                 is CustomResult.OnSuccess -> {
                     val data = getWorker.data
                     textDNI.postValue(data.message?.dni.toString())
+                    textArea.postValue(data.message?.area.toString())
                     _managementWorkerResult.value = ManagementWorkerResult.Success(data)
                 }
 
@@ -96,7 +98,7 @@ class ManagementWorkerViewModel(context: Context) : BaseViewModel() {
     }
 
     fun updateWorker() {
-        _managementWorkerResult.value = ManagementWorkerResult.UpdateWorker(textDNI)
+        _managementWorkerResult.value = ManagementWorkerResult.UpdateWorker(textDNI,textArea)
     }
 
     fun createWorker() {

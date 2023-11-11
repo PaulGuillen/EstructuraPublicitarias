@@ -23,6 +23,7 @@ import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.createWorker.CreateWorkerActivity
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.updateWorker.UpdateWorkerActivity
+
 @SuppressLint("SourceLockedOrientationActivity")
 class ManagementWorkerActivity : BaseActivity() {
 
@@ -76,8 +77,11 @@ class ManagementWorkerActivity : BaseActivity() {
 
             is ManagementWorkerResult.UpdateWorker -> {
                 val dni = result.dni.value
+                val area = result.area.value
+
                 val bundle = Bundle()
                 bundle.putString("dni", dni)
+                bundle.putString("area", area)
 
                 startNewActivityWithAnimation(this@ManagementWorkerActivity, UpdateWorkerActivity::class.java, bundle, false)
             }

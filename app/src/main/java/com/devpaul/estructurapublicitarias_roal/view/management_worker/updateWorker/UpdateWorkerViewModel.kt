@@ -5,11 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.GetWorker
-import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidateImageByPhotoRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.request.WorkerRequest
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
-import com.devpaul.estructurapublicitarias_roal.domain.usecases.emergency.EmergencyUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.mangementWorker.ManagementWorkerUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.updateWorker.UpdateWorkerResult
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
@@ -22,7 +20,6 @@ class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
 
     val textFullName = MutableLiveData("")
     val textDNI = MutableLiveData("")
-    val textArea = MutableLiveData("")
     val textPhone = MutableLiveData("")
     val textPhoneEmergency = MutableLiveData("")
     val textBlood = MutableLiveData("")
@@ -41,15 +38,15 @@ class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
         }
     }
 
-    fun updateWorkerNoImage() {
+    fun updateWorkerNoImage(areaSelected: String?) {
         viewModelScope.launch {
-            callServiceUpdateWorkerNoImage()
+            callServiceUpdateWorkerNoImage(areaSelected)
         }
     }
 
-    fun updateWorkerImage(imageFile: File?, imageInBase64: String?) {
+    fun updateWorkerImage(imageFile: File?, imageInBase64: String?, areaSelected: String?) {
         viewModelScope.launch {
-            callServiceUpdateWorkerImage(imageFile, imageInBase64)
+            callServiceUpdateWorkerImage(imageFile, imageInBase64, areaSelected)
         }
     }
 
@@ -71,7 +68,7 @@ class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
                     _updateWorkerResult.value = UpdateWorkerResult.Error(
                         error.code ?: SingletonError.code,
                         error.title ?: SingletonError.title,
-                        error.subtitle
+                        error.subtitle ?: SingletonError.subTitle
                     )
                 }
             }
@@ -90,7 +87,6 @@ class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
 
             textDNI.value = dni
             textFullName.value = responseFullName
-            textArea.value = area
             textPhone.value = phone
             textPhoneEmergency.value = phoneEmergency
             textBlood.value = bloodType
@@ -99,7 +95,7 @@ class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
         }
     }
 
-    private suspend fun callServiceUpdateWorkerNoImage() {
+    private suspend fun callServiceUpdateWorkerNoImage(areaSelected: String?) {
 
         val worker = workerData?.message ?: return
 
@@ -110,7 +106,6 @@ class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
         val nationality = worker.nationality
         val dateBirth = worker.dateBirth
         val dateJoin = worker.dateJoin
-        val area = textArea.value
         val bloodType = textBlood.value
         val diseases = textIllness.value
         val allergies = textAllergies.value
@@ -118,7 +113,12 @@ class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
         val phoneEmergency = textPhoneEmergency.value
 
 
-        if (!isValidFormUpdateWorker(area = area.toString(), phone = phone.toString(), phoneEmergency = phoneEmergency.toString())) {
+        if (!isValidFormUpdateWorker(
+                area = areaSelected.toString(),
+                phone = phone.toString(),
+                phoneEmergency = phoneEmergency.toString()
+            )
+        ) {
             _updateWorkerResult.value = UpdateWorkerResult.ValidationError
             _showLoadingDialog.value = false
             return
@@ -132,7 +132,7 @@ class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
             nationality = nationality,
             dateBirth = dateBirth,
             dateJoin = dateJoin,
-            area = area,
+            area = areaSelected,
             bloodType = bloodType,
             diseases = diseases,
             allergies = allergies,
@@ -154,7 +154,7 @@ class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
                     _updateWorkerResult.value = UpdateWorkerResult.Error(
                         error.code ?: SingletonError.code,
                         error.title ?: SingletonError.title,
-                        error.subtitle
+                        error.subtitle ?: SingletonError.subTitle
                     )
                 }
             }
@@ -165,30 +165,59 @@ class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
         }
     }
 
-    private suspend fun callServiceUpdateWorkerImage(imageFile: File?, imageInBase64: String?) {
+    private suspend fun callServiceUpdateWorkerImage(imageFile: File?, imageInBase64: String?, areaSelected: String?) {
 
         val newFileName = String.format("%s.jpg", imageFile?.nameWithoutExtension)
 
-        val validateImageByPhotoRequest = ValidateImageByPhotoRequest(
+        val worker = workerData?.message ?: return
+        val dni = worker.dni
+        val name = worker.name
+        val lastname = worker.lastname
+        val gender = worker.gender
+        val nationality = worker.nationality
+        val dateBirth = worker.dateBirth
+        val dateJoin = worker.dateJoin
+        val bloodType = textBlood.value
+        val diseases = textIllness.value
+        val allergies = textAllergies.value
+        val phone = textPhone.value
+        val phoneEmergency = textPhoneEmergency.value
+
+
+        val workerUpdateData = WorkerRequest(
+            dni = dni,
+            name = name,
+            lastname = lastname,
+            gender = gender,
+            nationality = nationality,
+            dateBirth = dateBirth,
+            dateJoin = dateJoin,
+            area = areaSelected,
+            bloodType = bloodType,
+            diseases = diseases,
+            allergies = allergies,
+            phone = phone,
+            phoneEmergency = phoneEmergency,
             photo = imageInBase64,
             photoFormat = newFileName
         )
+
         _showLoadingDialog.value = true
 
         try {
             val workerRepository = WorkersRepository()
-            val emergencyUseCase = EmergencyUseCase(workerRepository)
-            when (val updateDataImage = emergencyUseCase.validateImageByPhoto(validateImageByPhotoRequest)) {
+            val managementWorkerUseCase = ManagementWorkerUseCase(workerRepository)
+            when (val updateWorker = managementWorkerUseCase.updateWorker(workerUpdateData)) {
                 is CustomResult.OnSuccess -> {
                     _updateWorkerResult.value = UpdateWorkerResult.UpdateWorkerSuccess
                 }
 
                 is CustomResult.OnError -> {
-                    val error = updateDataImage.error
+                    val error = updateWorker.error
                     _updateWorkerResult.value = UpdateWorkerResult.Error(
                         error.code ?: SingletonError.code,
                         error.title ?: SingletonError.title,
-                        error.subtitle
+                        error.subtitle ?: SingletonError.subTitle
                     )
                 }
             }
