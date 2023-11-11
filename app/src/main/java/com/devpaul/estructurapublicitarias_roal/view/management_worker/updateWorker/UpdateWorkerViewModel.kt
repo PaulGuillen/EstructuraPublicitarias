@@ -74,7 +74,7 @@ class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
 
     private fun showData(worker: GetWorker?) {
         worker?.message?.run {
-            responseName.value = name
+            val responseName = name
             val responseLastName = lastname
             val responseFullName = "$responseName $responseLastName"
 
@@ -84,7 +84,7 @@ class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
             textPhone.value = phone
             textPhoneEmergency.value = phoneEmergency
             textBlood.value = bloodType
-            textIllness.value = ""
+            textIllness.value = diseases
             textAllergies.value = allergies
         }
     }

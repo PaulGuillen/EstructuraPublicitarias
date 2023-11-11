@@ -41,7 +41,7 @@ class ValidationEPPActivity : BaseActivity() {
         setContentView(binding.root)
         toolbarStyle(this@ValidationEPPActivity, binding.include.toolbar, "Validación EPP", true, HomeActivity::class.java)
         binding.imagePhoto.setOnClickListener { selectImage() }
-
+        setDefaultColorEquipment()
     }
 
     private fun sendImageToBE() {
@@ -217,6 +217,10 @@ class ValidationEPPActivity : BaseActivity() {
         setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyGloves, R.color.color_gray_items)
         setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyGlasses, R.color.color_gray_items)
         setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyBoots, R.color.color_gray_items)
+        setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyHeadphones, R.color.color_gray_items)
+        setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyHarness, R.color.color_gray_items)
+        setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyPants, R.color.color_gray_items)
+        setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyVest, R.color.color_gray_items)
     }
 
 }
