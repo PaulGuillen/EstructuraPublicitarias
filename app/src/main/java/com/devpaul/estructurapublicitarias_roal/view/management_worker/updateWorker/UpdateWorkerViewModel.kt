@@ -24,8 +24,6 @@ class UpdateWorkerViewModel(context: Context) : BaseViewModel() {
     val textIllness = MutableLiveData("")
     val textAllergies = MutableLiveData("")
 
-    var responseName = MutableLiveData("")
-
     private val _updateWorkerResult = MutableLiveData<UpdateWorkerResult>()
 
     val updateWorkerResult: LiveData<UpdateWorkerResult> = _updateWorkerResult
