@@ -4,6 +4,9 @@ import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -94,146 +97,156 @@ class UpdateWorkerActivity : BaseActivity() {
         setAreaSelection(area)
     }
 
-    private fun validateStateTI() {
-        if (!isSelectedTI) {
-            isSelectedTI = true
-            isSelectedSI = false
-            isSelectedCO = false
-
+    private fun validateState(selectedViewIds: Array<View>, selectedImage: ImageView, selectedLabel: TextView, area: String) {
+        if (!isSelected(area)) {
             val orangeColor = ContextCompat.getColor(this, R.color.orange_principal)
             val grayIconsColor = ContextCompat.getColor(this, R.color.color_gray_icons)
 
-            val tiViewIds = arrayOf(
+            val allViewIds = mapOf(
+                INFORMATION_TECHNOLOGY_AREA to arrayOf(
+                    binding.viewTopTI,
+                    binding.viewBottomTI,
+                    binding.viewLeftTI,
+                    binding.viewRightTI
+                ),
+                WELDING_AREA to arrayOf(
+                    binding.viewTopSI,
+                    binding.viewBottomSI,
+                    binding.viewLeftSI,
+                    binding.viewRightSI
+                ),
+                COURT_AREA to arrayOf(
+                    binding.viewTopCO,
+                    binding.viewBottomCO,
+                    binding.viewLeftCO,
+                    binding.viewRightCO
+                )
+            )
+
+            allViewIds.forEach { (key, viewIds) ->
+                viewIds.forEach { it.setBackgroundColor(if (key == area) orangeColor else grayIconsColor) }
+            }
+
+            binding.checkBoxImageTI.setImageResource(if (area == INFORMATION_TECHNOLOGY_AREA) R.drawable.checked_box else R.drawable.not_checked_box)
+            binding.checkBoxLabelTI.setTextColor(if (area == INFORMATION_TECHNOLOGY_AREA) orangeColor else grayIconsColor)
+
+            binding.checkBoxImageSI.setImageResource(if (area == WELDING_AREA) R.drawable.checked_box else R.drawable.not_checked_box)
+            binding.checkBoxLabelSI.setTextColor(if (area == WELDING_AREA) orangeColor else grayIconsColor)
+
+            binding.checkBoxImageCO.setImageResource(if (area == COURT_AREA) R.drawable.checked_box else R.drawable.not_checked_box)
+            binding.checkBoxLabelCO.setTextColor(if (area == COURT_AREA) orangeColor else grayIconsColor)
+
+            setSelectionFlags(area)
+        }
+    }
+
+    private fun isSelected(area: String) = when (area) {
+        INFORMATION_TECHNOLOGY_AREA -> isSelectedTI
+        WELDING_AREA -> isSelectedSI
+        COURT_AREA -> isSelectedCO
+        else -> false
+    }
+
+    private fun setSelectionFlags(area: String) {
+        isSelectedTI = area == INFORMATION_TECHNOLOGY_AREA
+        isSelectedSI = area == WELDING_AREA
+        isSelectedCO = area == COURT_AREA
+        areaSelected = when (area) {
+            INFORMATION_TECHNOLOGY_AREA -> "1"
+            WELDING_AREA -> "2"
+            COURT_AREA -> "3"
+            else -> areaSelected
+        }
+    }
+
+    // Usage in your existing functions
+    private fun validateStateTI() {
+        validateState(
+            arrayOf(
                 binding.viewTopTI,
                 binding.viewBottomTI,
                 binding.viewLeftTI,
                 binding.viewRightTI
-            )
-
-            val siViewIds = arrayOf(
-                binding.viewTopSI,
-                binding.viewBottomSI,
-                binding.viewLeftSI,
-                binding.viewRightSI
-            )
-
-            val coViewIds = arrayOf(
-                binding.viewTopCO,
-                binding.viewBottomCO,
-                binding.viewLeftCO,
-                binding.viewRightCO
-            )
-
-            tiViewIds.forEach { it.setBackgroundColor(orangeColor) }
-            siViewIds.forEach { it.setBackgroundColor(grayIconsColor) }
-            coViewIds.forEach { it.setBackgroundColor(grayIconsColor) }
-
-            binding.checkBoxImageTI.setImageResource(R.drawable.checked_box)
-            binding.checkBoxLabelTI.setTextColor(orangeColor)
-
-            binding.checkBoxImageSI.setImageResource(R.drawable.not_checked_box)
-            binding.checkBoxLabelSI.setTextColor(grayIconsColor)
-
-            binding.checkBoxImageCO.setImageResource(R.drawable.not_checked_box)
-            binding.checkBoxLabelCO.setTextColor(grayIconsColor)
-
-            areaSelected = "1"
-        }
+            ),
+            binding.checkBoxImageTI,
+            binding.checkBoxLabelTI,
+            INFORMATION_TECHNOLOGY_AREA
+        )
     }
 
     private fun validateStateSO() {
-        if (!isSelectedSI) {
-            isSelectedSI = true
-            isSelectedTI = false
-            isSelectedCO = false
-
-            val orangeColor = ContextCompat.getColor(this, R.color.orange_principal)
-            val grayIconsColor = ContextCompat.getColor(this, R.color.color_gray_icons)
-
-            val siViewIds = arrayOf(
+        validateState(
+            arrayOf(
                 binding.viewTopSI,
                 binding.viewBottomSI,
                 binding.viewLeftSI,
                 binding.viewRightSI
-            )
-
-            val tiViewIds = arrayOf(
-                binding.viewTopTI,
-                binding.viewBottomTI,
-                binding.viewLeftTI,
-                binding.viewRightTI
-            )
-
-            val coViewIds = arrayOf(
-                binding.viewTopCO,
-                binding.viewBottomCO,
-                binding.viewLeftCO,
-                binding.viewRightCO
-            )
-
-            siViewIds.forEach { it.setBackgroundColor(orangeColor) }
-            tiViewIds.forEach { it.setBackgroundColor(grayIconsColor) }
-            coViewIds.forEach { it.setBackgroundColor(grayIconsColor) }
-
-            binding.checkBoxImageSI.setImageResource(R.drawable.checked_box)
-            binding.checkBoxLabelSI.setTextColor(orangeColor)
-
-            binding.checkBoxImageTI.setImageResource(R.drawable.not_checked_box)
-            binding.checkBoxLabelTI.setTextColor(grayIconsColor)
-
-            binding.checkBoxImageCO.setImageResource(R.drawable.not_checked_box)
-            binding.checkBoxLabelCO.setTextColor(grayIconsColor)
-
-            areaSelected = "2"
-        }
+            ),
+            binding.checkBoxImageSI,
+            binding.checkBoxLabelSI,
+            WELDING_AREA
+        )
     }
 
     private fun validateStateCO() {
-        if (!isSelectedCO) {
-            isSelectedCO = true
-            isSelectedSI = false
-            isSelectedTI = false
-
-            val orangeColor = ContextCompat.getColor(this, R.color.orange_principal)
-            val grayIconsColor = ContextCompat.getColor(this, R.color.color_gray_icons)
-
-            val siViewIds = arrayOf(
-                binding.viewTopSI,
-                binding.viewBottomSI,
-                binding.viewLeftSI,
-                binding.viewRightSI
-            )
-
-            val tiViewIds = arrayOf(
-                binding.viewTopTI,
-                binding.viewBottomTI,
-                binding.viewLeftTI,
-                binding.viewRightTI
-            )
-
-            val coViewIds = arrayOf(
+        validateState(
+            arrayOf(
                 binding.viewTopCO,
                 binding.viewBottomCO,
                 binding.viewLeftCO,
                 binding.viewRightCO
-            )
+            ),
+            binding.checkBoxImageCO,
+            binding.checkBoxLabelCO,
+            COURT_AREA
+        )
+    }
 
-            coViewIds.forEach { it.setBackgroundColor(orangeColor) }
-            siViewIds.forEach { it.setBackgroundColor(grayIconsColor) }
-            tiViewIds.forEach { it.setBackgroundColor(grayIconsColor) }
+    private fun setAreaSelection(area: String?) {
+        area?.let {
+            when (it) {
+                INFORMATION_TECHNOLOGY_AREA -> validateState(
+                    arrayOf(
+                        binding.viewTopTI,
+                        binding.viewBottomTI,
+                        binding.viewLeftTI,
+                        binding.viewRightTI
+                    ),
+                    binding.checkBoxImageTI,
+                    binding.checkBoxLabelTI,
+                    INFORMATION_TECHNOLOGY_AREA
+                )
 
-            binding.checkBoxImageCO.setImageResource(R.drawable.checked_box)
-            binding.checkBoxLabelCO.setTextColor(orangeColor)
+                WELDING_AREA -> validateState(
+                    arrayOf(
+                        binding.viewTopSI,
+                        binding.viewBottomSI,
+                        binding.viewLeftSI,
+                        binding.viewRightSI
+                    ),
+                    binding.checkBoxImageSI,
+                    binding.checkBoxLabelSI,
+                    WELDING_AREA
+                )
 
-            binding.checkBoxImageSI.setImageResource(R.drawable.not_checked_box)
-            binding.checkBoxLabelSI.setTextColor(grayIconsColor)
-
-            binding.checkBoxImageTI.setImageResource(R.drawable.not_checked_box)
-            binding.checkBoxLabelTI.setTextColor(grayIconsColor)
-
-            areaSelected = "3"
+                COURT_AREA -> validateState(
+                    arrayOf(
+                        binding.viewTopCO,
+                        binding.viewBottomCO,
+                        binding.viewLeftCO,
+                        binding.viewRightCO
+                    ),
+                    binding.checkBoxImageCO,
+                    binding.checkBoxLabelCO,
+                    COURT_AREA
+                )
+                else -> {
+                   //Casuistica no contemplada
+                }
+            }
         }
     }
+
 
     private fun handleUpdateWorkerResult(result: UpdateWorkerResult) {
         when (result) {
@@ -283,14 +296,6 @@ class UpdateWorkerActivity : BaseActivity() {
                 Toast.makeText(this, MESSAGE_DATA_NOT_VALID, Toast.LENGTH_SHORT).show()
             }
 
-        }
-    }
-
-    private fun setAreaSelection(area: String?) {
-        when (area) {
-            "TI" -> validateStateTI()
-            "Soldadura" -> validateStateSO()
-            "Corte" -> validateStateCO()
         }
     }
 
