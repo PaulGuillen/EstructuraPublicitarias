@@ -178,4 +178,9 @@
     <string name="text_title_area">Área</string>
     <string name="text_title_country">País</string>
 
+    <!--ACTIVITY UPDATE WORKER -->
+    <string name="text_TI">TI</string>
+    <string name="text_SO">SO</string>
+    <string name="text_CO">CO</string>
+
 </resources>

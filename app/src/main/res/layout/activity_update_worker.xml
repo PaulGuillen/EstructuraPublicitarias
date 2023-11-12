@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.management_worker.updateWorker.UpdateWorkerActivity">
 
     <data>
 
@@ -72,53 +73,10 @@
                     android:textAlignment="center"
                     android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/textFirstName"
-                    style="@style/InputTextEditTextStyleRegular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/apellidos"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/textLastName"
-                    style="@style/InputTextEditTextStyleRegular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/apellidos"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/textdateJoin"
-                    style="@style/InputTextEditTextStyleRegular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/dni"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/textdateBirth"
-                    style="@style/InputTextEditTextStyleRegular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/dni"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:visibility="gone" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal">
@@ -169,7 +127,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingStart="8dp"
-                                    android:text="TI"
+                                    android:text="@string/text_TI"
                                     android:textSize="18sp"
                                     tools:ignore="RtlSymmetry" />
 
@@ -239,7 +197,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingStart="8dp"
-                                    android:text="SO"
+                                    android:text="@string/text_SO"
                                     android:textSize="18sp"
                                     tools:ignore="RtlSymmetry" />
 
@@ -309,7 +267,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingStart="8dp"
-                                    android:text="CO"
+                                    android:text="@string/text_CO"
                                     android:textSize="18sp"
                                     tools:ignore="RtlSymmetry" />
 
@@ -335,103 +293,68 @@
 
                 </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    app:boxBackgroundColor="@android:color/transparent">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textPhone"
-                        style="@style/InputTextEditTextStyleRegular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:autofillHints="phone"
-                        android:hint="@string/celular_form"
-                        android:inputType="number"
-                        android:maxLength="9"
-                        android:text="@={viewModel.textPhone}" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/transparent"
-                    app:boxBackgroundColor="@android:color/transparent">
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_background_selector"
+                    android:hint="@string/text_celular"
+                    android:inputType="phone"
+                    android:maxLength="9"
+                    android:padding="14dp"
+                    android:text="@={viewModel.textPhone}"
+                    android:textSize="16sp" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textPhoneEmergency"
-                        style="@style/InputTextEditTextStyleRegular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:autofillHints="phone"
-                        android:hint="@string/cel_emergencia_form"
-                        android:inputType="number"
-                        android:maxLength="9"
-                        android:text="@={viewModel.textPhoneEmergency}" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textPhoneEmergency"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/transparent"
-                    app:boxBackgroundColor="@android:color/transparent">
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_background_selector"
+                    android:hint="@string/text_celular_u_hogar"
+                    android:inputType="phone"
+                    android:maxLength="12"
+                    android:padding="14dp"
+                    android:text="@={viewModel.textPhoneEmergency}"
+                    android:textSize="16sp" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textBlood"
-                        style="@style/InputTextEditTextStyleRegular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:autofillHints="name"
-                        android:hint="@string/grupo_sangu_neo_form"
-                        android:inputType="textAutoComplete"
-                        android:text="@={viewModel.textBlood}" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <TextView
+                    android:id="@+id/viewBloodType"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/transparent"
-                    app:boxBackgroundColor="@android:color/transparent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:drawable/editbox_background"
+                    android:fontFamily="@font/mulish_black"
+                    android:gravity="center_vertical"
+                    android:hint="@string/text_tipo_de_sangre"
+                    android:padding="12dp"
+                    android:text="@={viewModel.textBlood}"
+                    app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textIllness"
-                        style="@style/InputTextEditTextStyleRegular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:autofillHints="name"
-                        android:hint="@string/enfermedades_pre_existentes_form"
-                        android:inputType="textAutoComplete"
-                        android:text="@={viewModel.textIllness}" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textIllness"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_background_selector"
+                    android:hint="@string/text_enfermedades"
+                    android:inputType="text"
+                    android:padding="14dp"
+                    android:text="@={viewModel.textIllness}"
+                    android:textSize="16sp" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textAllergies"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/transparent"
-                    app:boxBackgroundColor="@android:color/transparent">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textAllergies"
-                        style="@style/InputTextEditTextStyleRegular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:autofillHints="name"
-                        android:hint="@string/alergias_form"
-                        android:inputType="textAutoComplete"
-                        android:text="@={viewModel.textAllergies}" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:background="@drawable/edittext_background_selector"
+                    android:hint="@string/text_al_rgias"
+                    android:inputType="text"
+                    android:padding="14dp"
+                    android:text="@={viewModel.textAllergies}"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 

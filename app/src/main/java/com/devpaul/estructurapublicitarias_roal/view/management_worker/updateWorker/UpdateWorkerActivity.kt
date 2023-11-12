@@ -1,11 +1,19 @@
 package com.devpaul.estructurapublicitarias_roal.view.management_worker.updateWorker
 
 import android.app.Activity
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Base64
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -87,14 +95,11 @@ class UpdateWorkerActivity : BaseActivity() {
         initData()
     }
 
+
     private fun initData() {
         val extras = intent.extras
         val document = extras?.getString("dni")
-        val area = extras?.getString("area")
-
         viewModel.validateWorker(document.toString())
-
-        setAreaSelection(area)
     }
 
     private fun validateState(selectedViewIds: Array<View>, selectedImage: ImageView, selectedLabel: TextView, area: String) {
@@ -159,7 +164,6 @@ class UpdateWorkerActivity : BaseActivity() {
         }
     }
 
-    // Usage in your existing functions
     private fun validateStateTI() {
         validateState(
             arrayOf(
@@ -240,13 +244,13 @@ class UpdateWorkerActivity : BaseActivity() {
                     binding.checkBoxLabelCO,
                     COURT_AREA
                 )
+
                 else -> {
-                   //Casuistica no contemplada
+                    //Casuistica no contemplada
                 }
             }
         }
     }
-
 
     private fun handleUpdateWorkerResult(result: UpdateWorkerResult) {
         when (result) {
@@ -264,6 +268,10 @@ class UpdateWorkerActivity : BaseActivity() {
                         )
                         .into(binding.imageViewUser)
                 }
+
+                setAreaSelection(result.worker.message?.area)
+                setBloodType(result.worker.message?.bloodType)
+
             }
 
             is UpdateWorkerResult.UpdateWorker -> {
@@ -296,6 +304,61 @@ class UpdateWorkerActivity : BaseActivity() {
                 Toast.makeText(this, MESSAGE_DATA_NOT_VALID, Toast.LENGTH_SHORT).show()
             }
 
+        }
+    }
+
+    private fun setBloodType(bloodTypeSelected: String?) {
+
+        val defaultBloodType: String?
+
+        val arrayList = ArrayList<String>().apply {
+            add("A+")
+            add("A-")
+            add("B+")
+            add("B-")
+            add("AB+")
+            add("AB-")
+            add("O+")
+            add("O-")
+        }
+
+        defaultBloodType = if (arrayList.contains(bloodTypeSelected)) {
+            bloodTypeSelected
+        } else {
+            "A+"
+        }
+
+        binding.viewBloodType.text = defaultBloodType
+
+        binding.viewBloodType.setOnClickListener {
+
+            val dialog = Dialog(this@UpdateWorkerActivity)
+            dialog.setContentView(R.layout.dialog_searchable_spinner)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.show()
+
+            val editText: EditText = dialog.findViewById(R.id.edit_text)
+            val listView: ListView = dialog.findViewById(R.id.list_view)
+            val textTitle: TextView = dialog.findViewById(R.id.titleSearchView)
+
+            val adapter = ArrayAdapter(this@UpdateWorkerActivity, android.R.layout.simple_list_item_1, arrayList)
+            listView.adapter = adapter
+            textTitle.text = "Tipo de Sangre"
+
+            editText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+                override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                    adapter.filter.filter(charSequence)
+                }
+
+                override fun afterTextChanged(editable: Editable) {}
+            })
+
+            listView.setOnItemClickListener { _, _, i, _ ->
+                binding.viewBloodType.text = adapter.getItem(i)
+                dialog.dismiss()
+            }
         }
     }
 
