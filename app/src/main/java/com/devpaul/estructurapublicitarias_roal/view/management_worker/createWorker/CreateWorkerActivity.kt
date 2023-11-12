@@ -365,7 +365,7 @@ class CreateWorkerActivity : BaseActivity() {
             binding.includedCheckbox.checkBoxImageCO.setImageResource(R.drawable.not_checked_box)
             binding.includedCheckbox.checkBoxLabelCO.setTextColor(grayIconsColor)
 
-            documentType = "2"
+            documentType = "3"
         }
     }
 
@@ -412,7 +412,7 @@ class CreateWorkerActivity : BaseActivity() {
             binding.includedCheckbox.checkBoxImageTI.setImageResource(R.drawable.not_checked_box)
             binding.includedCheckbox.checkBoxLabelTI.setTextColor(grayIconsColor)
 
-            documentType = "3"
+            documentType = "2"
         }
     }
 

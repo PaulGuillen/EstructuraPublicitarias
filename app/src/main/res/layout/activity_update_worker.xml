@@ -53,6 +53,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/image_view_user">
 
                 <TextView
+                    android:id="@+id/textDNI"
+                    style="@style/InputTextEditTextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/dni"
+                    android:text="@={viewModel.textDNI}"
+                    android:textAlignment="textEnd"
+                    android:textSize="20sp" />
+
+                <TextView
                     android:id="@+id/textFullName"
                     style="@style/InputTextEditTextStyleRegular"
                     android:layout_width="match_parent"
@@ -61,17 +72,6 @@
                     android:text="@={viewModel.textFullName}"
                     android:textAlignment="center"
                     android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/textDNI"
-                    style="@style/InputTextEditTextStyleRegular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/dni"
-                    android:text="@={viewModel.textDNI}"
-                    android:textAlignment="center"
-                    android:textSize="20sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -293,31 +293,65 @@
 
                 </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textPhone"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/edittext_background_selector"
-                    android:hint="@string/text_celular"
-                    android:inputType="phone"
-                    android:maxLength="9"
-                    android:padding="14dp"
-                    android:text="@={viewModel.textPhone}"
-                    android:textSize="16sp" />
+                    android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textPhoneEmergency"
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:fontFamily="@font/mulish_black"
+                        android:gravity="center|start"
+                        android:text="@string/text_celular_1"
+                        android:textSize="16sp" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textPhone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/edittext_background_selector"
+                        android:hint="@string/text_celular"
+                        android:inputType="phone"
+                        android:maxLength="9"
+                        android:padding="14dp"
+                        android:text="@={viewModel.textPhone}"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/edittext_background_selector"
-                    android:hint="@string/text_celular_u_hogar"
-                    android:inputType="phone"
-                    android:maxLength="12"
-                    android:padding="14dp"
-                    android:text="@={viewModel.textPhoneEmergency}"
-                    android:textSize="16sp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:fontFamily="@font/mulish_black"
+                        android:gravity="center|start"
+                        android:text="@string/text_celular_2"
+                        android:textSize="16sp" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textPhoneEmergency"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/edittext_background_selector"
+                        android:hint="@string/text_celular_u_hogar"
+                        android:inputType="phone"
+                        android:maxLength="12"
+                        android:padding="14dp"
+                        android:text="@={viewModel.textPhoneEmergency}"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/viewBloodType"
@@ -332,29 +366,64 @@
                     android:text="@={viewModel.textBlood}"
                     app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textIllness"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/edittext_background_selector"
-                    android:hint="@string/text_enfermedades"
-                    android:inputType="text"
-                    android:padding="14dp"
-                    android:text="@={viewModel.textIllness}"
-                    android:textSize="16sp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textAllergies"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background_selector"
-                    android:hint="@string/text_al_rgias"
-                    android:inputType="text"
-                    android:padding="14dp"
-                    android:text="@={viewModel.textAllergies}"
-                    android:textSize="16sp" />
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:fontFamily="@font/mulish_black"
+                        android:gravity="center|start"
+                        android:text="@string/text_molestias"
+                        android:textSize="16sp" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textIllness"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/edittext_background_selector"
+                        android:hint="@string/text_enfermedades"
+                        android:text="@={viewModel.textIllness}"
+                        android:inputType="text"
+                        android:padding="14dp"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:fontFamily="@font/mulish_black"
+                        android:gravity="center|start"
+                        android:text="@string/text_al_rgias"
+                        android:textSize="16sp" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textAllergies"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/edittext_background_selector"
+                        android:hint="@string/text_al_rgias"
+                        android:inputType="text"
+                        android:padding="14dp"
+                        android:text="@={viewModel.textAllergies}"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

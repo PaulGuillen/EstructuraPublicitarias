@@ -34,6 +34,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker.ManagementWorkerActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
 
@@ -94,7 +95,6 @@ class UpdateWorkerActivity : BaseActivity() {
         }
         initData()
     }
-
 
     private fun initData() {
         val extras = intent.extras
@@ -158,10 +158,12 @@ class UpdateWorkerActivity : BaseActivity() {
         isSelectedCO = area == COURT_AREA
         areaSelected = when (area) {
             INFORMATION_TECHNOLOGY_AREA -> "1"
-            WELDING_AREA -> "2"
-            COURT_AREA -> "3"
+            COURT_AREA -> "2"
+            WELDING_AREA -> "3"
             else -> areaSelected
         }
+
+        Timber.d("AreaSelected $areaSelected")
     }
 
     private fun validateStateTI() {
@@ -286,6 +288,10 @@ class UpdateWorkerActivity : BaseActivity() {
             is UpdateWorkerResult.UpdateWorkerSuccess -> {
                 SweetAlertDialog(this@UpdateWorkerActivity, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText(getString(R.string.title_200_update))
+                    .setConfirmButton(getString(R.string.dialog_singleton_text_button_accept), SweetAlertDialog::dismissWithAnimation)
+                    .setConfirmClickListener {
+                        startNewActivityWithBackAnimation(this@UpdateWorkerActivity, ManagementWorkerActivity::class.java)
+                    }
                     .show()
             }
 
