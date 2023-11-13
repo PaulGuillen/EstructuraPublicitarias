@@ -20,7 +20,7 @@ class WorkersReportRepository : WorkersReportRepositoryNetwork {
         apiConfig = api.getWorkersRoutes()
     }
 
-    override fun allWorkers(): CustomResult<PrincipalListWorker> {
+    override fun allWorkers(): CustomResult<List<PrincipalListWorker>> {
 
         val serviceTitle = TITLE_ERROR_MS_ALL_WORKERS
 
@@ -29,7 +29,7 @@ class WorkersReportRepository : WorkersReportRepositoryNetwork {
 
             return when (callApi?.isSuccessful) {
                 true -> {
-                    val response: PrincipalListWorkerResponse? = callApi.body()
+                    val response: List<PrincipalListWorkerResponse>? = callApi.body()
 
                     if (response != null)
                         CustomResult.OnSuccess(WorkerReportMapper().map(response))

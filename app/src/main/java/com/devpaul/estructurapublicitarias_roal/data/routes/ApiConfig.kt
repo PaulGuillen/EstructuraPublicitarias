@@ -66,5 +66,5 @@ interface ApiConfig {
     //@GET("allWorkers")
     @GET("https://run.mocky.io/v3/15ea1e83-b4aa-46fd-9a76-67e8ae4c6c80")
     fun allWorkers(
-    ): Call<PrincipalListWorkerResponse>
+    ): Call<List<PrincipalListWorkerResponse>>
 }

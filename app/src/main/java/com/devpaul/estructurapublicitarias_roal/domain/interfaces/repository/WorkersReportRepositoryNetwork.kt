@@ -4,5 +4,5 @@ import com.devpaul.estructurapublicitarias_roal.data.models.entity.PrincipalList
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 
 interface WorkersReportRepositoryNetwork {
-    fun allWorkers(): CustomResult<PrincipalListWorker>
+    fun allWorkers(): CustomResult<List<PrincipalListWorker>>
 }

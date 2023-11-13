@@ -1,6 +1,5 @@
 package com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -24,7 +23,6 @@ import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.createWorker.CreateWorkerActivity
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.updateWorker.UpdateWorkerActivity
 
-@SuppressLint("SourceLockedOrientationActivity")
 class ManagementWorkerActivity : BaseActivity() {
 
     lateinit var binding: ActivityManagementWorkerBinding

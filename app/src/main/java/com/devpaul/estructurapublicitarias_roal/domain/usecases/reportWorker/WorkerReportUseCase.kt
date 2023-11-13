@@ -7,9 +7,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class WorkerReportUseCase(private val workersReportRepositoryNetwork: WorkersReportRepositoryNetwork) {
-    suspend fun allWorkers(dni: String): CustomResult<PrincipalListWorker> =
+    suspend fun allWorkers(): CustomResult<List<PrincipalListWorker>> =
         withContext(Dispatchers.IO) {
+
             val allWorkers = workersReportRepositoryNetwork.allWorkers()
+
             when (allWorkers) {
                 is CustomResult.OnSuccess -> {
                     allWorkers.data

@@ -29,15 +29,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/allWorkers"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="REPORT WORKER"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@android:drawable/editbox_background"
+                android:fontFamily="@font/mulish_black"
+                android:gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:hint="@string/text_title_spinner_workers"
+                android:padding="16dp"
+                android:textSize="18sp"
+                app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/include" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

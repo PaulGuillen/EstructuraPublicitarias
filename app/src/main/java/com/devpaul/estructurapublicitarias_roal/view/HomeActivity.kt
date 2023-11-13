@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
+import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Options
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityHomeBinding
@@ -116,7 +117,13 @@ class HomeActivity : BaseActivity() {
         val codeState = SingletonError.code
         val title = SingletonError.title
         val subTitle = SingletonError.subTitle
-        showCustomDialogErrorSingleton(this@HomeActivity, title, subTitle, codeState, "Aceptar", onClickListener = {})
+        showCustomDialogErrorSingleton(
+            this@HomeActivity,
+            title,
+            subTitle,
+            codeState,
+            getString(R.string.text_aceptar),
+            onClickListener = {})
     }
 
     override fun onResume() {

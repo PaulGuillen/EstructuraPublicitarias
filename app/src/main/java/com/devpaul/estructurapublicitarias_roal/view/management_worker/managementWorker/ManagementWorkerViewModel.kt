@@ -16,7 +16,7 @@ class ManagementWorkerViewModel(context: Context) : BaseViewModel() {
 
     var documentNumber = MutableLiveData("")
     var textDNI = MutableLiveData("")
-    var textArea = MutableLiveData("")
+    private var textArea = MutableLiveData("")
 
     private val _managementWorkerResult = MutableLiveData<ManagementWorkerResult>()
 
