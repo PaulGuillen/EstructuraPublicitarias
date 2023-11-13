@@ -13,6 +13,7 @@ import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.Options
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker.ManagementWorkerActivity
+import com.devpaul.estructurapublicitarias_roal.view.report_worker.ReportWorkerActivity
 import com.devpaul.estructurapublicitarias_roal.view.validationepp.ValidationEPPActivity
 
 class OptionsAdapter(val context: Activity, private val categories: List<Options>) :
@@ -56,9 +57,7 @@ class OptionsAdapter(val context: Activity, private val categories: List<Options
             }
 
             "3" -> {
-                //            val intent = Intent(context, ::class.java)
-                //            val options = ActivityOptionsCompat.makeCustomAnimation(context, R.transition.slide_in, R.transition.slide_out)
-                //            context.startActivity(intent, options.toBundle())
+                startNewActivityWithAnimation(context, ReportWorkerActivity::class.java)
             }
 
             "4" -> {

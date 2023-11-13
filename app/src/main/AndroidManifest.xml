@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -22,7 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ROAL"
         tools:targetApi="31">
-
+        <activity
+            android:name=".view.report_worker.ReportWorkerActivity"
+            android:exported="false" />
         <activity
             android:name=".view.validationepp.ValidationEPPActivity"
             android:exported="false"
@@ -116,7 +119,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".view.WelcomeActivity"
             android:exported="true">
@@ -126,7 +128,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
