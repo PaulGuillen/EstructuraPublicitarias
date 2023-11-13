@@ -184,6 +184,6 @@
     <string name="text_CO">CO</string>
 
     <!--ACTIVITY REPORT WORKER -->
-    <string name="text_title_spinner_workers">Lista de trabajadores</string>
+    <string name="text_title_spinner_workers">Ver trabajadores</string>
 
 </resources>

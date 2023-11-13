@@ -19,6 +19,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.usecases.reportWorker.Wor
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
+import timber.log.Timber
 
 class ReportWorkerActivity : BaseActivity() {
 
@@ -80,6 +81,8 @@ class ReportWorkerActivity : BaseActivity() {
 
     private fun showAllWorker(data: List<PrincipalListWorker>) {
 
+        var selectedDni: String
+
         binding.allWorkers.setOnClickListener {
 
             val dialog = Dialog(this@ReportWorkerActivity)
@@ -108,8 +111,12 @@ class ReportWorkerActivity : BaseActivity() {
             })
 
             listView.setOnItemClickListener { _, _, i, _ ->
+                val selectedWorker = data[i]
+                selectedDni = selectedWorker.document.toString()
                 binding.allWorkers.text = adapter.getItem(i)
                 dialog.dismiss()
+                Timber.d("DocumentSelected $selectedDni ${selectedWorker.name}")
+                //  viewModel.getInformation(selectedWorker.document)
             }
         }
     }
