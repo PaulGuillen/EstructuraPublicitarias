@@ -163,7 +163,6 @@ class UpdateWorkerActivity : BaseActivity() {
             else -> areaSelected
         }
 
-        Timber.d("AreaSelected $areaSelected")
     }
 
     private fun validateStateTI() {
@@ -290,7 +289,8 @@ class UpdateWorkerActivity : BaseActivity() {
                     .setTitleText(getString(R.string.title_200_update))
                     .setConfirmButton(getString(R.string.dialog_singleton_text_button_accept), SweetAlertDialog::dismissWithAnimation)
                     .setConfirmClickListener {
-                        startNewActivityWithBackAnimation(this@UpdateWorkerActivity, ManagementWorkerActivity::class.java)
+                        it.dismiss()
+                        startNewActivityWithBackAnimation(this, ManagementWorkerActivity::class.java)
                     }
                     .show()
             }

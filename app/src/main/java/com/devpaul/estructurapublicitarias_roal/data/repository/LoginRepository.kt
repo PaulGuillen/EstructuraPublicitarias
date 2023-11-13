@@ -9,19 +9,20 @@ import com.devpaul.estructurapublicitarias_roal.domain.mappers.GeneralHTTPMapper
 import com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository.LoginRepositoryNetwork
 import com.devpaul.estructurapublicitarias_roal.data.models.response.MainUser
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
-import com.devpaul.estructurapublicitarias_roal.data.routes.UsersRoutes
+import com.devpaul.estructurapublicitarias_roal.data.routes.ApiConfig
+import com.devpaul.estructurapublicitarias_roal.domain.utils.TITLE_ERROR_MS_GET_MAIN_USER
 
 class LoginRepository : LoginRepositoryNetwork {
 
-    private var apiConfig: UsersRoutes? = null
+    private var apiConfig: ApiConfig? = null
     private var messageTimeOut = "Time Out"
 
     init {
         val api = ApiRoutes()
-        apiConfig = api.getMainUserRoutes()
+        apiConfig = api.getWorkersRoutes()
     }
     override fun getMainUser(mainUser: MainUser): CustomResult<GeneralHTTP> {
-        val serviceTitle = "Error en el MS getMainUser"
+        val serviceTitle = TITLE_ERROR_MS_GET_MAIN_USER
         try {
             val callApi = apiConfig?.mainUserEndPoints(mainUser)?.execute()
 
