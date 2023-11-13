@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.PrincipalListWorker
@@ -19,12 +20,14 @@ import com.devpaul.estructurapublicitarias_roal.domain.usecases.reportWorker.Wor
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
+import com.devpaul.estructurapublicitarias_roal.view.management_worker.managementWorker.ManagementWorkerActivity
 import timber.log.Timber
 
 class ReportWorkerActivity : BaseActivity() {
 
     lateinit var binding: ActivityReportWorkerBinding
     private lateinit var viewModel: ReportWorkerViewModel
+    private var isPressed = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +73,14 @@ class ReportWorkerActivity : BaseActivity() {
             }
 
             is WorkerReportResult.Error -> {
-
+                showCustomDialogErrorSingleton(this,
+                    TITLE_ERROR_MS_ALL_WORKERS,
+                    result.subTitle,
+                    result.code,
+                    getString(R.string.dialog_singleton_text_button_accept),
+                    onClickListener = {
+                        startNewActivityWithBackAnimation(this, HomeActivity::class.java)
+                    })
             }
 
             is WorkerReportResult.ValidationError -> {
@@ -82,7 +92,7 @@ class ReportWorkerActivity : BaseActivity() {
     private fun showAllWorker(data: List<PrincipalListWorker>) {
 
         var selectedDni: String
-
+        optionsReportUI()
         binding.allWorkers.setOnClickListener {
 
             val dialog = Dialog(this@ReportWorkerActivity)
@@ -117,6 +127,38 @@ class ReportWorkerActivity : BaseActivity() {
                 dialog.dismiss()
                 Timber.d("DocumentSelected $selectedDni ${selectedWorker.name}")
                 //  viewModel.getInformation(selectedWorker.document)
+            }
+        }
+
+    }
+
+    private fun optionsReportUI() {
+        isPressed = true
+        val grayColor = ContextCompat.getColor(this, R.color.mid_gray_card)
+        val whiteColor = ContextCompat.getColor(this, R.color.white)
+
+        val btnUno = binding.btnUno
+        val btnDos = binding.btnDos
+        val btnTres = binding.btnTres
+        val btnCua = binding.btnCuatro
+
+        val cardViewButtons = listOf(
+            btnUno, btnDos, btnTres, btnCua
+        )
+
+        btnUno.setBackgroundColor(grayColor)
+
+        applyButtonSelectionLogic(cardViewButtons, grayColor, whiteColor) { button ->
+            cardViewButtons.filter { it != button }.forEach { it.setBackgroundColor(whiteColor) }
+
+            when (button) {
+                btnUno -> ""
+                btnDos -> ""
+                btnTres -> ""
+                btnCua -> ""
+                else -> {
+
+                }
             }
         }
     }

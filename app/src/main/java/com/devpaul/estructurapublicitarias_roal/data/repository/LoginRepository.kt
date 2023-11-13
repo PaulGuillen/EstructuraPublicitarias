@@ -10,12 +10,12 @@ import com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository.Log
 import com.devpaul.estructurapublicitarias_roal.data.models.response.MainUser
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
 import com.devpaul.estructurapublicitarias_roal.data.routes.ApiConfig
+import com.devpaul.estructurapublicitarias_roal.domain.utils.MESSAGE_TO
 import com.devpaul.estructurapublicitarias_roal.domain.utils.TITLE_ERROR_MS_GET_MAIN_USER
 
 class LoginRepository : LoginRepositoryNetwork {
 
     private var apiConfig: ApiConfig? = null
-    private var messageTimeOut = "Time Out"
 
     init {
         val api = ApiRoutes()
@@ -63,7 +63,7 @@ class LoginRepository : LoginRepositoryNetwork {
                 HttpError(
                     code = 408,
                     title = serviceTitle,
-                    subtitle = messageTimeOut,
+                    subtitle = MESSAGE_TO
                 )
             )
         }
@@ -112,7 +112,7 @@ class LoginRepository : LoginRepositoryNetwork {
                 HttpError(
                     code = 408,
                     title = serviceTitle,
-                    subtitle = messageTimeOut,
+                    subtitle = MESSAGE_TO
                 )
             )
         }
@@ -160,7 +160,7 @@ class LoginRepository : LoginRepositoryNetwork {
                 HttpError(
                     code = 408,
                     title = serviceTitle,
-                    subtitle = messageTimeOut,
+                    subtitle = MESSAGE_TO
                 )
             )
         }
@@ -208,7 +208,7 @@ class LoginRepository : LoginRepositoryNetwork {
                 HttpError(
                     code = 408,
                     title = serviceTitle,
-                    subtitle = messageTimeOut,
+                    subtitle = MESSAGE_TO
                 )
             )
         }

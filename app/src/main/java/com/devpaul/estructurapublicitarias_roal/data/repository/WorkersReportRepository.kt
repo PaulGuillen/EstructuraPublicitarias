@@ -9,6 +9,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.HttpError
 import com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository.WorkersReportRepositoryNetwork
 import com.devpaul.estructurapublicitarias_roal.domain.mappers.WorkerReportMapper
+import com.devpaul.estructurapublicitarias_roal.domain.utils.MESSAGE_TO
 import com.devpaul.estructurapublicitarias_roal.domain.utils.TITLE_ERROR_MS_ALL_WORKERS
 
 class WorkersReportRepository : WorkersReportRepositoryNetwork {
@@ -64,7 +65,7 @@ class WorkersReportRepository : WorkersReportRepositoryNetwork {
                 HttpError(
                     code = 408,
                     title = serviceTitle,
-                    subtitle = TITLE_ERROR_MS_ALL_WORKERS
+                    subtitle = MESSAGE_TO
                 )
             )
         }

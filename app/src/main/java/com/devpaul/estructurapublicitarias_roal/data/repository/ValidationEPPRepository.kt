@@ -10,6 +10,7 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.HttpError
 import com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository.ValidationEPPRepositoryNetwork
 import com.devpaul.estructurapublicitarias_roal.domain.mappers.ValidationEPPMapper
+import com.devpaul.estructurapublicitarias_roal.domain.utils.MESSAGE_TO
 import com.google.gson.Gson
 
 class ValidationEPPRepository : ValidationEPPRepositoryNetwork {
@@ -71,7 +72,7 @@ class ValidationEPPRepository : ValidationEPPRepositoryNetwork {
                 HttpError(
                     code = 408,
                     title = serviceTitle,
-                    subtitle = messageTimeOut,
+                    subtitle = MESSAGE_TO
                 )
             )
         }
