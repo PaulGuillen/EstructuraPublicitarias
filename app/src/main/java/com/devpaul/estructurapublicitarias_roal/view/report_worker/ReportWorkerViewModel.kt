@@ -3,10 +3,11 @@ package com.devpaul.estructurapublicitarias_roal.view.report_worker
 import android.content.Context
 import android.graphics.Color
 import android.view.View
+import androidx.cardview.widget.CardView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.WorkerReportByUser
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidationEPPReportEntity
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersReportRepository
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.reportWorker.WorkerReportResult
@@ -20,15 +21,15 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.PercentFormatter
 import kotlinx.coroutines.launch
-import java.util.ArrayList
 
 class ReportWorkerViewModel(context: Context) : BaseViewModel() {
 
     private val _reportWorkerResult = MutableLiveData<WorkerReportResult>()
 
     val reportWorkerResult: LiveData<WorkerReportResult> = _reportWorkerResult
+
+    val questionReport = MutableLiveData("")
 
     init {
         validateAllWorkers()
@@ -104,28 +105,14 @@ class ReportWorkerViewModel(context: Context) : BaseViewModel() {
 
     }
 
-    fun initPieChart(pieChart: PieChart?) {
-        pieChart?.setUsePercentValues(true)
-        pieChart?.description?.text = ""
-        //hollow pie chart
-        pieChart?.isDrawHoleEnabled = false
-        pieChart?.setTouchEnabled(false)
-        pieChart?.setDrawEntryLabels(false)
-        //adding padding
-        pieChart?.setExtraOffsets(20f, 0f, 20f, 20f)
-        pieChart?.setUsePercentValues(true)
-        pieChart?.isRotationEnabled = false
-        pieChart?.setDrawEntryLabels(false)
-        pieChart?.legend?.orientation = Legend.LegendOrientation.VERTICAL
-        pieChart?.legend?.isWordWrapEnabled = true
-    }
+    fun validateFirstButtonReport(pieChart: PieChart?, data: ValidationEPPReportEntity?, cardViewReport: CardView) {
 
-    fun validateFirstButtonReport(pieChart: PieChart?, data: WorkerReportByUser) {
-
-        pieChart?.visibility = View.VISIBLE
+        //Mostrando valores como porcentajes
         pieChart?.setUsePercentValues(true)
 
-        val pieEntries = data.validationEPP?.dataEntriesEPP?.pieEntries ?: emptyList()
+        cardViewReport.visibility = View.VISIBLE
+
+        val pieEntries = data?.dataEntriesEPP?.pieEntries ?: emptyList()
 
         val colors: List<Int> = pieEntries.map { entry ->
             Color.parseColor(entry.colorEntry)
@@ -142,29 +129,48 @@ class ReportWorkerViewModel(context: Context) : BaseViewModel() {
         )
 
         val dataChart = PieData(dataSet)
-        dataChart.setValueTextSize(15f)
 
         // In Percentage (usando el nuevo formateador redondeado)
         dataChart.setValueFormatter(RoundedPercentageFormatter())
+
+        // Espacio entre las barras
         dataSet.sliceSpace = 10f
         dataSet.colors = colors
-
         pieChart?.data = dataChart
-        dataChart.setValueTextSize(14f)
-        pieChart?.setExtraOffsets(5f, 5f, 5f, 5f)
+        dataChart.setValueTextSize(16f)
+        pieChart?.setExtraOffsets(6f, 6f, 6f, 6f)
         pieChart?.animateY(1400, Easing.EaseInOutQuad)
 
-        // create hole in center
         // Grosor de los colores
-        pieChart?.holeRadius = 50f
-        pieChart?.transparentCircleRadius = 61f
+        pieChart?.holeRadius = 56f
+        pieChart?.transparentCircleRadius = 60f
+        //Habilita la visualización del agujero en el centro del gráfico
         pieChart?.isDrawHoleEnabled = true
+        //Rotacion del PieChar
+        pieChart?.isRotationEnabled = true
         pieChart?.setHoleColor(Color.WHITE)
 
-        // add text in center
+        // Texto en el centro
         pieChart?.setDrawCenterText(true)
-        pieChart?.centerText = data.validationEPP?.additionalData?.titleReport ?: ""
+        pieChart?.centerText = data?.additionalData?.titleReport ?: ""
         pieChart?.setCenterTextSize(14f)
+
+        //Pregunta como titulo, identificador principal
+        questionReport.value = data?.additionalData?.questionReport ?: ""
+
+        //Deshabilita la visualización de etiquetas de entrada en el gráfico
+        pieChart?.setDrawEntryLabels(false)
+
+        // Configurar el tamaño del texto de la leyenda
+        val legend = pieChart?.legend
+        val description = pieChart?.description
+
+        legend?.textSize = 14f
+        legend?.yOffset = -2f
+        legend?.orientation = Legend.LegendOrientation.VERTICAL
+        legend?.isWordWrapEnabled = true
+        description?.text = ""
+
         pieChart?.invalidate()
     }
 

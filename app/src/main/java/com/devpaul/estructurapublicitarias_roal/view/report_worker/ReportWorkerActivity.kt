@@ -135,7 +135,6 @@ class ReportWorkerActivity : BaseActivity() {
 
         binding.horizontalScrollViewReport.visibility = View.VISIBLE
 
-        viewModel.initPieChart(pieChart)
         isPressed = true
 
         val grayColor = ContextCompat.getColor(this, R.color.mid_gray_card)
@@ -156,7 +155,7 @@ class ReportWorkerActivity : BaseActivity() {
             cardViewButtons.filter { it != button }.forEach { it.setBackgroundColor(whiteColor) }
 
             when (button) {
-                btnUno -> viewModel.validateFirstButtonReport(pieChart, data)
+                btnUno -> viewModel.validateFirstButtonReport(pieChart, data.validationEPP, binding.cardViewPieChart)
                 btnDos -> ""
                 btnTres -> ""
                 btnCua -> ""
