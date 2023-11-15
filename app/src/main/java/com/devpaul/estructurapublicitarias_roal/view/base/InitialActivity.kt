@@ -1,6 +1,8 @@
 package com.devpaul.estructurapublicitarias_roal.view.base
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -22,9 +24,15 @@ abstract class InitialActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        blockOrientationApp()
         initTimer()
         startHandler()
         TimberFactory.setupOnDebug()
+    }
+
+    @SuppressLint("SourceLockedOrientationActivity")
+    private fun blockOrientationApp(){
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 
     private fun initTimer() {

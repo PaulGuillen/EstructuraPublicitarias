@@ -10,6 +10,7 @@ import com.devpaul.estructurapublicitarias_roal.data.models.response.PrincipalLi
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ResponseHttp
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ValidateImageByPhotoResponse
 import com.devpaul.estructurapublicitarias_roal.data.models.response.ValidationEPPResponse
+import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkerReportByUserResponse
 import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -17,6 +18,7 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiConfig {
 
@@ -67,4 +69,9 @@ interface ApiConfig {
     @GET("https://run.mocky.io/v3/15ea1e83-b4aa-46fd-9a76-67e8ae4c6c80")
     fun allWorkers(
     ): Call<List<PrincipalListWorkerResponse>>
+
+    @GET("https://run.mocky.io/v3/522900b8-50c1-4ff1-8442-48a4f2652feb")
+    fun reportWorker(
+        @Query("document") document: String? = null
+    ): Call<WorkerReportByUserResponse>
 }

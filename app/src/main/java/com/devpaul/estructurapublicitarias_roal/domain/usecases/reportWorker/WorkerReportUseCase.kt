@@ -1,6 +1,8 @@
 package com.devpaul.estructurapublicitarias_roal.domain.usecases.reportWorker
 
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.PrincipalListWorker
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.WorkerReportByUser
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.interfaces.repository.WorkersReportRepositoryNetwork
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +24,23 @@ class WorkerReportUseCase(private val workersReportRepositoryNetwork: WorkersRep
                 }
             }
             return@withContext allWorkers
+        }
+
+    suspend fun reportByWorker(document: String): CustomResult<WorkerReportByUser> =
+        withContext(Dispatchers.IO) {
+
+            val reportWorker = workersReportRepositoryNetwork.reportByWorker(document)
+
+            when (reportWorker) {
+                is CustomResult.OnSuccess -> {
+                    reportWorker.data
+                }
+
+                else -> {
+                    WorkerReportByUser()
+                }
+            }
+            return@withContext reportWorker
         }
 
 }

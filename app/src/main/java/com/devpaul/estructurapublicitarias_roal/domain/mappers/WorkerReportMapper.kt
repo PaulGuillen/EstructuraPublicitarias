@@ -1,7 +1,13 @@
 package com.devpaul.estructurapublicitarias_roal.domain.mappers
 
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.AdditionalDataEntity
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.DataEntriesEPPEntity
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.PieEntryEntity
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.PrincipalListWorker
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidationEPPReportEntity
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.WorkerReportByUser
 import com.devpaul.estructurapublicitarias_roal.data.models.response.PrincipalListWorkerResponse
+import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkerReportByUserResponse
 import java.util.ArrayList
 
 class WorkerReportMapper {
@@ -21,4 +27,35 @@ class WorkerReportMapper {
             document = principalListWorker.document
         )
     }
+
+    fun mapReportData(workerReportByUserResponse: WorkerReportByUserResponse): WorkerReportByUser {
+        val dataEntries = workerReportByUserResponse.validationEPP.dataEntriesEPP
+        val additionalData = workerReportByUserResponse.validationEPP.additionalData
+
+        val pieEntriesEntity = dataEntries.pieEntries.map { pieEntry ->
+            PieEntryEntity(
+                labelEntry = pieEntry.labelEntry,
+                valueEntry = pieEntry.valueEntry,
+                colorEntry = pieEntry.colorEntry
+            )
+        }
+
+        val dataEntriesEntity = DataEntriesEPPEntity(
+            pieEntries = pieEntriesEntity,
+            totalValidation = dataEntries.totalValidation
+        )
+
+        val additionalDataEntity = AdditionalDataEntity(
+            titleReport = additionalData.titleReport,
+            questionReport = additionalData.questionReport
+        )
+
+        val validationEPPReportEntity = ValidationEPPReportEntity(
+            dataEntriesEPP = dataEntriesEntity,
+            additionalData = additionalDataEntity
+        )
+
+        return WorkerReportByUser(validationEPPReportEntity)
+    }
+
 }
