@@ -3,6 +3,7 @@ package com.devpaul.estructurapublicitarias_roal.view.report_worker
 import android.content.Context
 import android.graphics.Color
 import android.view.View
+import android.widget.LinearLayout
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -105,12 +106,12 @@ class ReportWorkerViewModel(context: Context) : BaseViewModel() {
 
     }
 
-    fun validateFirstButtonReport(pieChart: PieChart?, data: ValidationEPPReportEntity?, cardViewReport: CardView) {
+    fun validateFirstButtonReport(pieChart: PieChart?, data: ValidationEPPReportEntity?, linearDataReport: LinearLayout) {
 
         //Mostrando valores como porcentajes
         pieChart?.setUsePercentValues(true)
 
-        cardViewReport.visibility = View.VISIBLE
+        linearDataReport.visibility = View.VISIBLE
 
         val pieEntries = data?.dataEntriesEPP?.pieEntries ?: emptyList()
 

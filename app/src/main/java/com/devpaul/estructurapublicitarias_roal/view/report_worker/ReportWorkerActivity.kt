@@ -134,6 +134,7 @@ class ReportWorkerActivity : BaseActivity() {
     private fun optionsReportUI(data: WorkerReportByUser) {
 
         binding.horizontalScrollViewReport.visibility = View.VISIBLE
+        binding.linearDataReport.visibility = View.GONE
 
         isPressed = true
 
@@ -155,7 +156,7 @@ class ReportWorkerActivity : BaseActivity() {
             cardViewButtons.filter { it != button }.forEach { it.setBackgroundColor(whiteColor) }
 
             when (button) {
-                btnUno -> viewModel.validateFirstButtonReport(pieChart, data.validationEPP, binding.cardViewPieChart)
+                btnUno -> viewModel.validateFirstButtonReport(pieChart, data.validationEPP, binding.linearDataReport)
                 btnDos -> ""
                 btnTres -> ""
                 btnCua -> ""
