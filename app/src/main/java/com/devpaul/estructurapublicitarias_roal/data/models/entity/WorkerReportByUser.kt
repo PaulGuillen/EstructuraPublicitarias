@@ -1,27 +1,33 @@
 package com.devpaul.estructurapublicitarias_roal.data.models.entity
 
-
 data class WorkerReportByUser(
-    var validationEPP: ValidationEPPReportEntity? = null
+    val validationEPP: ValidationEPPReportEntity? = null
 )
 
-class ValidationEPPReportEntity(
-    val dataEntriesEPP: DataEntriesEPPEntity? = null,
-    val additionalData: AdditionalDataEntity? = null
+data class ValidationEPPReportEntity(
+    val dataEntriesEPP: DataEntriesEPPEntity,
+    val additionalData: List<AdditionalDataEntity>
 )
 
 data class DataEntriesEPPEntity(
-    val pieEntries: List<PieEntryEntity>? = null,
-    val totalValidation: String? = null
+    val pieEntries: List<PieEntryEntity>,
+    val pieDescription: PieDescriptionEntity
 )
 
 data class PieEntryEntity(
-    val labelEntry: String? = null,
-    val valueEntry: String? = null,
-    val colorEntry: String? = null
+    val labelEntry: String,
+    val valueEntry: String,
+    val colorEntry: String
+)
+
+data class PieDescriptionEntity(
+    val centerText: String,
+    val topText: String,
+    val bottomText: String,
+    val totalValidations: String
 )
 
 data class AdditionalDataEntity(
-    val titleReport: String? = null,
-    val questionReport: String? = null
+    val key: String,
+    val value: String
 )

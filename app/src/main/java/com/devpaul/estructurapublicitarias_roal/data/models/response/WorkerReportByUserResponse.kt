@@ -11,14 +11,25 @@ data class ValidationEPP(
     @SerializedName("dataEntriesEPP")
     val dataEntriesEPP: DataEntriesEPP,
     @SerializedName("additionalData")
-    val additionalData: AdditionalData
+    val additionalData: List<AdditionalData>
 )
 
 data class DataEntriesEPP(
     @SerializedName("pieEntries")
     val pieEntries: List<PieEntry>,
-    @SerializedName("totalValidation")
-    val totalValidation: String
+    @SerializedName("pieDescription")
+    val pieDescription: PieDescription
+)
+
+data class PieDescription(
+    @SerializedName("centerText")
+    val centerText: String,
+    @SerializedName("topText")
+    val topText: String,
+    @SerializedName("bottomText")
+    val bottomText: String,
+    @SerializedName("totalValidations")
+    val totalValidations: String
 )
 
 data class PieEntry(
@@ -31,8 +42,6 @@ data class PieEntry(
 )
 
 data class AdditionalData(
-    @SerializedName("titleReport")
-    val titleReport: String,
-    @SerializedName("questionReport")
-    val questionReport: String
+    @SerializedName("key") val key: String,
+    @SerializedName("value") val value: String
 )

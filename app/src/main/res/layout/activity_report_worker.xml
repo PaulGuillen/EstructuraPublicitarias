@@ -20,7 +20,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintGeneral"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/color_white_background">
 
             <include
                 android:id="@+id/include"
@@ -192,6 +193,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/horizontalScrollViewReport">
@@ -227,7 +230,7 @@
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pieChart"
                             android:layout_width="match_parent"
-                            android:layout_height="320dp"
+                            android:layout_height="380dp"
                             android:layout_margin="10dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -239,9 +242,10 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:elevation="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:elevation="14dp"
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
@@ -254,7 +258,9 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/mulish_bold"
                             android:padding="10dp"
+                            android:text="@={viewModel.titleDescriptionText}"
                             android:textAlignment="center"
+                            android:textColor="@color/black"
                             android:textSize="16sp"
                             tools:text="Validación de Equipo de Protección" />
 
@@ -268,7 +274,13 @@
                         <TextView
                             android:id="@+id/descriptionList"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/mulish_bold"
+                            android:padding="10dp"
+                            android:text="@={viewModel.descriptionList}"
+                            android:textAlignment="center"
+                            android:textSize="16sp"
+                            tools:text="Total de validaciones : 22" />
 
                     </LinearLayout>
 

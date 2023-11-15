@@ -32,6 +32,10 @@ class ReportWorkerViewModel(context: Context) : BaseViewModel() {
 
     val questionReport = MutableLiveData("")
 
+    val titleDescriptionText = MutableLiveData("")
+
+    val descriptionList = MutableLiveData("")
+
     init {
         validateAllWorkers()
     }
@@ -113,7 +117,16 @@ class ReportWorkerViewModel(context: Context) : BaseViewModel() {
 
         linearDataReport.visibility = View.VISIBLE
 
+        val dataEntries = data?.dataEntriesEPP?.pieDescription
         val pieEntries = data?.dataEntriesEPP?.pieEntries ?: emptyList()
+        val additionalDataList = data?.additionalData ?: emptyList()
+
+        val descriptionTexts = additionalDataList.mapIndexed { index, additionalData ->
+            "${additionalData.key}: ${additionalData.value}" + if (index < additionalDataList.size - 1) "\n\n" else ""
+        }
+
+        titleDescriptionText.value = dataEntries?.bottomText
+        descriptionList.value = descriptionTexts.joinToString(separator = "")
 
         val colors: List<Int> = pieEntries.map { entry ->
             Color.parseColor(entry.colorEntry)
@@ -122,7 +135,7 @@ class ReportWorkerViewModel(context: Context) : BaseViewModel() {
         val dataSet = PieDataSet(
             pieEntries.map { entry ->
                 PieEntry(
-                    entry.valueEntry?.toFloat() ?: 0.0.toFloat(),
+                    entry.valueEntry.toFloat(),
                     entry.labelEntry
                 )
             },
@@ -153,11 +166,11 @@ class ReportWorkerViewModel(context: Context) : BaseViewModel() {
 
         // Texto en el centro
         pieChart?.setDrawCenterText(true)
-        pieChart?.centerText = data?.additionalData?.titleReport ?: ""
+        pieChart?.centerText = dataEntries?.centerText ?: ""
         pieChart?.setCenterTextSize(14f)
 
         //Pregunta como titulo, identificador principal
-        questionReport.value = data?.additionalData?.questionReport ?: ""
+        questionReport.value = dataEntries?.topText ?: ""
 
         //Deshabilita la visualización de etiquetas de entrada en el gráfico
         pieChart?.setDrawEntryLabels(false)
@@ -167,7 +180,6 @@ class ReportWorkerViewModel(context: Context) : BaseViewModel() {
         val description = pieChart?.description
 
         legend?.textSize = 14f
-        legend?.yOffset = -2f
         legend?.orientation = Legend.LegendOrientation.VERTICAL
         legend?.isWordWrapEnabled = true
         description?.text = ""

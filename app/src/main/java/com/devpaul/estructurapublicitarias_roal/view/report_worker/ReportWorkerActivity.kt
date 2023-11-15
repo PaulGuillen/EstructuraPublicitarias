@@ -138,7 +138,7 @@ class ReportWorkerActivity : BaseActivity() {
 
         isPressed = true
 
-        val grayColor = ContextCompat.getColor(this, R.color.mid_gray_card)
+        val grayColor = ContextCompat.getColor(this, R.color.orange_light)
         val whiteColor = ContextCompat.getColor(this, R.color.white)
 
         val btnUno = binding.btnUno

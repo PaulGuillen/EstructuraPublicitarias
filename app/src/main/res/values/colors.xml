@@ -22,6 +22,7 @@
     <item name="red_light" type="color">#ec446c</item>
     <color name="unchecked_color">#FF0000</color>
     <color name="color_gray_items">#F4EEEE</color>
+    <color name="color_white_background">#FAF6F0</color>
 
     <color name="colorGrey">#dddddd</color>
 
