@@ -103,6 +103,9 @@ dependencies {
     // PlayCore appUpdate Google Play
     implementation("com.google.android.play:core:1.10.3")
 
+    // Android Chart PhilJay
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
     val lifeCycleVersion = "2.2.0"
     dependencies {
         add("implementation", "androidx.lifecycle:lifecycle-extensions:$lifeCycleVersion")
