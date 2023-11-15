@@ -11,6 +11,7 @@ import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersReportRep
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.reportWorker.WorkerReportResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.reportWorker.WorkerReportUseCase
+import com.devpaul.estructurapublicitarias_roal.domain.utils.RoundedPercentageFormatter
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseViewModel
 import com.github.mikephil.charting.animation.Easing
@@ -143,8 +144,8 @@ class ReportWorkerViewModel(context: Context) : BaseViewModel() {
         val dataChart = PieData(dataSet)
         dataChart.setValueTextSize(15f)
 
-        // In Percentage
-        dataChart.setValueFormatter(PercentFormatter(pieChart))
+        // In Percentage (usando el nuevo formateador redondeado)
+        dataChart.setValueFormatter(RoundedPercentageFormatter())
         dataSet.sliceSpace = 10f
         dataSet.colors = colors
 

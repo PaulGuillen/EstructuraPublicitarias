@@ -25,8 +25,10 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.devpaul.estructurapublicitarias_roal.R
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.textfield.TextInputEditText
 import java.io.File
+import kotlin.math.roundToInt
 
 fun toolbarStyle(context: Context, toolbar: Toolbar, title: String, activeToolbar: Boolean? = null, targetActivity: Class<*>? = null) {
     targetActivity?.let { configureToolbar(context as AppCompatActivity, toolbar, title, activeToolbar, it) }
@@ -342,5 +344,11 @@ fun <T : CardView?> applyButtonSelectionLogic(
             selectedButton = button
             onClick(button)
         }
+    }
+}
+
+class RoundedPercentageFormatter : ValueFormatter() {
+    override fun getFormattedValue(value: Float): String {
+        return "${value.roundToInt()}%"
     }
 }
