@@ -49,12 +49,7 @@ interface ApiConfig {
         @Path("dni") dni: String
     ): Call<ResponseHttp>
 
-    @POST("getDataFromPhoto")
-    fun consultByPhoto(
-        @Body workerUser: WorkersResponse
-    ): Call<WorkersResponse>
-
-    @POST("getDataFromPhoto")
+    @POST("get_data_from_photo")
     fun validateImageByPhoto(
         @Body validateImageByPhotoRequest: ValidateImageByPhotoRequest
     ): Call<ValidateImageByPhotoResponse>
