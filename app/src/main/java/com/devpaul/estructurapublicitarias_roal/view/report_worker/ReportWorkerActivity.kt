@@ -157,7 +157,7 @@ class ReportWorkerActivity : BaseActivity() {
 
             when (button) {
                 btnUno -> viewModel.validateFirstButtonReport(pieChart, data.validationEPP, binding.linearDataReport)
-                btnDos -> ""
+                btnDos -> viewModel.validateFirstButtonReport(pieChart, data.validateEquipment, binding.linearDataReport)
                 btnTres -> ""
                 btnCua -> ""
                 else -> {

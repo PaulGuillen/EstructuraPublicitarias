@@ -1,18 +1,14 @@
 package com.devpaul.estructurapublicitarias_roal.domain.mappers
 
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.AdditionalDataEntity
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.AllEquipment
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.DataEntriesEPPEntity
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.DataEntriesEntity
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.PieDescriptionEntity
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.PieEntryEntity
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.PrincipalListWorker
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidationEPPReportEntity
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidationReportEntity
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.WorkerReportByUser
-import com.devpaul.estructurapublicitarias_roal.data.models.response.AdditionalData
-import com.devpaul.estructurapublicitarias_roal.data.models.response.DataEntriesEPP
-import com.devpaul.estructurapublicitarias_roal.data.models.response.PieDescription
-import com.devpaul.estructurapublicitarias_roal.data.models.response.PieEntry
 import com.devpaul.estructurapublicitarias_roal.data.models.response.PrincipalListWorkerResponse
+import com.devpaul.estructurapublicitarias_roal.data.models.response.ValidationData
 import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkerReportByUserResponse
 import java.util.ArrayList
 
@@ -35,44 +31,49 @@ class WorkerReportMapper {
     }
 
     fun mapReportData(workerReportByUserResponse: WorkerReportByUserResponse): WorkerReportByUser {
-        val pieEntries = workerReportByUserResponse.validationEPP.dataEntriesEPP
-        val additionalData = workerReportByUserResponse.validationEPP.additionalData
-        val pieDescription = workerReportByUserResponse.validationEPP.dataEntriesEPP.pieDescription
+        val validationReportEntity = mapValidationData(workerReportByUserResponse.validationData)
+        val equipmentReportEntity = mapValidationData(workerReportByUserResponse.validateEquipment)
 
-        val pieEntriesEntity = pieEntries.pieEntries.map { pieEntry ->
-            PieEntryEntity(
-                labelEntry = pieEntry.labelEntry,
-                valueEntry = pieEntry.valueEntry,
-                colorEntry = pieEntry.colorEntry
+        return WorkerReportByUser(
+            validationEPP = validationReportEntity,
+            validateEquipment = equipmentReportEntity
+        )
+    }
+
+    private fun mapValidationData(validationData: ValidationData?): ValidationReportEntity? {
+        return validationData?.dataEntries?.let { dataEntries ->
+            val pieEntriesEntity = dataEntries.pieEntries.map { pieEntry ->
+                PieEntryEntity(
+                    labelEntry = pieEntry.labelEntry,
+                    valueEntry = pieEntry.valueEntry,
+                    colorEntry = pieEntry.colorEntry
+                )
+            }
+
+            val pieDescriptionEntity = PieDescriptionEntity(
+                centerText = dataEntries.pieDescription.centerText,
+                topText = dataEntries.pieDescription.topText,
+                bottomText = dataEntries.pieDescription.bottomText,
+                totalValidations = dataEntries.pieDescription.totalValidations
+            )
+
+            val dataEntriesEntity = DataEntriesEntity(
+                pieEntries = pieEntriesEntity,
+                pieDescription = pieDescriptionEntity
+            )
+
+            val additionalDataEntity = validationData.additionalData.map { item ->
+                AdditionalDataEntity(
+                    key = item.key,
+                    value = item.value
+                )
+            }
+
+            ValidationReportEntity(
+                dataEntries = dataEntriesEntity,
+                additionalData = additionalDataEntity
             )
         }
-
-        val pieDescriptionEntity = PieDescriptionEntity(
-            centerText = pieDescription.centerText,
-            topText = pieDescription.topText,
-            bottomText = pieDescription.bottomText,
-            totalValidations = pieDescription.totalValidations
-        )
-
-
-        val dataEntriesEntity = DataEntriesEPPEntity(
-            pieEntries = pieEntriesEntity,
-            pieDescription = pieDescriptionEntity
-        )
-
-        val additionalDataEntity = additionalData.map { item ->
-            AdditionalDataEntity(
-                key = item.key,
-                value = item.value
-            )
-        }
-
-        val validationEPPReportEntity = ValidationEPPReportEntity(
-            dataEntriesEPP = dataEntriesEntity,
-            additionalData = additionalDataEntity
-        )
-
-        return WorkerReportByUser(validationEPPReportEntity)
     }
 
 }

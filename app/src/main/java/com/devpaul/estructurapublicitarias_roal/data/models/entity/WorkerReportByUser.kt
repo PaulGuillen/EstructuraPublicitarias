@@ -1,16 +1,17 @@
 package com.devpaul.estructurapublicitarias_roal.data.models.entity
 
 data class WorkerReportByUser(
-    val validationEPP: ValidationEPPReportEntity? = null
+    val validationEPP: ValidationReportEntity? = null,
+    val validateEquipment: ValidationReportEntity? = null
 )
 
-data class ValidationEPPReportEntity(
-    val dataEntriesEPP: DataEntriesEPPEntity,
-    val additionalData: List<AdditionalDataEntity>
+data class ValidationReportEntity(
+    val dataEntries: DataEntriesEntity,
+    val additionalData: List<AdditionalDataEntity>?
 )
 
-data class DataEntriesEPPEntity(
-    val pieEntries: List<PieEntryEntity>,
+data class DataEntriesEntity(
+    val pieEntries: List<PieEntryEntity>?,
     val pieDescription: PieDescriptionEntity
 )
 
@@ -21,13 +22,13 @@ data class PieEntryEntity(
 )
 
 data class PieDescriptionEntity(
-    val centerText: String,
-    val topText: String,
-    val bottomText: String,
-    val totalValidations: String
+    val centerText: String? = null,
+    val topText: String? = null,
+    val bottomText: String? = null,
+    val totalValidations: String? = null
 )
 
 data class AdditionalDataEntity(
-    val key: String,
-    val value: String
+    val key: String? = null,
+    val value: String? = null
 )

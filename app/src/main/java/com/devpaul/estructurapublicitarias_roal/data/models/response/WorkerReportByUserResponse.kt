@@ -4,17 +4,19 @@ import com.google.gson.annotations.SerializedName
 
 data class WorkerReportByUserResponse(
     @SerializedName("validationEPP")
-    val validationEPP: ValidationEPP
+    val validationData: ValidationData? = null,
+    @SerializedName("validateEquipment")
+    val validateEquipment: ValidationData? = null
 )
 
-data class ValidationEPP(
-    @SerializedName("dataEntriesEPP")
-    val dataEntriesEPP: DataEntriesEPP,
+data class ValidationData(
+    @SerializedName("dataEntries")
+    val dataEntries: DataEntries?,
     @SerializedName("additionalData")
     val additionalData: List<AdditionalData>
 )
 
-data class DataEntriesEPP(
+data class DataEntries(
     @SerializedName("pieEntries")
     val pieEntries: List<PieEntry>,
     @SerializedName("pieDescription")
@@ -42,6 +44,8 @@ data class PieEntry(
 )
 
 data class AdditionalData(
-    @SerializedName("key") val key: String,
-    @SerializedName("value") val value: String
+    @SerializedName("key")
+    val key: String,
+    @SerializedName("value")
+    val value: String
 )

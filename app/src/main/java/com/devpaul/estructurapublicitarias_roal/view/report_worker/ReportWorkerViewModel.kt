@@ -4,11 +4,10 @@ import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.widget.LinearLayout
-import androidx.cardview.widget.CardView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidationEPPReportEntity
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidationReportEntity
 import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersReportRepository
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.reportWorker.WorkerReportResult
@@ -110,15 +109,15 @@ class ReportWorkerViewModel(context: Context) : BaseViewModel() {
 
     }
 
-    fun validateFirstButtonReport(pieChart: PieChart?, data: ValidationEPPReportEntity?, linearDataReport: LinearLayout) {
+    fun validateFirstButtonReport(pieChart: PieChart?, data: ValidationReportEntity?, linearDataReport: LinearLayout) {
 
         //Mostrando valores como porcentajes
         pieChart?.setUsePercentValues(true)
 
         linearDataReport.visibility = View.VISIBLE
 
-        val dataEntries = data?.dataEntriesEPP?.pieDescription
-        val pieEntries = data?.dataEntriesEPP?.pieEntries ?: emptyList()
+        val dataEntries = data?.dataEntries?.pieDescription
+        val pieEntries = data?.dataEntries?.pieEntries ?: emptyList()
         val additionalDataList = data?.additionalData ?: emptyList()
 
         val descriptionTexts = additionalDataList.mapIndexed { index, additionalData ->
