@@ -69,7 +69,7 @@ class EmergencyViewModel(context: Context) : ViewModel() {
                 is CustomResult.OnSuccess -> {
                     val data = validateImage.data
                     val dni = data.dni
-                    getWorkerByDNI(dni)
+                    getWorkerByDNIResultPhoto(dni.toString())
                 }
 
                 is CustomResult.OnError -> {
@@ -83,13 +83,11 @@ class EmergencyViewModel(context: Context) : ViewModel() {
         }
     }
 
-    private suspend fun getWorkerByDNI(dni: String?) {
-
-        _showLoadingDialog.value = true
+    private suspend fun getWorkerByDNIResultPhoto(dni: String) {
         try {
             val workerRepository = WorkersRepository()
             val emergencyUseCase = EmergencyUseCase(workerRepository)
-            when (val getWorkerByPhoto = dni?.let { emergencyUseCase.getWorkerByPhoto(it) }) {
+            when (val getWorkerByPhoto =  emergencyUseCase.getWorkerByPhoto(dni) ) {
                 is CustomResult.OnSuccess -> {
                     val data = getWorkerByPhoto.data
                     showData(data)
@@ -99,9 +97,28 @@ class EmergencyViewModel(context: Context) : ViewModel() {
                 is CustomResult.OnError -> {
                     _emergencyResult.value = EmergencyResult.Error
                 }
+            }
+        } catch (e: Exception) {
+            _emergencyResult.value = EmergencyResult.ValidationError
+        }
+    }
 
-                else -> {
-                    _emergencyResult.value = EmergencyResult.ValidationError
+    private suspend fun getWorkerByDNI(dni: String) {
+
+        _showLoadingDialog.value = true
+
+        try {
+            val workerRepository = WorkersRepository()
+            val emergencyUseCase = EmergencyUseCase(workerRepository)
+            when (val getWorkerByPhoto =  emergencyUseCase.getWorkerByPhoto(dni) ) {
+                is CustomResult.OnSuccess -> {
+                    val data = getWorkerByPhoto.data
+                    showData(data)
+                    _emergencyResult.value = EmergencyResult.SuccessWorker(data)
+                }
+
+                is CustomResult.OnError -> {
+                    _emergencyResult.value = EmergencyResult.Error
                 }
             }
         } catch (e: Exception) {
@@ -109,7 +126,6 @@ class EmergencyViewModel(context: Context) : ViewModel() {
         } finally {
             _showLoadingDialog.value = false
         }
-
     }
 
     private fun showData(worker: GetWorker?) {

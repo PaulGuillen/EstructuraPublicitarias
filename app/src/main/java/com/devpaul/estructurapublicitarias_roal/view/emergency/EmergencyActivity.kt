@@ -180,12 +180,14 @@ class EmergencyActivity : BaseActivity() {
                 binding.searchBox.visibility = View.VISIBLE
                 binding.imagePhoto.visibility = View.GONE
                 binding.imageQR.visibility = View.GONE
+                binding.searchBox.text.clear()
             }
 
             BY_PHOTO -> {
                 binding.searchBox.visibility = View.GONE
                 binding.imagePhoto.visibility = View.VISIBLE
                 binding.imageQR.visibility = View.GONE
+                clearForm()
             }
 
             BY_QR -> {

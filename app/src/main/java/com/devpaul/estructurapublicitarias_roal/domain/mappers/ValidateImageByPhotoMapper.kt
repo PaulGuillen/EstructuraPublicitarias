@@ -7,7 +7,8 @@ class ValidateImageByPhotoMapper {
     fun map(validateImageByPhotoResponse: ValidateImageByPhotoResponse): ValidateImageByPhoto {
 
         val validateImageByPhoto = ValidateImageByPhoto()
-        validateImageByPhotoResponse.dni = validateImageByPhoto.dni
+        validateImageByPhoto.code = validateImageByPhotoResponse.code
+        validateImageByPhoto.dni = validateImageByPhotoResponse.dni
 
         return validateImageByPhoto
     }

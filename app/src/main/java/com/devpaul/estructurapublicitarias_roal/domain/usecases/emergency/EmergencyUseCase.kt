@@ -34,7 +34,7 @@ class EmergencyUseCase(private val workersRepositoryNetwork: WorkersRepositoryNe
                 }
 
                 else -> {
-                    ValidateImageByPhoto()
+                    GetWorker()
                 }
             }
             return@withContext getWorkerByPhoto
