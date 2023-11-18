@@ -401,16 +401,6 @@ class UpdateWorkerActivity : BaseActivity() {
             .createIntent { intent -> startImageForResult.launch(intent) }
     }
 
-    private fun getBase64ForUriAndPossiblyCrash(uri: Uri): String {
-        return try {
-            val bytes = contentResolver.openInputStream(uri)?.readBytes()
-            Base64.encodeToString(bytes, Base64.DEFAULT)
-        } catch (error: IOException) {
-            error.printStackTrace()
-            "Ha ocurrido un error"
-        }
-    }
-
     override fun onBackPressed() {
         super.onBackPressed()
         startNewActivityWithBackAnimation(this@UpdateWorkerActivity, ManagementWorkerActivity::class.java)

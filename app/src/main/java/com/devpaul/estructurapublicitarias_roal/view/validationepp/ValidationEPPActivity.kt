@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.ActivityInfo
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Bundle
-import android.util.Base64
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,7 +25,6 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.io.File
-import java.io.IOException
 
 @SuppressLint("SourceLockedOrientationActivity")
 class ValidationEPPActivity : BaseActivity() {
@@ -195,16 +192,6 @@ class ValidationEPPActivity : BaseActivity() {
 
     private fun selectImage() {
         ImagePicker.with(this).crop().compress(1024).maxResultSize(1080, 1080).createIntent { intent -> startImageForResult.launch(intent) }
-    }
-
-    private fun getBase64ForUriAndPossiblyCrash(uri: Uri): String {
-        return try {
-            val bytes = contentResolver.openInputStream(uri)?.readBytes()
-            Base64.encodeToString(bytes, Base64.DEFAULT)
-        } catch (error: IOException) {
-            error.printStackTrace() // This exception always occurs
-            "Ha ocurrido un error"
-        }
     }
 
     override fun onBackPressed() {

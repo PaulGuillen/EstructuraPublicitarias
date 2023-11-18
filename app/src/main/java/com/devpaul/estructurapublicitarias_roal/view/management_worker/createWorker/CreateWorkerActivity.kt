@@ -738,18 +738,6 @@ class CreateWorkerActivity : BaseActivity() {
             .createIntent { intent -> startImageForResult.launch(intent) }
     }
 
-    private fun getBase64ForUriAndPossiblyCrash(uri: Uri): String {
-        return try {
-            contentResolver.openInputStream(uri)?.use { inputStream ->
-                val bytes = inputStream.readBytes()
-                Base64.encodeToString(bytes, Base64.DEFAULT)
-            } ?: "Error al abrir el archivo"
-        } catch (error: IOException) {
-            error.printStackTrace()
-            "Ha ocurrido un error"
-        }
-    }
-
     override fun onBackPressed() {
         super.onBackPressed()
         startNewActivityWithBackAnimation(this@CreateWorkerActivity, ManagementWorkerActivity::class.java)

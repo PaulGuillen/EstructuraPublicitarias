@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
-import android.util.Base64
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -16,46 +15,24 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
-import com.devpaul.estructurapublicitarias_roal.data.models.response.WorkersResponse
-import com.devpaul.estructurapublicitarias_roal.providers.WorkersProvider
 import com.github.dhaval2404.imagepicker.ImagePicker
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import com.devpaul.estructurapublicitarias_roal.domain.utils.toolbarStyle
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.BY_DNI
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.BY_PHOTO
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.BY_QR
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.SearchMode
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.Worker
-import com.devpaul.estructurapublicitarias_roal.data.repository.WorkersRepository
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityEmergencyBinding
-import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
-import com.devpaul.estructurapublicitarias_roal.domain.usecases.WorkerUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.emergency.EmergencyResult
-import com.devpaul.estructurapublicitarias_roal.domain.usecases.forgotPassword.ForgotPasswordResult
 import com.devpaul.estructurapublicitarias_roal.domain.utils.MESSAGE_DATA_NOT_VALID
 import com.devpaul.estructurapublicitarias_roal.domain.utils.SEARCH_TITLE_DNI
-import com.devpaul.estructurapublicitarias_roal.domain.utils.SingletonError
 import com.devpaul.estructurapublicitarias_roal.domain.utils.ViewModelFactory
 import com.devpaul.estructurapublicitarias_roal.domain.utils.applyCustomTextStyleToTextView
-import com.devpaul.estructurapublicitarias_roal.domain.utils.deleteCache
-import com.devpaul.estructurapublicitarias_roal.domain.utils.showCustomDialogErrorSingleton
-import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithAnimation
 import com.devpaul.estructurapublicitarias_roal.domain.utils.startNewActivityWithBackAnimation
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
-import com.devpaul.estructurapublicitarias_roal.view.forgot_password.forgotPassword.ForgotPasswordViewModel
-import com.devpaul.estructurapublicitarias_roal.view.forgot_password.newPassword.NewPasswordActivity
 import com.google.zxing.integration.android.IntentIntegrator
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.io.File
-import java.io.IOException
 
 class EmergencyActivity : BaseActivity() {
 
@@ -262,16 +239,6 @@ class EmergencyActivity : BaseActivity() {
             .compress(1024)
             .maxResultSize(1080, 1080)
             .createIntent { intent -> startImageForResult.launch(intent) }
-    }
-
-    private fun getBase64ForUriAndPossiblyCrash(uri: Uri): String {
-        return try {
-            val bytes = contentResolver.openInputStream(uri)?.readBytes()
-            Base64.encodeToString(bytes, Base64.DEFAULT)
-        } catch (error: IOException) {
-            error.printStackTrace()
-            getString(R.string.error_base64_uri)
-        }
     }
 
     override fun onBackPressed() {

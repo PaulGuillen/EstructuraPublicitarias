@@ -2,12 +2,15 @@ package com.devpaul.estructurapublicitarias_roal.view.base
 
 import android.app.Dialog
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.domain.utils.ChargeDialog
+import java.io.IOException
 
 abstract class BaseActivity : InitialActivity() {
 
@@ -47,5 +50,13 @@ abstract class BaseActivity : InitialActivity() {
     fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
-
+    fun getBase64ForUriAndPossiblyCrash(uri: Uri): String {
+        return try {
+            val bytes = contentResolver.openInputStream(uri)?.readBytes()
+            Base64.encodeToString(bytes, Base64.DEFAULT)
+        } catch (error: IOException) {
+            error.printStackTrace()
+            getString(R.string.error_base64_uri)
+        }
+    }
 }
