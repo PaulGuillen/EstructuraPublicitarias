@@ -32,11 +32,13 @@ class WorkerReportMapper {
 
     fun mapReportData(workerReportByUserResponse: WorkerReportByUserResponse): WorkerReportByUser {
         val validationReportEntity = mapValidationData(workerReportByUserResponse.validationData)
-        val equipmentReportEntity = mapValidationData(workerReportByUserResponse.validateEquipment)
+        val equipmentPresentReportEntity = mapValidationData(workerReportByUserResponse.validateEquipmentPresent)
+        val equipmentMissingReportEntity = mapValidationData(workerReportByUserResponse.validateEquipmentMissing)
 
         return WorkerReportByUser(
             validationEPP = validationReportEntity,
-            validateEquipment = equipmentReportEntity
+            validateEquipmentPresent = equipmentPresentReportEntity,
+            validateEquipmentMissing = equipmentMissingReportEntity
         )
     }
 

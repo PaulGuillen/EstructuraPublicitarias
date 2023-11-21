@@ -2,7 +2,8 @@ package com.devpaul.estructurapublicitarias_roal.data.models.entity
 
 data class WorkerReportByUser(
     val validationEPP: ValidationReportEntity? = null,
-    val validateEquipment: ValidationReportEntity? = null
+    val validateEquipmentPresent: ValidationReportEntity? = null,
+    val validateEquipmentMissing: ValidationReportEntity? = null
 )
 
 data class ValidationReportEntity(

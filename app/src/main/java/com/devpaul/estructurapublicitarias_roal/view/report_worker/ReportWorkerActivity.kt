@@ -144,10 +144,9 @@ class ReportWorkerActivity : BaseActivity() {
         val btnUno = binding.btnUno
         val btnDos = binding.btnDos
         val btnTres = binding.btnTres
-        val btnCua = binding.btnCuatro
 
         val cardViewButtons = listOf(
-            btnUno, btnDos, btnTres, btnCua
+            btnUno, btnDos, btnTres
         )
 
         cardViewButtons.forEach { it.setBackgroundColor(whiteColor) }
@@ -157,15 +156,10 @@ class ReportWorkerActivity : BaseActivity() {
 
             when (button) {
                 btnUno -> viewModel.validateFirstButtonReport(pieChart, data.validationEPP, binding.linearDataReport)
-                btnDos -> viewModel.validateFirstButtonReport(pieChart, data.validateEquipment, binding.linearDataReport)
-                btnTres -> ""
-                btnCua -> ""
-                else -> {
-
-                }
+                btnDos -> viewModel.validateFirstButtonReport(pieChart, data.validateEquipmentPresent, binding.linearDataReport)
+                btnTres -> viewModel.validateFirstButtonReport(pieChart, data.validateEquipmentMissing, binding.linearDataReport)
             }
         }
     }
-
 
 }

@@ -5,8 +5,10 @@ import com.google.gson.annotations.SerializedName
 data class WorkerReportByUserResponse(
     @SerializedName("validationEPP")
     val validationData: ValidationData? = null,
-    @SerializedName("validateEquipment")
-    val validateEquipment: ValidationData? = null
+    @SerializedName("validateEquipmentPresent")
+    val validateEquipmentPresent: ValidationData? = null,
+    @SerializedName("validateEquipmentMissing")
+    val validateEquipmentMissing: ValidationData? = null
 )
 
 data class ValidationData(
