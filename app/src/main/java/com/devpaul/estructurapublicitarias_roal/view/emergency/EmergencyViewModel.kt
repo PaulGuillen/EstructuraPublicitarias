@@ -1,6 +1,8 @@
 package com.devpaul.estructurapublicitarias_roal.view.emergency
 
 import android.content.Context
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -147,6 +149,16 @@ class EmergencyViewModel(context: Context) : ViewModel() {
             textDiseases.value = diseases?.takeIf { it.isNotEmpty() } ?: VALIDATE_NOT_DISEASES
             textBloodType.value = bloodType?.takeIf { it.isNotEmpty() } ?: VALIDATE_NOT_BLOOD_TYPE
 
+        }
+    }
+
+    fun searchWorkers(searchBox: EditText) {
+        searchBox.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val dni = searchBox.text.toString()
+                validateWorkerByDNI(dni)
+            }
+            false
         }
     }
 

@@ -65,7 +65,6 @@ class EmergencyActivity : BaseActivity() {
             switchSearchMode(BY_QR)
         }
 
-
         binding.textPrincipal.setOnClickListener { goToCall("phonePrincipal") }
         binding.textSecondary.setOnClickListener { goToCall("phoneSecondary") }
 
@@ -178,18 +177,8 @@ class EmergencyActivity : BaseActivity() {
         binding.linearLayoutNoDataFound.visibility = View.GONE
 
         if (searchMode == BY_DNI) {
-            searchWorkers()
-        }
-    }
-
-    private fun searchWorkers() {
-        binding.searchBox.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val dni = binding.searchBox.text.toString()
-                viewModel.validateWorkerByDNI(dni)
-                performSearch()
-            }
-            false
+            viewModel.searchWorkers(binding.searchBox)
+            performSearch()
         }
     }
 
