@@ -69,4 +69,7 @@ interface ApiConfig {
     fun reportWorker(
         @Query("document") document: String? = null
     ): Call<WorkerReportByUserResponse>
+    @GET("https://run.mocky.io/v3/71020a84-b380-4e91-8b16-bf3c4addec78")
+    fun listWorkers(
+    ): Call<WorkerReportByUserResponse>
 }

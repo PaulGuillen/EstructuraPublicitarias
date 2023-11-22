@@ -133,7 +133,7 @@
     <string name="text_tipo_de_sangre">Tipo de sangre</string>
     <string name="title_invalid_second_phone">Número emergencia</string>
     <string name="subtitle_invalid_second_phone">El número de emergencia no debe estar vacío o repetir con el primero</string>
-    <string name="title_end_session">Se cerró sesión por inactividad. \nDebido a que no se usó la aplicación de gestión por 10 minutos.</string>
+    <string name="title_end_session">Se cerró sesión por inactividad. \nDebido a que no se usó la aplicación de gestión por 30 minutos.</string>
     <string name="text_continuar">Continuar</string>
     <string name="text_message_from_be">Message from BE</string>
     <string name="text_aceptar">Aceptar</string>
