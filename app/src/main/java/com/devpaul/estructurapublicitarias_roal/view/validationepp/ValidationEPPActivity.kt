@@ -2,14 +2,15 @@ package com.devpaul.estructurapublicitarias_roal.view.validationepp
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.pm.ActivityInfo
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.lifecycle.ViewModelProvider
 import com.devpaul.estructurapublicitarias_roal.R
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidationEPP
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidationEPPRequest
@@ -17,7 +18,9 @@ import com.devpaul.estructurapublicitarias_roal.data.repository.ValidationEPPRep
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityValidationEppactivityBinding
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomError
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
-import com.devpaul.estructurapublicitarias_roal.domain.usecases.ValidationEPPUseCase
+import com.devpaul.estructurapublicitarias_roal.domain.usecases.emergency.EmergencyResult
+import com.devpaul.estructurapublicitarias_roal.domain.usecases.validateEPP.ValidationEPPResult
+import com.devpaul.estructurapublicitarias_roal.domain.usecases.validateEPP.ValidationEPPUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
 import com.devpaul.estructurapublicitarias_roal.view.HomeActivity
 import com.devpaul.estructurapublicitarias_roal.view.base.BaseActivity
@@ -30,15 +33,56 @@ import java.io.File
 class ValidationEPPActivity : BaseActivity() {
 
     lateinit var binding: ActivityValidationEppactivityBinding
+    private lateinit var viewModel: ValidationEPPViewModel
     private var imageFile: File? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = ActivityValidationEppactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         toolbarStyle(this@ValidationEPPActivity, binding.include.toolbar, "Validación EPP", true, HomeActivity::class.java)
+
+        viewModel =
+            ViewModelProvider(this, ViewModelFactory(this, ValidationEPPViewModel::class.java))[ValidationEPPViewModel::class.java]
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
+        viewModel.validateEPPResult.observe(this) { result ->
+            handleValidateEPPResult(result)
+        }
+
+        viewModel.showLoadingDialog.observe(this) { showLoading ->
+            if (showLoading) {
+                showLoading()
+            } else {
+                hideLoading()
+            }
+        }
+
         binding.imagePhoto.setOnClickListener { selectImage() }
-        setDefaultColorEquipment()
+    }
+
+    private fun handleValidateEPPResult(result: ValidationEPPResult) {
+        when (result) {
+            is ValidationEPPResult.Success -> {
+            }
+
+            is ValidationEPPResult.Error -> {
+
+            }
+
+            is ValidationEPPResult.ExceptionError -> {
+                Toast.makeText(this, MESSAGE_DATA_NOT_VALID, Toast.LENGTH_SHORT).show()
+            }
+
+            is ValidationEPPResult.MissingImage -> {
+                Toast.makeText(this, MESSAGE_DATA_NOT_VALID, Toast.LENGTH_SHORT).show()
+            }
+
+            is ValidationEPPResult.DefaultColorsComponents -> {
+                setDefaultColorEquipment()
+            }
+        }
     }
 
     private fun sendImageToBE() {
@@ -55,7 +99,7 @@ class ValidationEPPActivity : BaseActivity() {
                         }
 
                         val validateEPPRepository = ValidationEPPRepository()
-                        val validateUseCase = ValidationEPPUseCase(this@ValidationEPPActivity, validateEPPRepository)
+                        val validateUseCase = ValidationEPPUseCase(validateEPPRepository)
                         val requestValidateEPPService = validateUseCase.validateEPP(validateEPP)
 
                         withContext(Dispatchers.Main) {

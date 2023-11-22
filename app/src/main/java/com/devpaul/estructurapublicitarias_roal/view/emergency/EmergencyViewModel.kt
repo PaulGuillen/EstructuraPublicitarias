@@ -14,10 +14,11 @@ import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResul
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.emergency.EmergencyResult
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.emergency.EmergencyUseCase
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
+import com.devpaul.estructurapublicitarias_roal.view.base.BaseViewModel
 import kotlinx.coroutines.launch
 import java.io.File
 
-class EmergencyViewModel(context: Context) : ViewModel() {
+class EmergencyViewModel(context: Context) : BaseViewModel() {
 
     private val prefs = SharedPref(context)
 
@@ -37,10 +38,6 @@ class EmergencyViewModel(context: Context) : ViewModel() {
     private val _emergencyResult = MutableLiveData<EmergencyResult>()
 
     val emergencyResult: LiveData<EmergencyResult> = _emergencyResult
-
-    private val _showLoadingDialog = MutableLiveData<Boolean>()
-    val showLoadingDialog: LiveData<Boolean>
-        get() = _showLoadingDialog
 
     fun validateImageByPhoto(imageFile: File?, imageInBase64: String?) {
         viewModelScope.launch {

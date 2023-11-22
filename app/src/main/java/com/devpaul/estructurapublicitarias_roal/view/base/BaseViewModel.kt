@@ -15,8 +15,8 @@ abstract class BaseViewModel() : ViewModel() {
     }
 
     val _showLoadingDialog = MutableLiveData<Boolean>()
+
     val showLoadingDialog: LiveData<Boolean>
         get() = _showLoadingDialog
-
 
 }

@@ -50,6 +50,7 @@ abstract class BaseActivity : InitialActivity() {
     fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
+
     fun getBase64ForUriAndPossiblyCrash(uri: Uri): String {
         return try {
             val bytes = contentResolver.openInputStream(uri)?.readBytes()
