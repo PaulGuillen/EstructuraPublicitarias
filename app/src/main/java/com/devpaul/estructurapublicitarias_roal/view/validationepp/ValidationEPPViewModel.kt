@@ -1,6 +1,9 @@
 package com.devpaul.estructurapublicitarias_roal.view.validationepp
 
 import android.content.Context
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -20,18 +23,22 @@ class ValidationEPPViewModel(context: Context) : BaseViewModel() {
 
     val validateEPPResult: LiveData<ValidationEPPResult> = _validateEPPResult
 
-
     init {
         _validateEPPResult.value = ValidationEPPResult.DefaultColorsComponents
     }
 
-    private fun validateEPPService(imageFile: File?, imageInBase64: String?) {
+    fun validateEPPService(centeredImage: ImageView?, subtitleImage: TextView?, imageFile: File?, imageInBase64: String?) {
         viewModelScope.launch {
-            callServiceValidateEPP(imageFile, imageInBase64)
+            callServiceValidateEPP(centeredImage, subtitleImage, imageFile, imageInBase64)
         }
     }
 
-    private suspend fun callServiceValidateEPP(imageFile: File?, imageInBase64: String?) {
+    private suspend fun callServiceValidateEPP(
+        centeredImage: ImageView?,
+        subtitleImage: TextView?,
+        imageFile: File?,
+        imageInBase64: String?
+    ) {
 
         val validateImageByPhotoRequest = ValidationEPPRequest(
             photo = imageInBase64,
@@ -42,6 +49,9 @@ class ValidationEPPViewModel(context: Context) : BaseViewModel() {
             return
         }
 
+        centeredImage?.visibility = View.GONE
+        subtitleImage?.visibility = View.GONE
+
         _showLoadingDialog.value = true
 
         try {
@@ -50,7 +60,7 @@ class ValidationEPPViewModel(context: Context) : BaseViewModel() {
             when (val validateEPP = validateUseCase.validateEPP(validateImageByPhotoRequest)) {
                 is CustomResult.OnSuccess -> {
                     val data = validateEPP.data
-
+                    _validateEPPResult.value = ValidationEPPResult.Success(data)
                 }
 
                 is CustomResult.OnError -> {
