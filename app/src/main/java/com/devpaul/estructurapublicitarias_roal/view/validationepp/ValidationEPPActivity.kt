@@ -2,16 +2,13 @@ package com.devpaul.estructurapublicitarias_roal.view.validationepp
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import com.devpaul.estructurapublicitarias_roal.R
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.ValidationEPP
 import com.devpaul.estructurapublicitarias_roal.databinding.ActivityValidationEppactivityBinding
 import com.devpaul.estructurapublicitarias_roal.domain.usecases.validateEPP.ValidationEPPResult
 import com.devpaul.estructurapublicitarias_roal.domain.utils.*
@@ -32,7 +29,7 @@ class ValidationEPPActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityValidationEppactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        toolbarStyle(this@ValidationEPPActivity, binding.include.toolbar, "Validación EPP", true, HomeActivity::class.java)
+        toolbarStyle(this@ValidationEPPActivity, binding.include.toolbar, TOP_BAR_EQUIPMENT_PERSONAL, true, HomeActivity::class.java)
 
         viewModel =
             ViewModelProvider(this, ViewModelFactory(this, ValidationEPPViewModel::class.java))[ValidationEPPViewModel::class.java]
@@ -57,7 +54,7 @@ class ValidationEPPActivity : BaseActivity() {
     private fun handleValidateEPPResult(result: ValidationEPPResult) {
         when (result) {
             is ValidationEPPResult.Success -> {
-                validateEquipment(result.data)
+                viewModel.validateEquipment(result.data, binding.includeCardViewValidateEPP, this)
             }
 
             is ValidationEPPResult.Error -> {
@@ -125,68 +122,6 @@ class ValidationEPPActivity : BaseActivity() {
         setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyHarness, R.color.color_gray_items)
         setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyPants, R.color.color_gray_items)
         setSVGColorFromResource(binding.includeCardViewValidateEPP.safetyVest, R.color.color_gray_items)
-    }
-
-    private fun validateEquipment(data: ValidationEPP?) {
-        val allEquipment = data?.allEquipment
-        val wearingEquipment = data?.wearingEquipment
-        val descriptionEquipment = data?.descriptionEquipment
-        val areaEquipment = data?.area
-
-        val helmet = allEquipment?.find { it.key.contentEquals("firstEPP") }?.value
-        val gloves = allEquipment?.find { it.key.contentEquals("secondEPP") }?.value
-        val glasses = allEquipment?.find { it.key.contentEquals("thirdEPP") }?.value
-        val boots = allEquipment?.find { it.key.contentEquals("fourthEPP") }?.value
-        val harness = allEquipment?.find { it.key.contentEquals("fifthEPP") }?.value
-        val headphones = allEquipment?.find { it.key.contentEquals("sixEPP") }?.value
-        val pants = allEquipment?.find { it.key.contentEquals("sevenEPP") }?.value
-        val vest = allEquipment?.find { it.key.contentEquals("eightEPP") }?.value
-
-        val elementMap = mapOf(
-            helmet to binding.includeCardViewValidateEPP.safetyHelmet,
-            glasses to binding.includeCardViewValidateEPP.safetyGlasses,
-            gloves to binding.includeCardViewValidateEPP.safetyGloves,
-            boots to binding.includeCardViewValidateEPP.safetyBoots,
-            harness to binding.includeCardViewValidateEPP.safetyHarness,
-            headphones to binding.includeCardViewValidateEPP.safetyHeadphones,
-            pants to binding.includeCardViewValidateEPP.safetyPants,
-            vest to binding.includeCardViewValidateEPP.safetyVest,
-        )
-
-        wearingEquipment?.forEach { item ->
-            elementMap[item.key]?.let { imageButton ->
-                val colorResource = if (item.value == false) {
-                    R.color.red
-                } else {
-                    R.color.light_green_primary_dark
-                }
-                setSVGColorFromResource(imageButton, colorResource)
-            }
-        }
-
-        val presentKeys = wearingEquipment?.map { it.key } ?: emptyList()
-
-        val missingKeys = elementMap.keys - presentKeys.toSet()
-
-        missingKeys.forEach { key ->
-            elementMap[key]?.let { imageButton ->
-                setSVGColorFromResource(imageButton, R.color.black)
-            }
-        }
-
-        val colorBlueLight = ContextCompat.getColor(this, R.color.color_blue_light)
-        val cardDetailsTextView = binding.includeCardViewValidateEPP.textViewCardDetails
-        cardDetailsTextView.setBackgroundColor(colorBlueLight)
-
-        if (cardDetailsTextView.background is ColorDrawable) {
-            val currentColor = (cardDetailsTextView.background as ColorDrawable).color
-
-            if (currentColor == colorBlueLight) {
-                cardDetailsTextView.setOnClickListener {
-                    showDialogDetailsValidateEquipment(this@ValidationEPPActivity, descriptionEquipment, areaEquipment)
-                }
-            }
-        }
     }
 
     override fun onBackPressed() {
