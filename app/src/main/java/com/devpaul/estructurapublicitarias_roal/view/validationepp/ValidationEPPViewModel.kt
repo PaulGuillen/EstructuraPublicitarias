@@ -1,6 +1,5 @@
 package com.devpaul.estructurapublicitarias_roal.view.validationepp
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.view.View
