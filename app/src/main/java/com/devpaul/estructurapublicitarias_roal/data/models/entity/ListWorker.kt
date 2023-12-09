@@ -2,7 +2,7 @@ package com.devpaul.estructurapublicitarias_roal.data.models.entity
 
 import com.devpaul.estructurapublicitarias_roal.data.models.response.PaginationInfoResponse
 
-data class AllWorker(
+data class ListWorker(
     var workers: List<BodyWorker>? = null,
     var paginationInfo: PaginationInfoResponse? = null
 )

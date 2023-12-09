@@ -5,6 +5,6 @@ import com.devpaul.estructurapublicitarias_roal.data.models.entity.WorkerReportB
 import com.devpaul.estructurapublicitarias_roal.domain.custom_result.CustomResult
 
 interface WorkersReportRepositoryNetwork {
-    fun allWorkers(): CustomResult<List<PrincipalListWorker>>
+    fun reportAllWorkers(): CustomResult<List<PrincipalListWorker>>
     fun reportByWorker(document: String): CustomResult<WorkerReportByUser>
 }

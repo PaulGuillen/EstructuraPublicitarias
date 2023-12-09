@@ -4,6 +4,7 @@ import com.devpaul.estructurapublicitarias_roal.data.models.response.GetWorkerRe
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidateImageByPhotoRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.request.ValidationEPPRequest
 import com.devpaul.estructurapublicitarias_roal.data.models.request.WorkerRequest
+import com.devpaul.estructurapublicitarias_roal.data.models.response.ListWorkerResponse
 import com.devpaul.estructurapublicitarias_roal.data.models.response.MainUser
 import com.devpaul.estructurapublicitarias_roal.data.models.response.OptionsResponse
 import com.devpaul.estructurapublicitarias_roal.data.models.response.PrincipalListWorkerResponse
@@ -72,5 +73,5 @@ interface ApiConfig {
 
     @GET("https://run.mocky.io/v3/71020a84-b380-4e91-8b16-bf3c4addec78")
     fun listWorkers(
-    ): Call<WorkerReportByUserResponse>
+    ): Call<ListWorkerResponse>
 }

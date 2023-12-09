@@ -1,16 +1,16 @@
 package com.devpaul.estructurapublicitarias_roal.domain.mappers
 
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.AllWorker
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.ListWorker
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.BodyWorker
-import com.devpaul.estructurapublicitarias_roal.data.models.response.AllWorkerResponse
+import com.devpaul.estructurapublicitarias_roal.data.models.response.ListWorkerResponse
 import com.devpaul.estructurapublicitarias_roal.data.models.response.PaginationInfoResponse
 
 class AllWorkersMapper {
-    fun mapToWorkersResponseEntity(allWorkerResponse: AllWorkerResponse): AllWorker {
+    fun map(listWorkerResponse: ListWorkerResponse): ListWorker {
 
-        val allWorker = AllWorker()
+        val listWorker = ListWorker()
 
-        allWorker.workers = allWorkerResponse.workers?.map { item ->
+        listWorker.workers = listWorkerResponse.workers?.map { item ->
             BodyWorker(
                 dni = item.dni,
                 date_birth = item.date_birth,
@@ -28,10 +28,10 @@ class AllWorkersMapper {
                 area = item.area
             )
         }
-        allWorker.paginationInfo = PaginationInfoResponse(
-            totalResult = allWorkerResponse.paginationInfo?.totalResult ?: 0
+        listWorker.paginationInfo = PaginationInfoResponse(
+            totalResult = listWorkerResponse.paginationInfo?.totalResult ?: 0
         )
 
-        return allWorker
+        return listWorker
     }
 }

@@ -3,7 +3,7 @@ package com.devpaul.estructurapublicitarias_roal.data.models.response
 import com.devpaul.estructurapublicitarias_roal.data.models.entity.BodyWorker
 import com.google.gson.annotations.SerializedName
 
-data class AllWorkerResponse(
+data class ListWorkerResponse(
     @SerializedName("workers")
     val workers: List<BodyWorker>? = null,
     @SerializedName("paginationInfo")

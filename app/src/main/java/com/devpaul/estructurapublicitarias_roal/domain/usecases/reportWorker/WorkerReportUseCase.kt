@@ -11,7 +11,7 @@ class WorkerReportUseCase(private val workersReportRepositoryNetwork: WorkersRep
     suspend fun allWorkers(): CustomResult<List<PrincipalListWorker>> =
         withContext(Dispatchers.IO) {
 
-            val allWorkers = workersReportRepositoryNetwork.allWorkers()
+            val allWorkers = workersReportRepositoryNetwork.reportAllWorkers()
 
             when (allWorkers) {
                 is CustomResult.OnSuccess -> {

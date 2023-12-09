@@ -22,9 +22,9 @@ class WorkersReportRepository : WorkersReportRepositoryNetwork {
         apiConfig = api.getWorkersRoutes()
     }
 
-    override fun allWorkers(): CustomResult<List<PrincipalListWorker>> {
+    override fun reportAllWorkers(): CustomResult<List<PrincipalListWorker>> {
 
-        val serviceTitle = TITLE_ERROR_MS_ALL_WORKERS
+        val serviceTitle = TITLE_ERROR_MS_REPORT_ALL_WORKERS
 
         try {
             val callApi = apiConfig?.allWorkers()?.execute()
