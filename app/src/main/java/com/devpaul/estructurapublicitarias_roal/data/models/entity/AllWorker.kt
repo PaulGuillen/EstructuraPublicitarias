@@ -1,11 +1,13 @@
 package com.devpaul.estructurapublicitarias_roal.data.models.entity
 
-class AllWorker (
-    val workers: List<BodyWorkerEntity>,
-    val paginationInfo: PaginationInfoEntity
+import com.devpaul.estructurapublicitarias_roal.data.models.response.PaginationInfoResponse
+
+data class AllWorker(
+    var workers: List<BodyWorker>? = null,
+    var paginationInfo: PaginationInfoResponse? = null
 )
 
-data class BodyWorkerEntity(
+data class BodyWorker(
     val dni: String,
     val date_birth: String,
     val date_join: String,
@@ -22,6 +24,6 @@ data class BodyWorkerEntity(
     val area: String
 )
 
-data class PaginationInfoEntity(
+data class PaginationInfoResponse(
     val totalResult: Int
 )

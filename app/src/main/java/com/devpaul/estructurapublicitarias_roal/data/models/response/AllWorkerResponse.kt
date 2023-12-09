@@ -1,15 +1,16 @@
 package com.devpaul.estructurapublicitarias_roal.data.models.response
 
+import com.devpaul.estructurapublicitarias_roal.data.models.entity.BodyWorker
 import com.google.gson.annotations.SerializedName
 
-class AllWorkerResponse (
+data class AllWorkerResponse(
     @SerializedName("workers")
-    val workers: List<BodyWorkerResponse>,
+    val workers: List<BodyWorker>? = null,
     @SerializedName("paginationInfo")
-    val paginationInfo: PaginationInfoResponse
+    val paginationInfo: PaginationInfoResponse? = null
 )
 
-data class BodyWorkerResponse(
+data class BodyWorker(
     @SerializedName("dni")
     val dni: String,
     @SerializedName("date_birth")
