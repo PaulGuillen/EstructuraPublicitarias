@@ -1,6 +1,5 @@
 package com.devpaul.estructurapublicitarias_roal.data.models.response
 
-import com.devpaul.estructurapublicitarias_roal.data.models.entity.BodyWorker
 import com.google.gson.annotations.SerializedName
 
 data class ListWorkerResponse(
@@ -14,9 +13,9 @@ data class BodyWorker(
     @SerializedName("dni")
     val dni: String,
     @SerializedName("date_birth")
-    val date_birth: String,
+    val dateBirth: String,
     @SerializedName("date_join")
-    val date_join: String,
+    val dateJoin: String,
     @SerializedName("name")
     val name: String,
     @SerializedName("gender")
@@ -24,7 +23,7 @@ data class BodyWorker(
     @SerializedName("phone")
     val phone: String,
     @SerializedName("blood_type")
-    val blood_type: String,
+    val bloodType: String,
     @SerializedName("allergies")
     val allergies: String,
     @SerializedName("lastname")
@@ -32,7 +31,7 @@ data class BodyWorker(
     @SerializedName("nationality")
     val nationality: String,
     @SerializedName("phone_emergency")
-    val phone_emergency: String,
+    val phoneEmergency: String,
     @SerializedName("photo")
     val photo: String,
     @SerializedName("diseases")
